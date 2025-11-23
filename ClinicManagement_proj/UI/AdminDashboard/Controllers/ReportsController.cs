@@ -8,14 +8,12 @@ namespace ClinicManagement_proj.UI
     public class ReportsController : IPanelController
     {
         private readonly Panel panel;
-        private readonly AdminDashboard dashboard;
 
         public Panel Panel => panel;
 
-        public ReportsController(Panel panel, AdminDashboard dashboard)
+        public ReportsController(Panel panel)
         {
             this.panel = panel;
-            this.dashboard = dashboard;
         }
 
         public void Initialize()

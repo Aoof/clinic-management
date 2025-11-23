@@ -27,7 +27,6 @@ namespace ClinicManagement_proj.UI
             isEditMode = false;
             btnDoctorCancel.Visible = false;
             btnDoctorDelete.Visible = false;
-            dgvDoctors.DataSource = null;
             dgvDoctors.ClearSelection();
             btnDoctorSubmit.Text = "Create";
             grpDoctorMgmt.Text = "Create Doctor";

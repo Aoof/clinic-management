@@ -9,9 +9,9 @@ namespace ClinicManagement_proj.UI
     /// </summary>
     public class NavigationManager
     {
-        private readonly Dictionary<Button, IPanelController> navigationMap;
         private readonly Color defaultColor;
         private readonly Color activeColor;
+        private Dictionary<Button, IPanelController> navigationMap;
         private Button activeButton;
         private IPanelController activePanel;
 

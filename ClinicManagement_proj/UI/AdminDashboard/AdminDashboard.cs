@@ -7,9 +7,6 @@ namespace ClinicManagement_proj.UI
 {
     public partial class AdminDashboard : Form
     {
-        private bool isEditMode = false;
-        private bool isPasswordChanged = false;
-
         private readonly Color SIDEBAR_BG = Color.FromArgb(44, 62, 80);
         private readonly Color SIDEBAR_ACTIVE = Color.FromArgb(52, 73, 94);
         private readonly Color HEADER_BG = Color.FromArgb(41, 128, 185);
@@ -39,11 +36,11 @@ namespace ClinicManagement_proj.UI
             navigationManager = new NavigationManager(SIDEBAR_BG, SIDEBAR_ACTIVE);
 
             // Initialize panel controllers
-            userManagementController = new UserManagementController(pnlUserManagement, this);
-            doctorManagementController = new DoctorManagementController(pnlDoctorManagement, this);
-            schedulingController = new SchedulingController(pnlDoctorScheduling, this);
-            patientRegistrationController = new PatientRegistrationController(pnlPatientRegistration, this);
-            reportsController = new ReportsController(pnlReports, this);
+            userManagementController = new UserManagementController(pnlUserManagement);
+            doctorManagementController = new DoctorManagementController(pnlDoctorManagement);
+            schedulingController = new SchedulingController(pnlDoctorScheduling);
+            patientRegistrationController = new PatientRegistrationController(pnlPatientRegistration);
+            reportsController = new ReportsController(pnlReports);
         }
 
         /// <summary>

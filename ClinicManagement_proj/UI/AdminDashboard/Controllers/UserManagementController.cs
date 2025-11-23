@@ -1,4 +1,5 @@
 using System.Windows.Forms;
+using ClinicManagement_proj.BLL.Services;
 
 namespace ClinicManagement_proj.UI
 {
@@ -8,14 +9,15 @@ namespace ClinicManagement_proj.UI
     public class UserManagementController : IPanelController
     {
         private readonly Panel panel;
-        private readonly AdminDashboard dashboard;
+        private readonly UserService userService;
+        private DataGridView dgvUsers => (DataGridView)panel.Controls["dgvUsers"];
 
         public Panel Panel => panel;
 
-        public UserManagementController(Panel panel, AdminDashboard dashboard)
+        public UserManagementController(Panel panel)
         {
             this.panel = panel;
-            this.dashboard = dashboard;
+            this.userService = new UserService();
         }
 
         public void Initialize()
@@ -26,8 +28,13 @@ namespace ClinicManagement_proj.UI
 
         public void OnShow()
         {
-            // Refresh data when panel becomes visible
-            // Implementation delegated to dashboard partial class
+            LoadUsers();
+        }
+
+        private void LoadUsers()
+        {
+            var users = userService.GetAllUsers();
+            dgvUsers.DataSource = users;
         }
 
         public void OnHide()

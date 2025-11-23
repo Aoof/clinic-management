@@ -6,6 +6,8 @@ namespace ClinicManagement_proj.UI
 {
     public partial class AdminDashboard
     {
+        private bool isEditMode = false;
+        private bool isPasswordChanged = false;
         /// <summary>
         /// Reset the user management form to initial state
         /// </summary>
@@ -18,7 +20,6 @@ namespace ClinicManagement_proj.UI
             isPasswordChanged = false;
             btnUsrCancel.Visible = false;
             btnUsrDelete.Visible = false;
-            dgvUsers.DataSource = null;
             dgvUsers.ClearSelection();
             btnUsrSubmit.Text = "Create";
             grpAdminForm.Text = "Create User";

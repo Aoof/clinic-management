@@ -8,14 +8,12 @@ namespace ClinicManagement_proj.UI
     public class SchedulingController : IPanelController
     {
         private readonly Panel panel;
-        private readonly AdminDashboard dashboard;
 
         public Panel Panel => panel;
 
-        public SchedulingController(Panel panel, AdminDashboard dashboard)
+        public SchedulingController(Panel panel)
         {
             this.panel = panel;
-            this.dashboard = dashboard;
         }
 
         public void Initialize()

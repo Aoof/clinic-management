@@ -8,14 +8,12 @@ namespace ClinicManagement_proj.UI
     public class PatientRegistrationController : IPanelController
     {
         private readonly Panel panel;
-        private readonly AdminDashboard dashboard;
 
         public Panel Panel => panel;
 
-        public PatientRegistrationController(Panel panel, AdminDashboard dashboard)
+        public PatientRegistrationController(Panel panel)
         {
             this.panel = panel;
-            this.dashboard = dashboard;
         }
 
         public void Initialize()
