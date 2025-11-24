@@ -12,13 +12,7 @@ namespace ClinicManagement_proj.BLL.Services
 
         public List<UserDTO> GetAllUsers()
         {
-            List<UserDTO> users = clinicDb.Users.Include(u => u.Roles).Select(u => new UserDTO
-            {
-                Id = u.Id,
-                Username = u.Username,
-                Roles = u.Roles.FirstOrDefault().RoleName
-            }).ToList();
-            return users;
+            return clinicDb.Users.Include(u => u.Roles).ToList();
         }
     }
 }
