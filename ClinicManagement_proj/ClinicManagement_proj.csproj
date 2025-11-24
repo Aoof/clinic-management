@@ -60,6 +60,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLL\DTO\AppointmentDTO.cs" />
+    <Compile Include="BLL\DTO\DaysOfWeekEnum.cs" />
+    <Compile Include="BLL\DTO\DoctorDTO.cs" />
+    <Compile Include="BLL\DTO\PatientDTO.cs" />
+    <Compile Include="BLL\DTO\RoleDTO.cs" />
+    <Compile Include="BLL\DTO\ScheduleConstraintDTO.cs" />
+    <Compile Include="BLL\DTO\SpecialtyDTO.cs" />
+    <Compile Include="BLL\DTO\TimeSlotDTO.cs" />
     <Compile Include="BLL\DTO\UserDTO.cs" />
     <Compile Include="BLL\Services\UserService.cs" />
     <Compile Include="BLL\Utils\Notification.cs" />

@@ -101,7 +101,6 @@ namespace ClinicManagement_proj.UI
         /// </summary>
         private void btnUsrSubmit_Click(object sender, EventArgs e)
         {
-            NotificationManager.AddNotification("User operation simulated!", NotificationType.Info);
             ResetUsrForm();
         }
 

@@ -1,4 +1,6 @@
 using ClinicManagement_proj.BLL.Services;
+using ClinicManagement_proj.BLL.Utils;
+using System;
 using System.Windows.Forms;
 
 namespace ClinicManagement_proj.UI
@@ -22,8 +24,7 @@ namespace ClinicManagement_proj.UI
 
         public void Initialize()
         {
-            // Setup initial state, data bindings, etc.
-            // This would be called once during dashboard initialization
+
         }
 
         public void OnShow()

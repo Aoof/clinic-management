@@ -16,7 +16,7 @@ namespace ClinicManagement_proj.BLL.Services
             {
                 Id = u.Id,
                 Username = u.Username,
-                Role = u.Roles.FirstOrDefault().RoleName
+                Roles = u.Roles.FirstOrDefault().RoleName
             }).ToList();
             return users;
         }
