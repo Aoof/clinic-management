@@ -13,8 +13,8 @@ namespace ClinicManagement_proj.BLL.DTO
         public string Username { get; set; }
         public string PasswordHash { get; set; }
         public DateTime CreatedAt { get; set; }
-        public List<RoleDTO> Roles;
+        public List<RoleDTO> Roles { get; set; }
 
-       
+
     }
 }
