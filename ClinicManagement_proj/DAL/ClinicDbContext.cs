@@ -15,7 +15,7 @@ namespace ClinicManagement_proj.DAL
         public DbSet<TimeSlot> TimeSlots { get; set; }
         public DbSet<User> Users { get; set; }
 
-        public ClinicDbContext() : base("data source=.;initial catalog=HealthCareClinicDB;integrated security=True;encrypt=False;MultipleActiveResultSets=True;App=EntityFramework")
+        public ClinicDbContext() : base("data source=.\SQLEXPRESS;initial catalog=HealthCareClinicDB;integrated security=True;encrypt=False;MultipleActiveResultSets=True;App=EntityFramework")
         {
             Database.SetInitializer(new ClinicDbContextInitializer());
         }
