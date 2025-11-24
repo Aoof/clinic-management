@@ -16,7 +16,7 @@ namespace ClinicManagement_proj.BLL.DTO
         public string LastName { get; set; }
         public string LicenseNumber { get; set; }
         public DateTime CreatedAt { get; set; }
-        public DateTime ModifieddAt { get; set; }
+        public DateTime ModifiedAt { get; set; }
         public List<AppointmentDTO> Appointments { get; set; }
         public List<ScheduleConstraintDTO> ScheduleConstraints { get; set; }
         public List<SpecialtyDTO> Specialties { get; set; }

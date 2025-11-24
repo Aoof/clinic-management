@@ -2,7 +2,6 @@ using ClinicManagement_proj.BLL.Services;
 using ClinicManagement_proj.BLL.Utils;
 using System;
 using System.Windows.Forms;
-using System;
 
 namespace ClinicManagement_proj.UI
 {
@@ -14,6 +13,7 @@ namespace ClinicManagement_proj.UI
         private readonly Panel panel;
         private readonly UserService userService;
         private DataGridView dgvUsers => (DataGridView)panel.Controls["dgvUsers"];
+        private Button btnUsrSubmit => (Button)panel.Controls["btnUsrSubmit"];
 
         public Panel Panel => panel;
 
@@ -25,10 +25,7 @@ namespace ClinicManagement_proj.UI
 
         public void Initialize()
         {
-            // Setup initial state, data bindings, etc.
-            // This would be called once during dashboard initialization
-            Button btnUsrSubmit = (Button)panel.Controls["btnUsrSubmit"];
-            // btnUsrSubmit.Click += BtnUsrSubmit_Click;
+            btnUsrSubmit.Click += new EventHandler(BtnUsrSubmit_Click);
         }
 
         public void OnShow()

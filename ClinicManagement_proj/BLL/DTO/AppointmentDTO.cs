@@ -19,7 +19,7 @@ namespace ClinicManagement_proj.BLL.DTO
         public int PatientId { get; set; }
         public int TimeSlotId { get; set; }
         public DateTime CreatedAt { get; set; }
-        public DateTime ModifieddAt { get; set; }
+        public DateTime ModifiedAt { get; set; }
         public PatientDTO Patient { get; set; }
         public DoctorDTO Doctor { get; set; }
         public TimeSlotDTO TimeSlot { get; set; }
