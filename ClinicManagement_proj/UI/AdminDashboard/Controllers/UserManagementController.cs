@@ -26,7 +26,7 @@ namespace ClinicManagement_proj.UI
             // Setup initial state, data bindings, etc.
             // This would be called once during dashboard initialization
             Button btnUsrSubmit = (Button)panel.Controls["btnUsrSubmit"];
-            btnUsrSubmit.Click += BtnUsrSubmit_Click;
+            // btnUsrSubmit.Click += BtnUsrSubmit_Click;
         }
 
         public void OnShow()
