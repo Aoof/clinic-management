@@ -19,5 +19,22 @@ namespace ClinicManagement_proj.BLL.DTO
         {
             Users = new List<UserDTO>();
         }
+
+        public RoleDTO(string roleName, DateTime createdAt, DateTime modifiedAt)
+        {
+            RoleName = roleName;
+            CreatedAt = createdAt;
+            ModifiedAt = modifiedAt;
+            Users = new List<UserDTO>();
+        }
+
+        public RoleDTO(int id, string roleName, DateTime createdAt, DateTime modifiedAt, ICollection<UserDTO> users = null)
+        {
+            Id = id;
+            RoleName = roleName;
+            CreatedAt = createdAt;
+            ModifiedAt = modifiedAt;
+            Users = users ?? new List<UserDTO>();
+        }
     }
 }

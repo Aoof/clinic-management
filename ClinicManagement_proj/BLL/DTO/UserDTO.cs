@@ -20,5 +20,33 @@ namespace ClinicManagement_proj.BLL.DTO
         {
             Roles = new List<RoleDTO>();
         }
+
+        public UserDTO(string username, string passwordHash, DateTime createdAt, DateTime modifiedAt, ICollection<RoleDTO> roles = null)
+        {
+            Username = username;
+            PasswordHash = passwordHash;
+            CreatedAt = createdAt;
+            ModifiedAt = modifiedAt;
+            Roles = roles ?? new List<RoleDTO>();
+        }
+
+        public UserDTO(int id, string username, string passwordHash, DateTime createdAt, DateTime modifiedAt, ICollection<RoleDTO> roles = null)
+        {
+            Id = id;
+            Username = username;
+            PasswordHash = passwordHash;
+            CreatedAt = createdAt;
+            ModifiedAt = modifiedAt;
+            Roles = roles ?? new List<RoleDTO>();
+        }
+
+        public UserDTO(int id, string username, string passwordHash, DateTime createdAt)
+        {
+            Id = id;
+            Username = username;
+            PasswordHash = passwordHash;
+            CreatedAt = createdAt;
+            Roles = new List<RoleDTO>();
+        }
     }
 }

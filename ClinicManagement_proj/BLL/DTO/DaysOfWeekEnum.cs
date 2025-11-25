@@ -8,12 +8,12 @@ namespace ClinicManagement_proj.BLL.DTO
 {
     public enum DaysOfWeekEnum
     {
-        Monday,
-        Tuesday,
-        Wednesday,
-        Thursday,
-        Friday,
-        Saturday,
-       
+        MONDAY,
+        TUESDAY,
+        WEDNESDAY,
+        THURSDAY,
+        FRIDAY,
+        SATURDAY,
+        SUNDAY
     }
 }

@@ -26,5 +26,17 @@ namespace ClinicManagement_proj.BLL.DTO
         {
             Appointments = new List<AppointmentDTO>();
         }
+
+        public PatientDTO(string firstName, string lastName, string insuranceNumber, DateTime dateOfBirth, string phoneNumber, DateTime createdAt, DateTime modifiedAt)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            InsuranceNumber = insuranceNumber;
+            DateOfBirth = dateOfBirth;
+            PhoneNumber = phoneNumber;
+            CreatedAt = createdAt;
+            ModifiedAt = modifiedAt;
+            Appointments = new List<AppointmentDTO>();
+        }
     }
 }

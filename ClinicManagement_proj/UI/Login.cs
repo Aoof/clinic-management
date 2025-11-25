@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
+using ClinicManagement_proj.BLL.Services;
+using ClinicManagement_proj.BLL;
+using System.Linq;
 
 namespace ClinicManagement_proj.UI
 {
@@ -12,38 +15,69 @@ namespace ClinicManagement_proj.UI
 
         private void LoginForm_Load(object sender, EventArgs e)
         {
-            // Removed non-existent settings
-            // txtUsername.Text = Properties.Settings.Default.Username;
-            // txtPassword.Text = Properties.Settings.Default.Password;
+            // Load remembered credentials
+            txtUsername.Text = Properties.Settings.Default.Username;
+            txtPassword.Text = Properties.Settings.Default.Password;
 
-            // if (!string.IsNullOrEmpty(txtUsername.Text) && !string.IsNullOrEmpty(txtPassword.Text))
-            // {
-            //     checkRememberPassword.Checked = true;
-            // }
+            if (!string.IsNullOrEmpty(txtUsername.Text) && !string.IsNullOrEmpty(txtPassword.Text))
+            {
+                checkRememberPassword.Checked = true;
+            }
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            // Removed BLL logic
-            Form dashboard = new AdminDashboard();
+            var loginService = new LoginService();
+            var user = loginService.Authenticate(txtUsername.Text, txtPassword.Text);
 
-            // Removed non-existent settings
-            // if (checkRememberPassword.Checked)
-            // {
-            //     Properties.Settings.Default.Username = txtUsername.Text;
-            //     Properties.Settings.Default.Password = txtPassword.Text;
-            //     Properties.Settings.Default.Save();
-            // }
-            // else
-            // {
-            //     Properties.Settings.Default.Username = "";
-            //     Properties.Settings.Default.Password = "";
-            //     Properties.Settings.Default.Save();
-            // }
+            if (user != null)
+            {
+                // Set the current user
+                CurrentUser.User = user;
 
-            this.Hide();
-            dashboard.ShowDialog();
-            Close();
+                // Save or clear settings based on remember checkbox
+                if (checkRememberPassword.Checked)
+                {
+                    Properties.Settings.Default.Username = txtUsername.Text;
+                    Properties.Settings.Default.Password = txtPassword.Text;
+                    Properties.Settings.Default.Save();
+                }
+                else
+                {
+                    Properties.Settings.Default.Username = "";
+                    Properties.Settings.Default.Password = "";
+                    Properties.Settings.Default.Save();
+                }
+
+                Form dashboard = null;
+
+                // Determine dashboard based on role
+                if (UserService.CurrentUserHasRole(UserService.UserRoles.Admin))
+                {
+                    dashboard = new AdminDashboard();
+                }
+                else if (UserService.CurrentUserHasRole(UserService.UserRoles.Doctor))
+                {
+                    dashboard = new DoctorDashboard();
+                }
+                else if (UserService.CurrentUserHasRole(UserService.UserRoles.Receptionist))
+                {
+                    dashboard = new ReceptionistDashboard();
+                }
+                else
+                {
+                    MessageBox.Show("No dashboard available for your role.", "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                this.Hide();
+                dashboard.ShowDialog();
+                Close();
+            }
+            else
+            {
+                MessageBox.Show("Invalid username or password", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void txtPassword_KeyDown(object sender, KeyEventArgs e)

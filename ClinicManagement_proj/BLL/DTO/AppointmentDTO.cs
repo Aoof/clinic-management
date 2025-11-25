@@ -23,5 +23,20 @@ namespace ClinicManagement_proj.BLL.DTO
         public PatientDTO Patient { get; set; }
         public DoctorDTO Doctor { get; set; }
         public TimeSlotDTO TimeSlot { get; set; }
+
+        public AppointmentDTO()
+        {
+        }
+
+        public AppointmentDTO(DateTime date, string notes, int doctorId, int patientId, int timeSlotId, DateTime createdAt, DateTime modifiedAt)
+        {
+            Date = date;
+            Notes = notes;
+            DoctorId = doctorId;
+            PatientId = patientId;
+            TimeSlotId = timeSlotId;
+            CreatedAt = createdAt;
+            ModifiedAt = modifiedAt;
+        }
     }
 }

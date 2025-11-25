@@ -14,22 +14,8 @@ namespace ClinicManagement_proj.BLL.Services
        
         public List<RoleDTO> GetAllRoles()
         {
-            return clinicDb.Roles
-                .Include(r => r.Users)
-                .Select(r => new RoleDTO
-                {
-                    Id = r.Id,
-                    RoleName = r.RoleName,
-                    CreatedAt = r.CreatedAt,
-                    ModifiedAt = r.ModifiedAt,
-                    Users = r.Users.Select(u => new UserDTO
-                    {
-                        Id = u.Id,
-                        Username = u.Username,
-                        PasswordHash = u.PasswordHash,
-                        CreatedAt = u.CreatedAt
-                    }).ToList()
-                }).ToList();
+            var roles = clinicDb.Roles.Include(r => r.Users).ToList();
+            return roles.Select(r => new RoleDTO(r.Id, r.RoleName, r.CreatedAt, r.ModifiedAt, r.Users.Select(u => new UserDTO(u.Id, u.Username, u.PasswordHash, u.CreatedAt)).ToList())).ToList();
         }
 
         
@@ -41,20 +27,7 @@ namespace ClinicManagement_proj.BLL.Services
 
             if (role == null) return null;
 
-            return new RoleDTO
-            {
-                Id = role.Id,
-                RoleName = role.RoleName,
-                CreatedAt = role.CreatedAt,
-                ModifiedAt = role.ModifiedAt,
-                Users = role.Users.Select(u => new UserDTO
-                {
-                    Id = u.Id,
-                    Username = u.Username,
-                    PasswordHash = u.PasswordHash,
-                    CreatedAt = u.CreatedAt
-                }).ToList()
-            };
+            return new RoleDTO(role.Id, role.RoleName, role.CreatedAt, role.ModifiedAt, role.Users.Select(u => new UserDTO(u.Id, u.Username, u.PasswordHash, u.CreatedAt)).ToList());
         }
 
         
@@ -66,33 +39,15 @@ namespace ClinicManagement_proj.BLL.Services
 
             if (role == null) return null;
 
-            return new RoleDTO
-            {
-                Id = role.Id,
-                RoleName = role.RoleName,
-                CreatedAt = role.CreatedAt,
-                ModifiedAt = role.ModifiedAt,
-                Users = role.Users.Select(u => new UserDTO
-                {
-                    Id = u.Id,
-                    Username = u.Username,
-                    PasswordHash = u.PasswordHash,
-                    CreatedAt = u.CreatedAt
-                }).ToList()
-            };
+            return new RoleDTO(role.Id, role.RoleName, role.CreatedAt, role.ModifiedAt, role.Users.Select(u => new UserDTO(u.Id, u.Username, u.PasswordHash, u.CreatedAt)).ToList());
         }
 
         
         public int CreateRole(RoleDTO roleDto)
         {
-            var role = new Role
-            {
-                RoleName = roleDto.RoleName,
-                CreatedAt = DateTime.UtcNow,
-                ModifiedAt = DateTime.UtcNow
-            };
+            var role = new RoleDTO(roleDto.RoleName, DateTime.UtcNow, DateTime.UtcNow);
 
-            clinicDb.Roles.Add(roleDto);
+            clinicDb.Roles.Add(role);
             clinicDb.SaveChanges();
 
             return role.Id;
@@ -113,24 +68,11 @@ namespace ClinicManagement_proj.BLL.Services
 
         public List<RoleDTO> SearchRoles(string keyword)
         {
-            return clinicDb.Roles
+            var roles = clinicDb.Roles
                 .Include(r => r.Users)
                 .Where(r => r.RoleName.Contains(keyword)) // filter by partial match
-                .Select(r => new RoleDTO
-                {
-                    Id = r.Id,
-                    RoleName = r.RoleName,
-                    CreatedAt = r.CreatedAt,
-                    ModifiedAt = r.ModifiedAt,
-                    Users = r.Users.Select(u => new UserDTO
-                    {
-                        Id = u.Id,
-                        Username = u.Username,
-                        PasswordHash = u.PasswordHash,
-                        CreatedAt = u.CreatedAt
-                    }).ToList()
-                })
                 .ToList();
+            return roles.Select(r => new RoleDTO(r.Id, r.RoleName, r.CreatedAt, r.ModifiedAt, r.Users.Select(u => new UserDTO(u.Id, u.Username, u.PasswordHash, u.CreatedAt)).ToList())).ToList();
         }
 
 

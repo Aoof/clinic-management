@@ -25,14 +25,131 @@ namespace ClinicManagement_proj.DAL
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<AppointmentDTO>().HasKey(a => new { a.Id });
-            modelBuilder.Entity<DoctorDTO>().HasKey(d => new { d.Id });
-            modelBuilder.Entity<DoctorScheduleDTO>().HasKey(ds => new { ds.Id });
-            modelBuilder.Entity<PatientDTO>().HasKey(p => new { p.Id });
-            modelBuilder.Entity<RoleDTO>().HasKey(r => new { r.Id });
-            modelBuilder.Entity<SpecialtyDTO>().HasKey(s => new { s.Id });
-            modelBuilder.Entity<TimeSlotDTO>().HasKey(ts => new { ts.Id });
-            modelBuilder.Entity<UserDTO>().HasKey(u => new { u.Id });
+            // AppointmentDTO
+            modelBuilder.Entity<AppointmentDTO>()
+                .ToTable("Appointment")
+                .HasKey(a => a.Id);
+            modelBuilder.Entity<AppointmentDTO>()
+                .Property(a => a.Id).HasColumnName("Id");
+            modelBuilder.Entity<AppointmentDTO>()
+                .Property(a => a.Date).HasColumnName("Date");
+            modelBuilder.Entity<AppointmentDTO>()
+                .Property(a => a.Notes).HasColumnName("Notes");
+            modelBuilder.Entity<AppointmentDTO>()
+                .Property(a => a.DoctorId).HasColumnName("DoctorId");
+            modelBuilder.Entity<AppointmentDTO>()
+                .Property(a => a.PatientId).HasColumnName("PatientId");
+            modelBuilder.Entity<AppointmentDTO>()
+                .Property(a => a.TimeSlotId).HasColumnName("TimeSlotId");
+            modelBuilder.Entity<AppointmentDTO>()
+                .Property(a => a.CreatedAt).HasColumnName("CreatedAt");
+            modelBuilder.Entity<AppointmentDTO>()
+                .Property(a => a.ModifiedAt).HasColumnName("ModifiedAt");
+
+            // DoctorDTO
+            modelBuilder.Entity<DoctorDTO>()
+                .ToTable("Doctor")
+                .HasKey(d => d.Id);
+            modelBuilder.Entity<DoctorDTO>()
+                .Property(d => d.Id).HasColumnName("Id");
+            modelBuilder.Entity<DoctorDTO>()
+                .Property(d => d.FirstName).HasColumnName("FirstName");
+            modelBuilder.Entity<DoctorDTO>()
+                .Property(d => d.LastName).HasColumnName("LastName");
+            modelBuilder.Entity<DoctorDTO>()
+                .Property(d => d.LicenseNumber).HasColumnName("LicenseNumber");
+            modelBuilder.Entity<DoctorDTO>()
+                .Property(d => d.CreatedAt).HasColumnName("CreatedAt");
+            modelBuilder.Entity<DoctorDTO>()
+                .Property(d => d.ModifiedAt).HasColumnName("ModifiedAt");
+
+            // DoctorScheduleDTO
+            modelBuilder.Entity<DoctorScheduleDTO>()
+                .ToTable("DoctorSchedule")
+                .HasKey(ds => ds.Id);
+            modelBuilder.Entity<DoctorScheduleDTO>()
+                .Property(ds => ds.Id).HasColumnName("Id");
+            modelBuilder.Entity<DoctorScheduleDTO>()
+                .Property(ds => ds.DoctorId).HasColumnName("DoctorId");
+            modelBuilder.Entity<DoctorScheduleDTO>()
+                .Property(ds => ds.DayOfWeek).HasColumnName("DayOfWeek");
+            modelBuilder.Entity<DoctorScheduleDTO>()
+                .Property(ds => ds.WorkStartTime).HasColumnName("WorkStartTime");
+            modelBuilder.Entity<DoctorScheduleDTO>()
+                .Property(ds => ds.WorkEndTime).HasColumnName("WorkEndTime");
+            modelBuilder.Entity<DoctorScheduleDTO>()
+                .Property(ds => ds.CreatedAt).HasColumnName("CreatedAt");
+            modelBuilder.Entity<DoctorScheduleDTO>()
+                .Property(ds => ds.ModifiedAt).HasColumnName("ModifiedAt");
+
+            // PatientDTO
+            modelBuilder.Entity<PatientDTO>()
+                .ToTable("Patient")
+                .HasKey(p => p.Id);
+            modelBuilder.Entity<PatientDTO>()
+                .Property(p => p.Id).HasColumnName("Id");
+            modelBuilder.Entity<PatientDTO>()
+                .Property(p => p.FirstName).HasColumnName("FirstName");
+            modelBuilder.Entity<PatientDTO>()
+                .Property(p => p.LastName).HasColumnName("LastName");
+            modelBuilder.Entity<PatientDTO>()
+                .Property(p => p.InsuranceNumber).HasColumnName("InsuranceNumber");
+            modelBuilder.Entity<PatientDTO>()
+                .Property(p => p.DateOfBirth).HasColumnName("DateOfBirth");
+            modelBuilder.Entity<PatientDTO>()
+                .Property(p => p.PhoneNumber).HasColumnName("PhoneNumber");
+            modelBuilder.Entity<PatientDTO>()
+                .Property(p => p.CreatedAt).HasColumnName("CreatedAt");
+            modelBuilder.Entity<PatientDTO>()
+                .Property(p => p.ModifiedAt).HasColumnName("ModifiedAt");
+
+            // RoleDTO
+            modelBuilder.Entity<RoleDTO>()
+                .ToTable("Roles")
+                .HasKey(r => r.Id);
+            modelBuilder.Entity<RoleDTO>()
+                .Property(r => r.Id).HasColumnName("Id");
+            modelBuilder.Entity<RoleDTO>()
+                .Property(r => r.RoleName).HasColumnName("RoleName");
+            modelBuilder.Entity<RoleDTO>()
+                .Property(r => r.CreatedAt).HasColumnName("CreatedAt");
+            modelBuilder.Entity<RoleDTO>()
+                .Property(r => r.ModifiedAt).HasColumnName("ModifiedAt");
+
+            // SpecialtyDTO
+            modelBuilder.Entity<SpecialtyDTO>()
+                .ToTable("Specialties")
+                .HasKey(s => s.Id);
+            modelBuilder.Entity<SpecialtyDTO>()
+                .Property(s => s.Id).HasColumnName("Id");
+            modelBuilder.Entity<SpecialtyDTO>()
+                .Property(s => s.Name).HasColumnName("Name");
+
+            // TimeSlotDTO
+            modelBuilder.Entity<TimeSlotDTO>()
+                .ToTable("TimeSlots")
+                .HasKey(ts => ts.Id);
+            modelBuilder.Entity<TimeSlotDTO>()
+                .Property(ts => ts.Id).HasColumnName("Id");
+            modelBuilder.Entity<TimeSlotDTO>()
+                .Property(ts => ts.HourOfDay).HasColumnName("HourOfDay");
+            modelBuilder.Entity<TimeSlotDTO>()
+                .Property(ts => ts.MinuteOfHour).HasColumnName("MinuteOfHour");
+
+            // UserDTO
+            modelBuilder.Entity<UserDTO>()
+                .ToTable("Users")
+                .HasKey(u => u.Id);
+            modelBuilder.Entity<UserDTO>()
+                .Property(u => u.Id).HasColumnName("Id");
+            modelBuilder.Entity<UserDTO>()
+                .Property(u => u.Username).HasColumnName("Username");
+            modelBuilder.Entity<UserDTO>()
+                .Property(u => u.PasswordHash).HasColumnName("PasswordHash");
+            modelBuilder.Entity<UserDTO>()
+                .Property(u => u.CreatedAt).HasColumnName("CreatedAt");
+            modelBuilder.Entity<UserDTO>()
+                .Property(u => u.ModifiedAt).HasColumnName("ModifiedAt");
 
             // Many-to-many relationships
             modelBuilder.Entity<UserDTO>()
@@ -81,7 +198,7 @@ namespace ClinicManagement_proj.DAL
             RoleDTO receptionistRole = context.Roles.Add(new RoleDTO { Id = 3, RoleName = "Receptionist", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now });
 
             // Users
-            UserDTO adm_1 = context.Users.Add(new UserDTO { Id = 1, Username = "admin", PasswordHash = "dHsKcdUmGyLbbM2LlD8u5L7RmODA7o4S9Aab9y4tcTCj21Ut", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now });
+            UserDTO adm_1 = context.Users.Add(new UserDTO { Username = "admin", PasswordHash = "dHsKcdUmGyLbbM2LlD8u5L7RmODA7o4S9Aab9y4tcTCj21Ut", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now });
             adm_1.Roles.Add(adminRole);
             UserDTO dr_1 = context.Users.Add(new UserDTO { Id = 2, Username = "dr_who", PasswordHash = "dHsKcdUmGyLbbM2LlD8u5L7RmODA7o4S9Aab9y4tcTCj21Ut", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now });
             dr_1.Roles.Add(doctorRole);
@@ -91,7 +208,7 @@ namespace ClinicManagement_proj.DAL
             dr_3.Roles.Add(doctorRole);
             UserDTO rec_1 = context.Users.Add(new UserDTO { Id = 5, Username = "receptionist1", PasswordHash = "dHsKcdUmGyLbbM2LlD8u5L7RmODA7o4S9Aab9y4tcTCj21Ut", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now });
             rec_1.Roles.Add(receptionistRole);
-            UserDTO rec_2 = context.Users.Add(new UserDTO { Id = 6, Username = "receptionist2", PasswordHash = "dHsKcdUmGyLbbM2LlD8u5L7RmODA7o4S9Aab9y4tcTCj21Ut", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now });
+            UserDTO rec_2 = context.Users.Add(new UserDTO { Id = 12, Username = "receptionist2", PasswordHash = "dHsKcdUmGyLbbM2LlD8u5L7RmODA7o4S9Aab9y4tcTCj21Ut", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now });
             rec_2.Roles.Add(receptionistRole);
 
             // UserRoles
@@ -121,22 +238,22 @@ namespace ClinicManagement_proj.DAL
 
             // DoctorSchedules
             // Dr. Who (Id=1, Monday-Friday 9AM-5PM)
-            context.DoctorSchedules.Add(new DoctorScheduleDTO { Id = 1, DoctorId = 1, DayOfWeek = DaysOfWeekEnum.Monday, WorkStartTime = new DateTime(2025, 1, 1, 9, 0, 0), WorkEndTime = new DateTime(2025, 1, 1, 17, 0, 0), CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now });
-            context.DoctorSchedules.Add(new DoctorScheduleDTO { Id = 2, DoctorId = 1, DayOfWeek = DaysOfWeekEnum.Tuesday, WorkStartTime = new DateTime(2025, 1, 1, 9, 0, 0), WorkEndTime = new DateTime(2025, 1, 1, 17, 0, 0), CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now });
-            context.DoctorSchedules.Add(new DoctorScheduleDTO { Id = 3, DoctorId = 1, DayOfWeek = DaysOfWeekEnum.Wednesday, WorkStartTime = new DateTime(2025, 1, 1, 9, 0, 0), WorkEndTime = new DateTime(2025, 1, 1, 17, 0, 0), CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now });
-            context.DoctorSchedules.Add(new DoctorScheduleDTO { Id = 4, DoctorId = 1, DayOfWeek = DaysOfWeekEnum.Thursday, WorkStartTime = new DateTime(2025, 1, 1, 9, 0, 0), WorkEndTime = new DateTime(2025, 1, 1, 17, 0, 0), CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now });
-            context.DoctorSchedules.Add(new DoctorScheduleDTO { Id = 5, DoctorId = 1, DayOfWeek = DaysOfWeekEnum.Friday, WorkStartTime = new DateTime(2025, 1, 1, 9, 0, 0), WorkEndTime = new DateTime(2025, 1, 1, 17, 0, 0), CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now });
+            context.DoctorSchedules.Add(new DoctorScheduleDTO { Id = 1, DoctorId = 1, DayOfWeek = DaysOfWeekEnum.MONDAY, WorkStartTime = new DateTime(2025, 1, 1, 9, 0, 0), WorkEndTime = new DateTime(2025, 1, 1, 17, 0, 0), CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now });
+            context.DoctorSchedules.Add(new DoctorScheduleDTO { Id = 2, DoctorId = 1, DayOfWeek = DaysOfWeekEnum.TUESDAY, WorkStartTime = new DateTime(2025, 1, 1, 9, 0, 0), WorkEndTime = new DateTime(2025, 1, 1, 17, 0, 0), CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now });
+            context.DoctorSchedules.Add(new DoctorScheduleDTO { Id = 3, DoctorId = 1, DayOfWeek = DaysOfWeekEnum.WEDNESDAY, WorkStartTime = new DateTime(2025, 1, 1, 9, 0, 0), WorkEndTime = new DateTime(2025, 1, 1, 17, 0, 0), CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now });
+            context.DoctorSchedules.Add(new DoctorScheduleDTO { Id = 4, DoctorId = 1, DayOfWeek = DaysOfWeekEnum.THURSDAY, WorkStartTime = new DateTime(2025, 1, 1, 9, 0, 0), WorkEndTime = new DateTime(2025, 1, 1, 17, 0, 0), CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now });
+            context.DoctorSchedules.Add(new DoctorScheduleDTO { Id = 5, DoctorId = 1, DayOfWeek = DaysOfWeekEnum.FRIDAY, WorkStartTime = new DateTime(2025, 1, 1, 9, 0, 0), WorkEndTime = new DateTime(2025, 1, 1, 17, 0, 0), CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now });
             // Dr. Smith (Id=2, Monday-Thursday 8AM-4PM)
-            context.DoctorSchedules.Add(new DoctorScheduleDTO { Id = 6, DoctorId = 2, DayOfWeek = DaysOfWeekEnum.Monday, WorkStartTime = new DateTime(2025, 1, 1, 8, 0, 0), WorkEndTime = new DateTime(2025, 1, 1, 16, 0, 0), CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now });
-            context.DoctorSchedules.Add(new DoctorScheduleDTO { Id = 7, DoctorId = 2, DayOfWeek = DaysOfWeekEnum.Tuesday, WorkStartTime = new DateTime(2025, 1, 1, 8, 0, 0), WorkEndTime = new DateTime(2025, 1, 1, 16, 0, 0), CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now });
-            context.DoctorSchedules.Add(new DoctorScheduleDTO { Id = 8, DoctorId = 2, DayOfWeek = DaysOfWeekEnum.Wednesday, WorkStartTime = new DateTime(2025, 1, 1, 8, 0, 0), WorkEndTime = new DateTime(2025, 1, 1, 16, 0, 0), CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now });
-            context.DoctorSchedules.Add(new DoctorScheduleDTO { Id = 9, DoctorId = 2, DayOfWeek = DaysOfWeekEnum.Thursday, WorkStartTime = new DateTime(2025, 1, 1, 8, 0, 0), WorkEndTime = new DateTime(2025, 1, 1, 16, 0, 0), CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now });
+            context.DoctorSchedules.Add(new DoctorScheduleDTO { Id = 6, DoctorId = 2, DayOfWeek = DaysOfWeekEnum.MONDAY, WorkStartTime = new DateTime(2025, 1, 1, 8, 0, 0), WorkEndTime = new DateTime(2025, 1, 1, 16, 0, 0), CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now });
+            context.DoctorSchedules.Add(new DoctorScheduleDTO { Id = 7, DoctorId = 2, DayOfWeek = DaysOfWeekEnum.TUESDAY, WorkStartTime = new DateTime(2025, 1, 1, 8, 0, 0), WorkEndTime = new DateTime(2025, 1, 1, 16, 0, 0), CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now });
+            context.DoctorSchedules.Add(new DoctorScheduleDTO { Id = 8, DoctorId = 2, DayOfWeek = DaysOfWeekEnum.WEDNESDAY, WorkStartTime = new DateTime(2025, 1, 1, 8, 0, 0), WorkEndTime = new DateTime(2025, 1, 1, 16, 0, 0), CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now });
+            context.DoctorSchedules.Add(new DoctorScheduleDTO { Id = 9, DoctorId = 2, DayOfWeek = DaysOfWeekEnum.THURSDAY, WorkStartTime = new DateTime(2025, 1, 1, 8, 0, 0), WorkEndTime = new DateTime(2025, 1, 1, 16, 0, 0), CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now });
             // Dr. Jones (Id=3, Tuesday-Saturday 10AM-6PM)
-            context.DoctorSchedules.Add(new DoctorScheduleDTO { Id = 10, DoctorId = 3, DayOfWeek = DaysOfWeekEnum.Tuesday, WorkStartTime = new DateTime(2025, 1, 1, 10, 0, 0), WorkEndTime = new DateTime(2025, 1, 1, 18, 0, 0), CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now });
-            context.DoctorSchedules.Add(new DoctorScheduleDTO { Id = 11, DoctorId = 3, DayOfWeek = DaysOfWeekEnum.Wednesday, WorkStartTime = new DateTime(2025, 1, 1, 10, 0, 0), WorkEndTime = new DateTime(2025, 1, 1, 18, 0, 0), CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now });
-            context.DoctorSchedules.Add(new DoctorScheduleDTO { Id = 12, DoctorId = 3, DayOfWeek = DaysOfWeekEnum.Thursday, WorkStartTime = new DateTime(2025, 1, 1, 10, 0, 0), WorkEndTime = new DateTime(2025, 1, 1, 18, 0, 0), CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now });
-            context.DoctorSchedules.Add(new DoctorScheduleDTO { Id = 13, DoctorId = 3, DayOfWeek = DaysOfWeekEnum.Friday, WorkStartTime = new DateTime(2025, 1, 1, 10, 0, 0), WorkEndTime = new DateTime(2025, 1, 1, 18, 0, 0), CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now });
-            context.DoctorSchedules.Add(new DoctorScheduleDTO { Id = 14, DoctorId = 3, DayOfWeek = DaysOfWeekEnum.Saturday, WorkStartTime = new DateTime(2025, 1, 1, 10, 0, 0), WorkEndTime = new DateTime(2025, 1, 1, 18, 0, 0), CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now });
+            context.DoctorSchedules.Add(new DoctorScheduleDTO { Id = 10, DoctorId = 3, DayOfWeek = DaysOfWeekEnum.TUESDAY, WorkStartTime = new DateTime(2025, 1, 1, 10, 0, 0), WorkEndTime = new DateTime(2025, 1, 1, 18, 0, 0), CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now });
+            context.DoctorSchedules.Add(new DoctorScheduleDTO { Id = 11, DoctorId = 3, DayOfWeek = DaysOfWeekEnum.WEDNESDAY, WorkStartTime = new DateTime(2025, 1, 1, 10, 0, 0), WorkEndTime = new DateTime(2025, 1, 1, 18, 0, 0), CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now });
+            context.DoctorSchedules.Add(new DoctorScheduleDTO { Id = 12, DoctorId = 3, DayOfWeek = DaysOfWeekEnum.THURSDAY, WorkStartTime = new DateTime(2025, 1, 1, 10, 0, 0), WorkEndTime = new DateTime(2025, 1, 1, 18, 0, 0), CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now });
+            context.DoctorSchedules.Add(new DoctorScheduleDTO { Id = 13, DoctorId = 3, DayOfWeek = DaysOfWeekEnum.FRIDAY, WorkStartTime = new DateTime(2025, 1, 1, 10, 0, 0), WorkEndTime = new DateTime(2025, 1, 1, 18, 0, 0), CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now });
+            context.DoctorSchedules.Add(new DoctorScheduleDTO { Id = 14, DoctorId = 3, DayOfWeek = DaysOfWeekEnum.SATURDAY, WorkStartTime = new DateTime(2025, 1, 1, 10, 0, 0), WorkEndTime = new DateTime(2025, 1, 1, 18, 0, 0), CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now });
 
             // TimeSlots (30-minute intervals from 8AM to 6PM)
             int slotId = 1;

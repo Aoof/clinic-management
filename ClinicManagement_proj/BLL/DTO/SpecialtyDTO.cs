@@ -17,5 +17,11 @@ namespace ClinicManagement_proj.BLL.DTO
         {
             Doctors = new List<DoctorDTO>();
         }
+
+        public SpecialtyDTO(string name)
+        {
+            Name = name;
+            Doctors = new List<DoctorDTO>();
+        }
     }
 }

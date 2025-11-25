@@ -27,5 +27,17 @@ namespace ClinicManagement_proj.BLL.DTO
             DoctorSchedules = new List<DoctorScheduleDTO>();
             Specialties = new List<SpecialtyDTO>();
         }
+
+        public DoctorDTO(string firstName, string lastName, string licenseNumber, DateTime createdAt, DateTime modifiedAt)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            LicenseNumber = licenseNumber;
+            CreatedAt = createdAt;
+            ModifiedAt = modifiedAt;
+            Appointments = new List<AppointmentDTO>();
+            DoctorSchedules = new List<DoctorScheduleDTO>();
+            Specialties = new List<SpecialtyDTO>();
+        }
     }
 }

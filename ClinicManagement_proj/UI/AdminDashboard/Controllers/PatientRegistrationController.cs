@@ -18,11 +18,11 @@ namespace ClinicManagement_proj.UI
         private DateTimePicker dateDoB => (DateTimePicker)grpPatientRegistration.Controls["dateDoB"];
         private TextBox txtPPhone => (TextBox)grpPatientRegistration.Controls["txtPPhone"];
         private TableLayoutPanel layoutPatientButtons => (TableLayoutPanel)grpPatientRegistration.Controls["layoutPatientButtons"];
-        private Button btnPatientSubmit => (Button)layoutPatientButtons.Controls["btnPCreate"];
+        private Button btnPatientCreate => (Button)layoutPatientButtons.Controls["btnPCreate"];
+        private Button btnPatientUpdate => (Button)layoutPatientButtons.Controls["btnPUpdate"];
         private Button btnPatientCancel => (Button)layoutPatientButtons.Controls["btnPCancel"];
         private Button btnPatientDelete => (Button)layoutPatientButtons.Controls["btnPDelete"];
         private Button btnPatientDisplay => (Button)layoutPatientButtons.Controls["btnPDisplay"];
-        private Button btnPatientUpdate => (Button)layoutPatientButtons.Controls["btnPUpdate"];
         private Button btnPatientSearch => (Button)layoutPatientButtons.Controls["btnPSearch"];
 
         public Panel Panel => panel;
@@ -34,11 +34,11 @@ namespace ClinicManagement_proj.UI
 
         public void Initialize()
         {
-            btnPatientSubmit.Click += new EventHandler(btnPatientSubmit_Click); //acutally button Create
+            btnPatientCreate.Click += new EventHandler(btnPatientCreate_Click);
+            btnPatientUpdate.Click += new EventHandler(btnPatientUpdate_Click);
             btnPatientCancel.Click += new EventHandler(btnPatientCancel_Click);
             btnPatientDelete.Click += new EventHandler(btnPatientDelete_Click);
             btnPatientDisplay.Click += new EventHandler(btnPatientDisplay_Click);
-            btnPatientUpdate.Click += new EventHandler(btnPatientUpdate_Click);
             btnPatientSearch.Click += new EventHandler(btnPatientSearch_Click);
             dgvPatients.Click += new EventHandler(dgvPatients_Click);
         }
@@ -97,20 +97,23 @@ namespace ClinicManagement_proj.UI
             ResetPatientForm();
         }
 
-        private void btnPatientUpdate_Click(object sender, EventArgs e)
-        {
-            ResetPatientForm();
-        }
-
         private void btnPatientSearch_Click(object sender, EventArgs e)
         {
             ResetPatientForm();
         }
 
         /// <summary>
-        /// Submit patient form (create or update)
+        /// Submit patient form and Create new patient
         /// </summary>
-        private void btnPatientSubmit_Click(object sender, EventArgs e)
+        private void btnPatientCreate_Click(object sender, EventArgs e)
+        {
+            NotificationManager.AddNotification("Patient operation simulated!", NotificationType.Info);
+            ResetPatientForm();
+        }
+        /// <summary>
+        /// Submit patient form and Update existing patient
+        /// </summary>
+        private void btnPatientUpdate_Click(object sender, EventArgs e)
         {
             NotificationManager.AddNotification("Patient operation simulated!", NotificationType.Info);
             ResetPatientForm();

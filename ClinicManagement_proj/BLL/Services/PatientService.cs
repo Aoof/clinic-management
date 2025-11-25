@@ -14,16 +14,7 @@ namespace ClinicManagement_proj.BLL.Services
 
         public int CreatePatient(PatientDTO patientDto)
         {
-            var patient = new PatientDTO
-            {
-                FirstName = patientDto.FirstName,
-                LastName = patientDto.LastName,
-                InsuranceNumber = patientDto.InsuranceNumber,
-                DateOfBirth = patientDto.DateOfBirth,
-                PhoneNumber = patientDto.PhoneNumber,
-                CreatedAt = DateTime.UtcNow,
-                ModifiedAt = DateTime.UtcNow
-            };
+            var patient = new PatientDTO(patientDto.FirstName, patientDto.LastName, patientDto.InsuranceNumber, patientDto.DateOfBirth, patientDto.PhoneNumber, DateTime.UtcNow, DateTime.UtcNow);
 
             clinicDb.Patients.Add(patient);
             clinicDb.SaveChanges();

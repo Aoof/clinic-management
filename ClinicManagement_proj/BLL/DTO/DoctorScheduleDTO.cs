@@ -16,5 +16,19 @@ namespace ClinicManagement_proj.BLL.DTO
         public DateTime CreatedAt { get; set; }
         public DateTime ModifiedAt { get; set; }
         public DoctorDTO Doctor { get; set; }
+
+        public DoctorScheduleDTO()
+        {
+        }
+
+        public DoctorScheduleDTO(int doctorId, DaysOfWeekEnum dayOfWeek, DateTime workStartTime, DateTime workEndTime, DateTime createdAt, DateTime modifiedAt)
+        {
+            DoctorId = doctorId;
+            DayOfWeek = dayOfWeek;
+            WorkStartTime = workStartTime;
+            WorkEndTime = workEndTime;
+            CreatedAt = createdAt;
+            ModifiedAt = modifiedAt;
+        }
     }
 }

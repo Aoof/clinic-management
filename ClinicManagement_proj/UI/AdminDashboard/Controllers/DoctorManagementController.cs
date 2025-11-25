@@ -16,14 +16,11 @@ namespace ClinicManagement_proj.UI
         private TableLayoutPanel actionsLayout => (TableLayoutPanel)grpDoctorMgmt.Controls["layoutDoctorActions"];
         private TextBox txtDoctorFName => (TextBox)grpDoctorMgmt.Controls["txtDoctorFName"];
         private TextBox txtDoctorLName => (TextBox)grpDoctorMgmt.Controls["txtDoctorLName"];
-        private ComboBox comboDoctorUserId => (ComboBox)grpDoctorMgmt.Controls["comboDoctorUserId"];
         private ComboBox comboSpecialization => (ComboBox)grpDoctorMgmt.Controls["comboSpecialization"];
-        private Button btnDoctorSubmit => (Button)actionsLayout.Controls["btnDoctorSubmit"];
+        private Button btnDoctorCreate => (Button)actionsLayout.Controls["btnDoctorCreate"];
+        private Button btnDoctorUpdate => (Button)actionsLayout.Controls["btnDoctorUpdate"];
         private Button btnDoctorCancel => (Button)actionsLayout.Controls["btnDoctorCancel"];
         private Button btnDoctorDelete => (Button)actionsLayout.Controls["btnDoctorDelete"];
-        private Label lblDocUserId => (Label)grpDoctorMgmt.Controls["lblDocUserId"];
-
-        private bool isEditMode = false;
 
         public Panel Panel => panel;
 
@@ -34,11 +31,11 @@ namespace ClinicManagement_proj.UI
 
         public void Initialize()
         {
-            btnDoctorSubmit.Click += new EventHandler(btnDoctorSubmit_Click);
+            btnDoctorCreate.Click += new EventHandler(btnDoctorCreate_Click);
+            btnDoctorUpdate.Click += new EventHandler(btnDoctorUpdate_Click);
             btnDoctorCancel.Click += new EventHandler(btnDoctorCancel_Click);
             btnDoctorDelete.Click += new EventHandler(btnDoctorDelete_Click);
             dgvDoctors.Click += new EventHandler(dgvDoctors_Click);
-            comboDoctorUserId.SelectedIndexChanged += new EventHandler(comboDoctorUserId_SelectedIndexChanged);
         }
 
         public void OnShow()
@@ -60,35 +57,11 @@ namespace ClinicManagement_proj.UI
         {
             txtDoctorFName.Text = string.Empty;
             txtDoctorLName.Text = string.Empty;
-
-            // Load available usernames for doctor association
-            List<string> usernames = new List<string>();
-            // TODO: Load from BLL when implemented
-
-            comboDoctorUserId.DataSource = usernames;
-            comboDoctorUserId.SelectedIndex = -1;
-
+            
             // TODO: Load specializations when enum is available
             comboSpecialization.SelectedIndex = -1;
 
-            isEditMode = false;
-            btnDoctorCancel.Visible = false;
-            btnDoctorDelete.Visible = false;
             dgvDoctors.ClearSelection();
-            btnDoctorSubmit.Text = "Create";
-            grpDoctorMgmt.Text = "Create Doctor";
-        }
-
-        /// <summary>
-        /// Enter edit mode for doctor management
-        /// </summary>
-        private void EnterDoctorEditMode()
-        {
-            isEditMode = true;
-            btnDoctorCancel.Visible = true;
-            btnDoctorDelete.Visible = true;
-            btnDoctorSubmit.Text = "Update";
-            grpDoctorMgmt.Text = "Edit Doctor";
         }
 
         /// <summary>
@@ -101,17 +74,7 @@ namespace ClinicManagement_proj.UI
                 // Load selected doctor data
                 txtDoctorFName.Text = dgvDoctors.CurrentRow.Cells["FirstName"].Value.ToString();
                 txtDoctorLName.Text = dgvDoctors.CurrentRow.Cells["LastName"].Value.ToString();
-                EnterDoctorEditMode();
             }
-        }
-
-        /// <summary>
-        /// Handle doctor user association selection change
-        /// </summary>
-        private void comboDoctorUserId_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            // Update label based on selection
-            lblDocUserId.Text = "User Associated";
         }
 
         /// <summary>
@@ -123,9 +86,18 @@ namespace ClinicManagement_proj.UI
         }
 
         /// <summary>
-        /// Submit doctor form (create or update)
+        /// Submit doctor form and Create or doctor
         /// </summary>
-        private void btnDoctorSubmit_Click(object sender, EventArgs e)
+        private void btnDoctorCreate_Click(object sender, EventArgs e)
+        {
+            NotificationManager.AddNotification("Doctor operation simulated!", NotificationType.Info);
+            ResetDoctorForm();
+        }
+
+        /// <summary>
+        /// Submit doctor form and Update existing doctor
+        /// </summary>
+        private void btnDoctorUpdate_Click(object sender, EventArgs e)
         {
             NotificationManager.AddNotification("Doctor operation simulated!", NotificationType.Info);
             ResetDoctorForm();
