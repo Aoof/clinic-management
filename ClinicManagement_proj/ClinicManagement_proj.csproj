@@ -70,6 +70,8 @@
     <Compile Include="BLL\DTO\SpecialtyDTO.cs" />
     <Compile Include="BLL\DTO\TimeSlotDTO.cs" />
     <Compile Include="BLL\DTO\UserDTO.cs" />
+    <Compile Include="BLL\Services\AppointmentService.cs" />
+    <Compile Include="BLL\Services\DoctorService.cs" />
     <Compile Include="BLL\Services\LoginService.cs" />
     <Compile Include="BLL\Services\PatientService.cs" />
     <Compile Include="BLL\Services\RoleService.cs" />
