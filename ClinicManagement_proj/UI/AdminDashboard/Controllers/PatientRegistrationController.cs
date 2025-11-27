@@ -19,7 +19,7 @@ namespace ClinicManagement_proj.UI
         private readonly Panel panel;
         private DataGridView dgvPatients => (DataGridView)panel.Controls["dgvRegPatients"];
         private GroupBox grpPatientRegistration => (GroupBox)panel.Controls["grpPatientRegistration"];
-        private TextBox txtPId => (TextBox)grpPatientRegistration.Controls["txtPId"];
+        private TextBox txtPatientId => (TextBox)grpPatientRegistration.Controls["txtPatientId"];
 
         private TextBox txtPFName => (TextBox)grpPatientRegistration.Controls["txtPFName"];
         private TextBox txtPLName => (TextBox)grpPatientRegistration.Controls["txtPLName"];
@@ -73,7 +73,7 @@ namespace ClinicManagement_proj.UI
         /// </summary>
         private void ResetPatientForm()
         {
-            
+            txtPatientId.Text = string.Empty;
             txtPFName.Text = string.Empty;
             txtPLName.Text = string.Empty;
             txtMedicalNumber.Text = string.Empty;
@@ -96,11 +96,16 @@ namespace ClinicManagement_proj.UI
         {
             if(dgvPatients.CurrentRow != null)
             {
-                txtPFName.Text = dgvPatients.CurrentRow.Cells[0].Value?.ToString();
-                txtPLName.Text = dgvPatients.CurrentRow.Cells[1].Value?.ToString();
-                dateDoB.Text = dgvPatients.CurrentRow.Cells[2].Value?.ToString();
-                txtMedicalNumber.Text = dgvPatients.CurrentRow.Cells[3].Value?.ToString();
-                txtPPhone.Text = dgvPatients.CurrentRow.Cells[4].Value?.ToString();
+                
+                int selectedUserId = (int)dgvPatients.CurrentRow.Cells["Id"].Value;
+                txtPatientId.Text = selectedUserId.ToString();
+                var user = patientService.Search(selectedUserId);
+                txtPFName.Text = user.FirstName;
+                txtPLName.Text = user.LastName;
+                dateDoB.Value = user.DateOfBirth;
+                txtMedicalNumber.Text = user.InsuranceNumber;
+                txtPPhone.Text = user.PhoneNumber;
+
 
             }
         }
@@ -124,7 +129,7 @@ namespace ClinicManagement_proj.UI
         private void btnPatientSearch_Click(object sender, EventArgs e)
         {
             ResetPatientForm();
-            if (!int.TryParse(txtPId.Text, out int id))
+            if (!int.TryParse(txtPatientId.Text, out int id))
             {
                 MessageBox.Show("Enter a valid Patient ID.");
                 return;
@@ -139,7 +144,7 @@ namespace ClinicManagement_proj.UI
                 return;
             }
 
-            txtPId.Text = result.Id.ToString();
+            txtPatientId.Text = result.Id.ToString();
             txtPFName.Text = result.FirstName;
             txtPLName.Text = result.LastName;
             txtMedicalNumber.Text = result.InsuranceNumber.ToString();
@@ -156,13 +161,13 @@ namespace ClinicManagement_proj.UI
         private void btnPatientCreate_Click(object sender, EventArgs e)
         {
             
-            if (!int.TryParse(txtPId.Text, out int id))
-            {
-                MessageBox.Show("Patient ID must be a number.");
-                return;
-            }
+            //if (!int.TryParse(txtPatientId.Text, out int id))
+            //{
+            //    MessageBox.Show("Patient ID must be a number.");
+            //    return;
+            //}
 
-            if (string.IsNullOrWhiteSpace(txtPId.Text) ||
+            if (/*string.IsNullOrWhiteSpace(txtPatientId.Text) ||*/
                 string.IsNullOrWhiteSpace(txtPFName.Text)
                 ||
                 string.IsNullOrWhiteSpace(txtPLName.Text)
@@ -176,19 +181,19 @@ namespace ClinicManagement_proj.UI
                 MessageBox.Show("All fields are required.");
                 return;
             }
-            if (patientService.Exists(id))
-            {
-                MessageBox.Show("A patient with this ID already exists. Please use a different ID.");
-                return;
-            }
+            //if (patientService.Exists(id))
+            //{
+            //    MessageBox.Show("A patient with this ID already exists. Please use a different ID.");
+            //    return;
+            //}
 
             var dto = new PatientDTO
             {
-                Id = id,
+                //Id = id,
                 FirstName = txtPFName.Text,
                 LastName = txtPLName.Text,
                 InsuranceNumber = txtMedicalNumber.Text,
-                DateOfBirth = DateTime.Parse(dateDoB.Text),
+                DateOfBirth = dateDoB.Value,
                 PhoneNumber = txtPPhone.Text
             };
 
@@ -201,7 +206,7 @@ namespace ClinicManagement_proj.UI
         /// </summary>
         private void btnPatientUpdate_Click(object sender, EventArgs e)
         {
-            if (!int.TryParse(txtPId.Text, out int id))
+            if (!int.TryParse(txtPatientId.Text, out int id))
             {
                 MessageBox.Show("Enter a valid ID.");
                 return;
@@ -225,7 +230,8 @@ namespace ClinicManagement_proj.UI
 
             patientService.UpdatePatient(dto);
             LoadPatients();
-            ResetPatientForm();
+            //ResetPatientForm();
+            
         }
 
         /// <summary>
@@ -233,7 +239,7 @@ namespace ClinicManagement_proj.UI
         /// </summary>
         private void btnPatientDelete_Click(object sender, EventArgs e)
         {
-            if (!int.TryParse(txtPId.Text, out int id))
+            if (!int.TryParse(txtPatientId.Text, out int id))
             {
                 MessageBox.Show("Enter a valid ID.");
                 return;

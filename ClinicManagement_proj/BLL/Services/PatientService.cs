@@ -20,15 +20,15 @@ namespace ClinicManagement_proj.BLL.Services
         }
         public void AddPatient(PatientDTO dto)
         {
-            var patient = new Patient
-            {
-                Id = dto.Id,
-                FirstName = dto.FirstName,
-                LastName = dto.LastName,
-                InsuranceNumber = dto.InsuranceNumber,
-                DateOfBirth = dto.DateOfBirth,
-                PhoneNumber = dto.PhoneNumber
-            };
+            //var patient = new Patient
+            //{
+            //    Id = dto.Id,
+            //    FirstName = dto.FirstName,
+            //    LastName = dto.LastName,
+            //    InsuranceNumber = dto.InsuranceNumber,
+            //    DateOfBirth = dto.DateOfBirth,
+            //    PhoneNumber = dto.PhoneNumber
+            //};
             clinicDb.Patients.Add(dto);
             clinicDb.SaveChanges();
         }
