@@ -142,21 +142,21 @@
     <Compile Include="DAL\vw_UpcomingAppointments.cs">
       <DependentUpon>HealthCareClinicModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="UI\AdminDashboard\AdminDashboard.cs">
+    <Compile Include="UI\AdminDashboard.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\AdminDashboard\AdminDashboard.Designer.cs">
+    <Compile Include="UI\AdminDashboard.Designer.cs">
       <DependentUpon>AdminDashboard.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\AdminDashboard\Controllers\AppointmentManagementController.cs" />
-    <Compile Include="UI\AdminDashboard\Controllers\DoctorManagementController.cs" />
+    <Compile Include="UI\Controllers\AppointmentManagementController.cs" />
+    <Compile Include="UI\Controllers\DoctorManagementController.cs" />
     <Compile Include="UI\Utils\ImageHelper.cs" />
     <Compile Include="UI\IPanelController.cs" />
     <Compile Include="UI\Utils\NavigationManager.cs" />
-    <Compile Include="UI\AdminDashboard\Controllers\PatientRegistrationController.cs" />
-    <Compile Include="UI\AdminDashboard\Controllers\ReportsController.cs" />
-    <Compile Include="UI\AdminDashboard\Controllers\SchedulingController.cs" />
-    <Compile Include="UI\AdminDashboard\Controllers\UserManagementController.cs" />
+    <Compile Include="UI\Controllers\PatientRegistrationController.cs" />
+    <Compile Include="UI\Controllers\ReportsController.cs" />
+    <Compile Include="UI\Controllers\SchedulingController.cs" />
+    <Compile Include="UI\Controllers\UserManagementController.cs" />
     <Compile Include="UI\DoctorDashboard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -193,7 +193,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="UI\AdminDashboard\AdminDashboard.resx">
+    <EmbeddedResource Include="UI\AdminDashboard.resx">
       <DependentUpon>AdminDashboard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\DoctorDashboard.resx">
