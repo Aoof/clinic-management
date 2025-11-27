@@ -2,7 +2,9 @@
 using ClinicManagement_proj.DAL;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,55 +12,64 @@ namespace ClinicManagement_proj.BLL.Services
 {
     public class PatientService
     {
-        private readonly ClinicDbContext clinicDb = new ClinicDbContext();
+        private  ClinicDbContext clinicDb = new ClinicDbContext();
 
-        public int CreatePatient(PatientDTO patientDto)
+        public List<PatientDTO> GetAll()
         {
-            var patient = new PatientDTO(patientDto.FirstName, patientDto.LastName, patientDto.InsuranceNumber, patientDto.DateOfBirth, patientDto.PhoneNumber, DateTime.UtcNow, DateTime.UtcNow);
-
-            clinicDb.Patients.Add(patient);
+            return clinicDb.Patients.ToList();
+        }
+        public void AddPatient(PatientDTO dto)
+        {
+            var patient = new Patient
+            {
+                Id = dto.Id,
+                FirstName = dto.FirstName,
+                LastName = dto.LastName,
+                InsuranceNumber = dto.InsuranceNumber,
+                DateOfBirth = dto.DateOfBirth,
+                PhoneNumber = dto.PhoneNumber
+            };
+            clinicDb.Patients.Add(dto);
             clinicDb.SaveChanges();
-
-            return patient.Id;
         }
 
-        public bool UpdatePatient(PatientDTO patientDto)
+        public void UpdatePatient(PatientDTO patientDto)
         {
             var patient = clinicDb.Patients.FirstOrDefault(p => p.Id == patientDto.Id);
-            if (patient == null) return false;
+            if (patient != null)
+            {
+                patient.FirstName = patientDto.FirstName;
+                patient.LastName = patientDto.LastName;
+                patient.InsuranceNumber = patientDto.InsuranceNumber;
+                patient.DateOfBirth = patientDto.DateOfBirth;
+                patient.PhoneNumber = patientDto.PhoneNumber;
+                patient.ModifiedAt = DateTime.UtcNow;
 
-            patient.FirstName = patientDto.FirstName;
-            patient.LastName = patientDto.LastName;
-            patient.InsuranceNumber = patientDto.InsuranceNumber;
-            patient.DateOfBirth = patientDto.DateOfBirth;
-            patient.PhoneNumber = patientDto.PhoneNumber;
-            patient.ModifiedAt = DateTime.UtcNow;
-
-            clinicDb.SaveChanges();
-            return true;
+                clinicDb.SaveChanges();
+            }           
         }
 
-        public bool DeletePatient(int id)
+        public void DeletePatient(int id)
         {
             var patient = clinicDb.Patients.Find(id);
-            if (patient == null) return false;
-
-            clinicDb.Patients.Remove(patient);
-            clinicDb.SaveChanges();
-            return true;
+            if (patient != null)
+            {
+                clinicDb.Patients.Remove(patient);
+                clinicDb.SaveChanges();
+                
+            }
         }
 
         public PatientDTO Search(int id)
         {
-            PatientDTO patientToSearch = new PatientDTO();
+            return clinicDb.Patients.FirstOrDefault(s => s.Id == id);
 
-            //Check if the contact id exist
-            patientToSearch = clinicDb.Patients.FirstOrDefault(u => u.Id == id);
-
-            // return true if exist otherwise return false
-            return patientToSearch;
         }
 
+        public bool Exists(int id)
+        {
+            return clinicDb.Patients.Any(s => s.Id == id);
+        }
 
     }
 }
