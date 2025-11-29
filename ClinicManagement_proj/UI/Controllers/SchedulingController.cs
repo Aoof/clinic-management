@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -10,16 +11,26 @@ namespace ClinicManagement_proj.UI
     public class SchedulingController : IPanelController
     {
         private readonly Panel panel;
-        private AdminDashboard adminDashboard => (AdminDashboard)panel.FindForm();
-        private GroupBox grpScheduling => (GroupBox)panel.Controls["grpDoctorScheduling"];
-        private TableLayoutPanel schedulingLayout => (TableLayoutPanel)grpScheduling.Controls["layoutSchedulingContent"];
-        private ListBox lbSunday => (ListBox)schedulingLayout.Controls["lbSunday"];
-        private ListBox lbMonday => (ListBox)schedulingLayout.Controls["lbMonday"];
-        private ListBox lbTuesday => (ListBox)schedulingLayout.Controls["lbTuesday"];
-        private ListBox lbWednesday => (ListBox)schedulingLayout.Controls["lbWednesday"];
-        private ListBox lbThursday => (ListBox)schedulingLayout.Controls["lbThursday"];
-        private ListBox lbFriday => (ListBox)schedulingLayout.Controls["lbFriday"];
-        private ListBox lbSaturday => (ListBox)schedulingLayout.Controls["lbSaturday"];
+        private AdminDashboard adminDashboard => (AdminDashboard)(panel.FindForm() 
+                ?? throw new Exception("Form not found for panel."));
+        private GroupBox grpScheduling => (GroupBox)(panel.Controls["grpDoctorScheduling"] 
+                ?? throw new Exception("No control named [grpDoctorScheduling] found in panel controls collection."));
+        private TableLayoutPanel schedulingLayout => (TableLayoutPanel)(grpScheduling.Controls["layoutSchedulingContent"] 
+                ?? throw new Exception("No control named [layoutSchedulingContent] found in grpScheduling controls collection."));
+        private ListBox lbSunday => (ListBox)(schedulingLayout.Controls["lbSunday"] 
+                ?? throw new Exception("No control named [lbSunday] found in schedulingLayout controls collection."));
+        private ListBox lbMonday => (ListBox)(schedulingLayout.Controls["lbMonday"] 
+                ?? throw new Exception("No control named [lbMonday] found in schedulingLayout controls collection."));
+        private ListBox lbTuesday => (ListBox)(schedulingLayout.Controls["lbTuesday"] 
+                ?? throw new Exception("No control named [lbTuesday] found in schedulingLayout controls collection."));
+        private ListBox lbWednesday => (ListBox)(schedulingLayout.Controls["lbWednesday"] 
+                ?? throw new Exception("No control named [lbWednesday] found in schedulingLayout controls collection."));
+        private ListBox lbThursday => (ListBox)(schedulingLayout.Controls["lbThursday"] 
+                ?? throw new Exception("No control named [lbThursday] found in schedulingLayout controls collection."));
+        private ListBox lbFriday => (ListBox)(schedulingLayout.Controls["lbFriday"] 
+                ?? throw new Exception("No control named [lbFriday] found in schedulingLayout controls collection."));
+        private ListBox lbSaturday => (ListBox)(schedulingLayout.Controls["lbSaturday"] 
+                ?? throw new Exception("No control named [lbSaturday] found in schedulingLayout controls collection."));
 
         public Panel Panel => panel;
 

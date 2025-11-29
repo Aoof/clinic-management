@@ -19,22 +19,38 @@ namespace ClinicManagement_proj.UI
         private readonly RoleService roleService;
         private int selectedUserId;
 
-        private DataGridView dgvUsers => (DataGridView)panel.Controls["dgvUsers"];
-        private GroupBox grpAdminForm => (GroupBox)panel.Controls["grpAdminForm"];
-        private Panel pnlButtons => (Panel)grpAdminForm.Controls["pnlButtons"];
-        private Button btnUsrCreate => (Button)pnlButtons.Controls["btnUsrCreate"];
-        private Button btnUsrUpdate => (Button)pnlButtons.Controls["btnUsrUpdate"];
-        private Button btnUsrCancel => (Button)pnlButtons.Controls["btnUsrCancel"];
-        private Button btnUsrDelete => (Button)pnlButtons.Controls["btnUsrDelete"];
-        private Button btnUsrDisplay => (Button)pnlButtons.Controls["btnUsrDisplay"];
-        private Button btnUsrSearch => (Button)pnlButtons.Controls["btnUsrSearch"];
-        private Panel pnlPassword => (Panel)grpAdminForm.Controls["pnlPassword"];
-        private Button btnTogglePassword => (Button)pnlPassword.Controls["btnTogglePassword"];
-        private Button btnGenPassword => (Button)pnlButtons.Controls["btnGenPassword"];
-        private TextBox txtUsrId => (TextBox)grpAdminForm.Controls["txtUsrId"];
-        private TextBox txtUsrUsername => (TextBox)grpAdminForm.Controls["txtUsrUsername"];
-        private TextBox txtUsrPassword => (TextBox)pnlPassword.Controls["txtUsrPassword"];
-        private ComboBox comboRoles => (ComboBox)grpAdminForm.Controls["comboRoles"];
+        private DataGridView dgvUsers => (DataGridView)(panel.Controls["dgvUsers"] 
+                ?? throw new Exception("No control named [dgvUsers] found in panel controls collection."));
+        private GroupBox grpAdminForm => (GroupBox)(panel.Controls["grpAdminForm"] 
+                ?? throw new Exception("No control named [grpAdminForm] found in panel controls collection."));
+        private Panel pnlButtons => (Panel)(grpAdminForm.Controls["pnlButtons"] 
+                ?? throw new Exception("No control named [pnlButtons] found in grpAdminForm controls collection."));
+        private Button btnUsrCreate => (Button)(pnlButtons.Controls["btnUsrCreate"] 
+                ?? throw new Exception("No control named [btnUsrCreate] found in pnlButtons controls collection."));
+        private Button btnUsrUpdate => (Button)(pnlButtons.Controls["btnUsrUpdate"] 
+                ?? throw new Exception("No control named [btnUsrUpdate] found in pnlButtons controls collection."));
+        private Button btnUsrCancel => (Button)(pnlButtons.Controls["btnUsrCancel"] 
+                ?? throw new Exception("No control named [btnUsrCancel] found in pnlButtons controls collection."));
+        private Button btnUsrDelete => (Button)(pnlButtons.Controls["btnUsrDelete"] 
+                ?? throw new Exception("No control named [btnUsrDelete] found in pnlButtons controls collection."));
+        private Button btnUsrDisplay => (Button)(pnlButtons.Controls["btnUsrDisplay"] 
+                ?? throw new Exception("No control named [btnUsrDisplay] found in pnlButtons controls collection."));
+        private Button btnUsrSearch => (Button)(pnlButtons.Controls["btnUsrSearch"] 
+                ?? throw new Exception("No control named [btnUsrSearch] found in pnlButtons controls collection."));
+        private Panel pnlPassword => (Panel)(grpAdminForm.Controls["pnlPassword"] 
+                ?? throw new Exception("No control named [pnlPassword] found in grpAdminForm controls collection."));
+        private Button btnTogglePassword => (Button)(pnlPassword.Controls["btnTogglePassword"] 
+                ?? throw new Exception("No control named [btnTogglePassword] found in pnlPassword controls collection."));
+        private Button btnGenPassword => (Button)(pnlButtons.Controls["btnGenPassword"] 
+                ?? throw new Exception("No control named [btnGenPassword] found in pnlButtons controls collection."));
+        private TextBox txtUsrId => (TextBox)(grpAdminForm.Controls["txtUsrId"] 
+                ?? throw new Exception("No control named [txtUsrId] found in grpAdminForm controls collection."));
+        private TextBox txtUsrUsername => (TextBox)(grpAdminForm.Controls["txtUsrUsername"] 
+                ?? throw new Exception("No control named [txtUsrUsername] found in grpAdminForm controls collection."));
+        private TextBox txtUsrPassword => (TextBox)(pnlPassword.Controls["txtUsrPassword"] 
+                ?? throw new Exception("No control named [txtUsrPassword] found in pnlPassword controls collection."));
+        private ComboBox comboRoles => (ComboBox)(grpAdminForm.Controls["comboRoles"] 
+                ?? throw new Exception("No control named [comboRoles] found in grpAdminForm controls collection."));
 
         private bool isEditMode = false;
         private bool isPasswordChanged = false;
