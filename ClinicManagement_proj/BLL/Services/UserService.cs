@@ -12,8 +12,6 @@ namespace ClinicManagement_proj.BLL.Services
     {
         private ClinicDbContext clinicDb;
 
-        public UserDTO CurrentUser { get; set; }
-
         public UserService(ClinicDbContext dbContext)
         {
             clinicDb = dbContext;
@@ -160,8 +158,8 @@ namespace ClinicManagement_proj.BLL.Services
 
         public bool CurrentUserHasRole(UserRoles role)
         {
-            if (CurrentUser == null) return false;
-            return CurrentUser.Roles.Any(r => r.RoleName == role.ToString());
+            if (ClinicManagementApp.CurrentUser == null) return false;
+            return ClinicManagementApp.CurrentUser.Roles.Any(r => r.RoleName == role.ToString());
         }
     }
 }

@@ -31,7 +31,7 @@ namespace ClinicManagement_proj.UI
             if (user != null)
             {
                 // Set the current user
-                ClinicManagementApp.SetCurrentUser(user);
+                ClinicManagementApp.CurrentUser = user;
 
                 // Save or clear settings based on remember checkbox
                 if (checkRememberPassword.Checked)

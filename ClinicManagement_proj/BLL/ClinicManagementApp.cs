@@ -25,14 +25,6 @@ namespace ClinicManagement_proj.BLL
             AppointmentService = new AppointmentService(DbContext);
             DoctorService = new DoctorService(DbContext);
             PatientService = new PatientService(DbContext);
-
-            UserService.CurrentUser = CurrentUser;
-        }
-
-        public static void SetCurrentUser(UserDTO user)
-        {
-            CurrentUser = user;
-            UserService.CurrentUser = user;
         }
     }
 }
