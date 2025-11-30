@@ -13,6 +13,7 @@ namespace ClinicManagement_proj.BLL.DTO
         public int DoctorId { get; set; }
         public int PatientId { get; set; }
         public int TimeSlotId { get; set; }
+        public string Status { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime ModifiedAt { get; set; }
         public PatientDTO Patient { get; set; }
