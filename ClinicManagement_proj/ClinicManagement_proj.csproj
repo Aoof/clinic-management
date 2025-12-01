@@ -70,10 +70,10 @@
     <Compile Include="BLL\DTO\TimeSlotDTO.cs" />
     <Compile Include="BLL\DTO\UserDTO.cs" />
     <Compile Include="BLL\Services\AppointmentService.cs" />
+    <Compile Include="BLL\Services\DoctorScheduleService.cs" />
     <Compile Include="BLL\Services\DoctorService.cs" />
     <Compile Include="BLL\Services\LoginService.cs" />
     <Compile Include="BLL\Services\PatientService.cs" />
-    <Compile Include="BLL\Services\RoleService.cs" />
     <Compile Include="BLL\Services\UserService.cs" />
     <Compile Include="BLL\Utils\Notification.cs" />
     <Compile Include="BLL\Utils\NotificationManager.cs" />

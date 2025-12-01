@@ -17,7 +17,6 @@ namespace ClinicManagement_proj.UI
     {
         private readonly Panel panel;
         private readonly UserService userService;
-        private readonly RoleService roleService;
 
         private DataGridView dgvUsers => (DataGridView)(panel.Controls["dgvUsers"] 
                 ?? throw new Exception("No control named [dgvUsers] found in panel controls collection."));
@@ -61,7 +60,6 @@ namespace ClinicManagement_proj.UI
         {
             this.panel = panel;
             this.userService = ClinicManagementApp.UserService;
-            this.roleService = ClinicManagementApp.RoleService;
         }
 
         public void Initialize()
@@ -84,7 +82,7 @@ namespace ClinicManagement_proj.UI
             LoadUsers();
             ResetUsrForm();
 
-            cmbRoles.DataSource = roleService.GetAllRoles();
+            cmbRoles.DataSource = userService.GetAllRoles();
         }
 
         private void LoadUsers()

@@ -50,15 +50,15 @@ namespace ClinicManagement_proj.UI
                 Form dashboard = null;
 
                 // Determine dashboard based on role
-                if (ClinicManagementApp.UserService.CurrentUserHasRole(UserService.UserRoles.Administrator))
+                if (ClinicManagementApp.CurrentUserHasRole(UserService.UserRoles.Administrator))
                 {
                     dashboard = new AdminDashboard();
                 }
-                else if (ClinicManagementApp.UserService.CurrentUserHasRole(UserService.UserRoles.Doctor))
+                else if (ClinicManagementApp.CurrentUserHasRole(UserService.UserRoles.Doctor))
                 {
                     dashboard = new DoctorDashboard();
                 }
-                else if (ClinicManagementApp.UserService.CurrentUserHasRole(UserService.UserRoles.Receptionist))
+                else if (ClinicManagementApp.CurrentUserHasRole(UserService.UserRoles.Receptionist))
                 {
                     dashboard = new ReceptionistDashboard();
                 }

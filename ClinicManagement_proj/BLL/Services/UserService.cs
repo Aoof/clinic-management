@@ -54,7 +54,7 @@ namespace ClinicManagement_proj.BLL.Services
 
         public List<UserDTO> GetAllUsers()
         {
-            if (!CurrentUserHasRole(UserRoles.Administrator))
+            if (!ClinicManagementApp.CurrentUserHasRole(UserRoles.Administrator))
                 throw new UnauthorizedAccessException("Only Admin users can access the list of all users.");
 
             return clinicDb.Users
@@ -62,16 +62,14 @@ namespace ClinicManagement_proj.BLL.Services
                 .ToList();
         }
 
-        public UserDTO GetUserById(int id)
+        public List<RoleDTO> GetAllRoles()
         {
-            if (!CurrentUserHasRole(UserRoles.Administrator))
-                throw new UnauthorizedAccessException("Only Admin users can access user details.");
+            if (!ClinicManagementApp.CurrentUserHasRole(UserRoles.Administrator))
+                throw new UnauthorizedAccessException("Only Admin users can access roles.");
 
-            var user = clinicDb.Users
-                .Include(u => u.Roles)
-                .FirstOrDefault(u => u.Id == id);
-
-            return user;
+            return clinicDb.Roles
+                .Include(r => r.Users)
+                .ToList();
         }
 
         public UserDTO GetUserByUsername(string username)
@@ -87,7 +85,7 @@ namespace ClinicManagement_proj.BLL.Services
 
         public void CreateUser(UserDTO user, string password)
         {
-            if (!CurrentUserHasRole(UserRoles.Administrator))
+            if (!ClinicManagementApp.CurrentUserHasRole(UserRoles.Administrator))
                 throw new UnauthorizedAccessException("Only Admin users can create new users.");
 
             if (clinicDb.Users.Any(u => u.Username == user.Username))
@@ -100,7 +98,7 @@ namespace ClinicManagement_proj.BLL.Services
 
         public UserDTO UpdateUser(UserDTO user, string password = null)
         {
-            if (!CurrentUserHasRole(UserRoles.Administrator))
+            if (!ClinicManagementApp.CurrentUserHasRole(UserRoles.Administrator))
                 throw new UnauthorizedAccessException("Only Admin users can update users.");
 
             if (!string.IsNullOrEmpty(password))
@@ -113,7 +111,7 @@ namespace ClinicManagement_proj.BLL.Services
 
         public void DeleteUser(int id)
         {
-            if (!CurrentUserHasRole(UserRoles.Administrator))
+            if (!ClinicManagementApp.CurrentUserHasRole(UserRoles.Administrator))
                 throw new UnauthorizedAccessException("Only Admin users can delete users.");
 
             var user = clinicDb.Users
@@ -127,7 +125,7 @@ namespace ClinicManagement_proj.BLL.Services
 
         public void DeleteUser(UserDTO user)
         {
-            if (!CurrentUserHasRole(UserRoles.Administrator))
+            if (!ClinicManagementApp.CurrentUserHasRole(UserRoles.Administrator))
                 throw new UnauthorizedAccessException("Only Admin users can delete users.");
 
             clinicDb.Users.Remove(user);
@@ -136,7 +134,7 @@ namespace ClinicManagement_proj.BLL.Services
 
         public List<UserDTO> Search(int id)
         {
-            if (!CurrentUserHasRole(UserRoles.Administrator))
+            if (!ClinicManagementApp.CurrentUserHasRole(UserRoles.Administrator))
                 throw new UnauthorizedAccessException("Only Admin users can search users.");
 
             return clinicDb.Users
@@ -147,7 +145,7 @@ namespace ClinicManagement_proj.BLL.Services
 
         public List<UserDTO> Search(string username)
         {
-            if (!CurrentUserHasRole(UserRoles.Administrator))
+            if (!ClinicManagementApp.CurrentUserHasRole(UserRoles.Administrator))
                 throw new UnauthorizedAccessException("Only Admin users can search users.");
 
             return clinicDb.Users
@@ -156,10 +154,5 @@ namespace ClinicManagement_proj.BLL.Services
                 .ToList();
         }
 
-        public bool CurrentUserHasRole(UserRoles role)
-        {
-            if (ClinicManagementApp.CurrentUser == null) return false;
-            return ClinicManagementApp.CurrentUser.Roles.Any(r => r.RoleName == role.ToString());
-        }
     }
 }
