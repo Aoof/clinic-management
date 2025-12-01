@@ -1,4 +1,5 @@
-﻿using ClinicManagement_proj.BLL.Utils;
+﻿using ClinicManagement_proj.BLL;
+using ClinicManagement_proj.BLL.Utils;
 using System;
 using System.Drawing;
 using System.Linq;
@@ -40,7 +41,7 @@ namespace ClinicManagement_proj.UI
             userManagementController = new UserManagementController(pnlUserManagement);
             doctorManagementController = new DoctorManagementController(pnlDoctorManagement);
             schedulingController = new SchedulingController(pnlDoctorScheduling);
-            patientRegistrationController = new PatientRegistrationController(pnlPatientRegistration);
+            patientRegistrationController = new PatientRegistrationController(pnlPatientRegistration, ClinicManagementApp.PatientService);
             reportsController = new ReportsController(pnlReports);
             appointmentManagementController = new ApptMgmtController(pnlAppointmentManagement);
         }
