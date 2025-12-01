@@ -1,15 +1,20 @@
+using ClinicManagement_proj.BLL;
+using ClinicManagement_proj.BLL.Services;
 using System;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Windows.Forms;
+using ClinicManagement_proj.BLL.DTO;
 
 namespace ClinicManagement_proj.UI
 {
     /// <summary>
     /// Controller for the Appointment Management panel
     /// </summary>
-    public class AppointmentManagementController : IPanelController
+    public class ApptMgmtController : IPanelController
     {
+        AppointmentService appointmentService;
+
         private readonly Panel panel;
 
         // Access to existing controls
@@ -31,9 +36,10 @@ namespace ClinicManagement_proj.UI
 
         public Panel Panel => panel;
 
-        public AppointmentManagementController(Panel panel)
+        public ApptMgmtController(Panel panel)
         {
             this.panel = panel;
+            this.appointmentService = ClinicManagementApp.AppointmentService;
         }
 
         public void Initialize()
@@ -53,19 +59,27 @@ namespace ClinicManagement_proj.UI
             dtpApptDate.ValueChanged += new EventHandler(dtpApptDate_ValueChanged);
             txtApptDoctor.TextChanged += new EventHandler(txtApptDoctor_TextChanged);
             txtApptPatient.TextChanged += new EventHandler(txtApptPatient_TextChanged);
+            dgvAppointments.CellFormatting += new DataGridViewCellFormattingEventHandler(dgvAppointments_CellFormatting);
         }
 
         public void OnShow()
         {
-            // Theoretical: LoadAppointments();
-            // ResetAppointmentForm();
+            LoadAppointments();
+            ResetAppointmentForm();
         }
 
         private void LoadAppointments()
         {
-            // Theoretical: var appointments = appointmentService.GetAll();
-            // dgvAppointments.DataSource = appointments;
-            // dgvAppointments.AutoGenerateColumns = true;
+            dgvAppointments.AutoGenerateColumns = false;
+            dgvAppointments.Columns.Clear();
+            dgvAppointments.Columns.Add(new DataGridViewTextBoxColumn { Name = "Id", HeaderText = "ID", Width = 50 });
+            dgvAppointments.Columns.Add(new DataGridViewTextBoxColumn { Name = "Date", HeaderText = "Date", Width = 100 });
+            dgvAppointments.Columns.Add(new DataGridViewTextBoxColumn { Name = "Doctor", HeaderText = "Doctor", Width = 150 });
+            dgvAppointments.Columns.Add(new DataGridViewTextBoxColumn { Name = "Patient", HeaderText = "Patient", Width = 150 });
+            dgvAppointments.Columns.Add(new DataGridViewTextBoxColumn { Name = "TimeSlot", HeaderText = "Time", Width = 80 });
+            dgvAppointments.Columns.Add(new DataGridViewTextBoxColumn { Name = "Status", HeaderText = "Status", Width = 100 });
+            dgvAppointments.Columns.Add(new DataGridViewTextBoxColumn { Name = "Notes", HeaderText = "Notes", Width = 200 });
+            dgvAppointments.DataSource = appointmentService.GetAllAppointments();
         }
 
         private void ResetAppointmentForm()
@@ -136,6 +150,42 @@ namespace ClinicManagement_proj.UI
         {
             // Theoretical: Highlight based on selection
             // if (appointmentService.IsPatientSelected(txtApptPatient.Text)) txtPatient.BackColor = Color.Green; else txtPatient.BackColor = Color.Red;
+        }
+
+        private void dgvAppointments_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                var appointment = (AppointmentDTO)dgvAppointments.Rows[e.RowIndex].DataBoundItem;
+                if (appointment != null)
+                {
+                    switch (dgvAppointments.Columns[e.ColumnIndex].Name)
+                    {
+                        case "Id":
+                            e.Value = appointment.Id;
+                            break;
+                        case "Date":
+                            e.Value = appointment.Date.ToString("yyyy-MM-dd");
+                            break;
+                        case "Doctor":
+                            e.Value = appointment.Doctor != null ? $"{appointment.Doctor.FirstName} {appointment.Doctor.LastName}" : "N/A";
+                            break;
+                        case "Patient":
+                            e.Value = appointment.Patient != null ? $"{appointment.Patient.FirstName} {appointment.Patient.LastName}" : "N/A";
+                            break;
+                        case "TimeSlot":
+                            e.Value = appointment.TimeSlot != null ? $"{appointment.TimeSlot.HourOfDay:D2}:{appointment.TimeSlot.MinuteOfHour:D2}" : "N/A";
+                            break;
+                        case "Status":
+                            e.Value = appointment.Status;
+                            break;
+                        case "Notes":
+                            e.Value = appointment.Notes;
+                            break;
+                    }
+                    e.FormattingApplied = true;
+                }
+            }
         }
 
         public void OnHide()

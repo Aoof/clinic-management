@@ -15,56 +15,158 @@ namespace ClinicManagement_proj.BLL.Services
             clinicDb = dbContext;
         }
 
-        public int CreateAppointment(AppointmentDTO appointmentDTO)
+        public AppointmentDTO CreateAppointment(AppointmentDTO appointment)
         {
-            var appointment = new AppointmentDTO
-            {
-                Date = appointmentDTO.Date,
-                Notes = appointmentDTO.Notes,
-                DoctorId = appointmentDTO.DoctorId,
-                PatientId = appointmentDTO.PatientId,
-                TimeSlotId = appointmentDTO.TimeSlotId,
-                CreatedAt = DateTime.Now,
-                ModifiedAt = DateTime.Now,
-            };
+            if (!ClinicManagementApp.CurrentUserHasRole
+                    (
+                        UserService.UserRoles.Administrator,
+                        UserService.UserRoles.Doctor,
+                        UserService.UserRoles.Receptionist
+                    )
+               )
+                throw new UnauthorizedAccessException("Only authorized users can create appointments.");
             clinicDb.Appointments.Add(appointment);
             clinicDb.SaveChanges();
-            return appointment.Id;
+            return appointment;
         }
 
-        public bool UpdateAppointment(AppointmentDTO appointmentDTO)
+        public AppointmentDTO UpdateAppointment(AppointmentDTO appointment)
         {
-            var appointment = clinicDb.Appointments.FirstOrDefault(a => a.Id == appointmentDTO.Id);
-            if (appointment == null) return false;
-
-            appointment.Date = appointmentDTO.Date;
-            appointment.Notes = appointmentDTO.Notes;
-            appointment.DoctorId = appointmentDTO.DoctorId;
-            appointment.PatientId = appointmentDTO.PatientId;
-            appointment.TimeSlotId = appointmentDTO.TimeSlotId;
+            if (!ClinicManagementApp.CurrentUserHasRole
+                    (
+                        UserService.UserRoles.Administrator,
+                        UserService.UserRoles.Doctor,
+                        UserService.UserRoles.Receptionist
+                    )
+               )
+                throw new UnauthorizedAccessException("Only authorized users can create appointments.");
             appointment.ModifiedAt = DateTime.Now;
             clinicDb.SaveChanges();
-            return true;
+            return appointment;
         }
 
-        public bool DeleteAppointment(int id)
+        public void DeleteAppointment(AppointmentDTO appointment)
         {
-            var appointment = clinicDb.Appointments.Find(id);
-            if (appointment == null) return false;
-
+            if (!ClinicManagementApp.CurrentUserHasRole
+                    (
+                        UserService.UserRoles.Administrator,
+                        UserService.UserRoles.Doctor,
+                        UserService.UserRoles.Receptionist
+                    )
+               )
+                throw new UnauthorizedAccessException("Only authorized users can create appointments.");
             clinicDb.Appointments.Remove(appointment);
             clinicDb.SaveChanges();
-            return true;
-        }
-
-        public AppointmentDTO GetAppointmentById(int id)
-        {
-            return clinicDb.Appointments.FirstOrDefault(a => a.Id == id);
         }
 
         public List<AppointmentDTO> GetAllAppointments()
         {
-            return clinicDb.Appointments.ToList();
+            if (!ClinicManagementApp.CurrentUserHasRole
+                    (
+                        UserService.UserRoles.Administrator,
+                        UserService.UserRoles.Doctor,
+                        UserService.UserRoles.Receptionist
+                    )
+               )
+                throw new UnauthorizedAccessException("Only authorized users can create appointments.");
+            return clinicDb.Appointments
+                .Include("Doctor")
+                .Include("Patient")
+                .Include("TimeSlot")
+                .ToList();
+        }
+
+        public List<AppointmentDTO> Search(int id)
+        {
+            if (!ClinicManagementApp.CurrentUserHasRole
+                    (
+                        UserService.UserRoles.Administrator,
+                        UserService.UserRoles.Doctor,
+                        UserService.UserRoles.Receptionist
+                    )
+               )
+                throw new UnauthorizedAccessException("Only authorized users can create appointments.");
+            return clinicDb.Appointments
+                .Include("Doctor")
+                .Include("Patient")
+                .Include("TimeSlot")
+                .Where(a => a.Id.ToString().Contains(id.ToString()))
+                .ToList();
+        }
+
+        public List<AppointmentDTO> Search(DateTime date)
+        {
+            if (!ClinicManagementApp.CurrentUserHasRole
+                    (
+                        UserService.UserRoles.Administrator,
+                        UserService.UserRoles.Doctor,
+                        UserService.UserRoles.Receptionist
+                    )
+               )
+                throw new UnauthorizedAccessException("Only authorized users can create appointments.");
+            return clinicDb.Appointments
+                .Include("Doctor")
+                .Include("Patient")
+                .Include("TimeSlot")
+                .Where(a => a.Date.Date == date.Date)
+                .ToList();
+        }
+
+        public List<AppointmentDTO> Search(DoctorDTO doctor)
+        {
+            if (!ClinicManagementApp.CurrentUserHasRole
+                    (
+                        UserService.UserRoles.Administrator,
+                        UserService.UserRoles.Doctor,
+                        UserService.UserRoles.Receptionist
+                    )
+               )
+                throw new UnauthorizedAccessException("Only authorized users can create appointments.");
+            
+            return clinicDb.Appointments
+                .Include("Doctor")
+                .Include("Patient")
+                .Include("TimeSlot")
+                .Where(a => a.DoctorId == doctor.Id)
+                .ToList();
+        }
+
+        public List<AppointmentDTO> Search(PatientDTO patient)
+        {
+            if (!ClinicManagementApp.CurrentUserHasRole
+                    (
+                        UserService.UserRoles.Administrator,
+                        UserService.UserRoles.Doctor,
+                        UserService.UserRoles.Receptionist
+                    )
+               )
+                throw new UnauthorizedAccessException("Only authorized users can create appointments.");
+            return clinicDb.Appointments
+                .Include("Doctor")
+                .Include("Patient")
+                .Include("TimeSlot")
+                .Where(a => a.PatientId == patient.Id)
+                .ToList();
+        }
+
+        public List<TimeSlotDTO> GetAvailableTimeSlots(DateTime date)
+        {
+            if (!ClinicManagementApp.CurrentUserHasRole
+                    (
+                        UserService.UserRoles.Administrator,
+                        UserService.UserRoles.Doctor,
+                        UserService.UserRoles.Receptionist
+                    )
+               )
+                throw new UnauthorizedAccessException("Only authorized users can create appointments.");
+            var bookedSlotIds = clinicDb.Appointments
+                                        .Where(a => a.Date.Date == date.Date)
+                                        .Select(a => a.TimeSlotId)
+                                        .ToList();
+            var availableSlots = clinicDb.TimeSlots
+                                        .Where(ts => !bookedSlotIds.Contains(ts.Id))
+                                        .ToList();
+            return availableSlots;
         }
     }
 }

@@ -148,7 +148,7 @@
     <Compile Include="UI\AdminDashboard.Designer.cs">
       <DependentUpon>AdminDashboard.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Controllers\AppointmentManagementController.cs" />
+    <Compile Include="UI\Controllers\ApptMgmtController.cs" />
     <Compile Include="UI\Controllers\DoctorManagementController.cs" />
     <Compile Include="UI\Utils\ImageHelper.cs" />
     <Compile Include="UI\IPanelController.cs" />
@@ -223,7 +223,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DAL\HealthCareClinicDB_Script.sql" />
+    <Content Include="DAL\HealthCareClinicDB_T2_Script.sql" />
     <Content Include="DAL\HealthCareClinicModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>HealthCareClinicModel.edmx</DependentUpon>

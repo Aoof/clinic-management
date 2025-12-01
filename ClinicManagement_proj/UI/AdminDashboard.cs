@@ -17,7 +17,7 @@ namespace ClinicManagement_proj.UI
         private DoctorManagementController doctorManagementController;
         private SchedulingController schedulingController;
         private PatientRegistrationController patientRegistrationController;
-        private AppointmentManagementController appointmentManagementController;
+        private ApptMgmtController appointmentManagementController;
         private ReportsController reportsController;
 
         public AdminDashboard()
@@ -42,7 +42,7 @@ namespace ClinicManagement_proj.UI
             schedulingController = new SchedulingController(pnlDoctorScheduling);
             patientRegistrationController = new PatientRegistrationController(pnlPatientRegistration);
             reportsController = new ReportsController(pnlReports);
-            appointmentManagementController = new AppointmentManagementController(pnlAppointmentManagement);
+            appointmentManagementController = new ApptMgmtController(pnlAppointmentManagement);
         }
 
         /// <summary>

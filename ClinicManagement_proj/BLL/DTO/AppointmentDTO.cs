@@ -1,7 +1,25 @@
 ﻿using System;
 
 namespace ClinicManagement_proj.BLL.DTO
-{
+{ 
+    // Use this as a base for the DTO
+    //public partial class Appointment
+    //{
+        //public int Id { get; set; }
+        //public System.DateTime Date { get; set; }
+        //public string Notes { get; set; }
+        //public int PatientId { get; set; }
+        //public int DoctorId { get; set; }
+        //public int TimeSlotId { get; set; }
+        //public string Status { get; set; }
+        //public System.DateTime CreatedAt { get; set; }
+        //public System.DateTime ModifiedAt { get; set; }
+    
+        // public virtual Doctor Doctor { get; set; }
+        //public virtual Patient Patient { get; set; }
+        //public virtual TimeSlot TimeSlot { get; set; }
+    // }
+
     public class AppointmentDTO
     {
         public static int NOTES_MAX_LENGTH = 512;

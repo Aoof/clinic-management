@@ -2,14 +2,14 @@
 USE master;
 GO
 
-IF DB_ID('HealthCareClinicDB') IS NOT NULL
-    DROP DATABASE HealthCareClinicDB;
+IF DB_ID('HealthCareClinicDB_T2') IS NOT NULL
+    DROP DATABASE HealthCareClinicDB_T2;
 GO
 
-CREATE DATABASE HealthCareClinicDB;
+CREATE DATABASE HealthCareClinicDB_T2;
 GO
 
-USE HealthCareClinicDB;
+USE HealthCareClinicDB_T2;
 GO
 
 -- DROP STORED PROCEDURES

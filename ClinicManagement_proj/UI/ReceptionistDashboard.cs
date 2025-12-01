@@ -14,7 +14,7 @@ namespace ClinicManagement_proj.UI
 
         private NavigationManager navigationManager;
         private PatientRegistrationController patientRegistrationController;
-        private AppointmentManagementController appointmentManagementController;
+        private ApptMgmtController appointmentManagementController;
 
         public ReceptionistDashboard()
         {
@@ -34,7 +34,7 @@ namespace ClinicManagement_proj.UI
 
             // Initialize panel controllers
             patientRegistrationController = new PatientRegistrationController(pnlPatientRegistration);
-            appointmentManagementController = new AppointmentManagementController(pnlAppointmentManagement);
+            appointmentManagementController = new ApptMgmtController(pnlAppointmentManagement);
         }
 
         /// <summary>

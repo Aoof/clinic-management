@@ -103,14 +103,14 @@ namespace ClinicManagement_proj.UI
             if (dgvUsers.Columns.Contains("Username"))
             {
                 dgvUsers.Columns["Username"].HeaderText = "Username";
-                dgvUsers.Columns["Username"].Width = 150;
+                dgvUsers.Columns["Username"].Width = 100;
                 dgvUsers.Columns["Username"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             }
 
             if (dgvUsers.Columns.Contains("CreatedAt"))
             {
                 dgvUsers.Columns["CreatedAt"].HeaderText = "Created At";
-                dgvUsers.Columns["CreatedAt"].Width = 120;
+                dgvUsers.Columns["CreatedAt"].Width = 150;
                 dgvUsers.Columns["CreatedAt"].DefaultCellStyle.Format = "yyyy-MM-dd HH:mm";
                 dgvUsers.Columns["CreatedAt"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             }
@@ -118,7 +118,7 @@ namespace ClinicManagement_proj.UI
             if (dgvUsers.Columns.Contains("ModifiedAt"))
             {
                 dgvUsers.Columns["ModifiedAt"].HeaderText = "Modified At";
-                dgvUsers.Columns["ModifiedAt"].Width = 120;
+                dgvUsers.Columns["ModifiedAt"].Width = 150;
                 dgvUsers.Columns["ModifiedAt"].DefaultCellStyle.Format = "yyyy-MM-dd HH:mm";
                 dgvUsers.Columns["ModifiedAt"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             }
