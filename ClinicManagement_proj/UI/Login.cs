@@ -1,5 +1,5 @@
-﻿using ClinicManagement_proj.BLL;
-using ClinicManagement_proj.BLL.Services;
+﻿using ClinicManagement_proj.BLL.Services;
+using ClinicManagement_proj.BLL;
 using System;
 using System.Windows.Forms;
 
@@ -26,13 +26,12 @@ namespace ClinicManagement_proj.UI
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            var loginService = new LoginService();
-            var user = loginService.Authenticate(txtUsername.Text, txtPassword.Text);
+            var user = ClinicManagementApp.LoginService.Authenticate(txtUsername.Text, txtPassword.Text);
 
             if (user != null)
             {
                 // Set the current user
-                CurrentUser.User = user;
+                ClinicManagementApp.CurrentUser = user;
 
                 // Save or clear settings based on remember checkbox
                 if (checkRememberPassword.Checked)
@@ -51,15 +50,15 @@ namespace ClinicManagement_proj.UI
                 Form dashboard = null;
 
                 // Determine dashboard based on role
-                if (UserService.CurrentUserHasRole(UserService.UserRoles.Administrator))
+                if (ClinicManagementApp.CurrentUserHasRole(UserService.UserRoles.Administrator))
                 {
                     dashboard = new AdminDashboard();
                 }
-                else if (UserService.CurrentUserHasRole(UserService.UserRoles.Doctor))
+                else if (ClinicManagementApp.CurrentUserHasRole(UserService.UserRoles.Doctor))
                 {
                     dashboard = new DoctorDashboard();
                 }
-                else if (UserService.CurrentUserHasRole(UserService.UserRoles.Receptionist))
+                else if (ClinicManagementApp.CurrentUserHasRole(UserService.UserRoles.Receptionist))
                 {
                     dashboard = new ReceptionistDashboard();
                 }

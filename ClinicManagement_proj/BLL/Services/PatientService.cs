@@ -8,7 +8,12 @@ namespace ClinicManagement_proj.BLL.Services
 {
     public class PatientService
     {
-        private ClinicDbContext clinicDb = new ClinicDbContext();
+        private ClinicDbContext clinicDb;
+
+        public PatientService(ClinicDbContext dbContext)
+        {
+            clinicDb = dbContext;
+        }
 
         public List<PatientDTO> GetAll()
         {

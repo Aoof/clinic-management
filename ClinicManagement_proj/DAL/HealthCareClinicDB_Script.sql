@@ -207,6 +207,7 @@ CREATE TABLE dbo.Appointment(
     PatientId INT NOT NULL,
     DoctorId INT NOT NULL,
     TimeSlotId INT NOT NULL,
+    Status VARCHAR(20) NOT NULL DEFAULT('PENDING') CHECK (Status IN ('PENDING', 'CONFIRMED', 'COMPLETED', 'CANCELLED')),
     CreatedAt DATETIME2(7) NOT NULL DEFAULT(GETDATE()),
     ModifiedAt DATETIME2(7) NOT NULL DEFAULT(GETDATE()),
     CONSTRAINT FK_Appointment_Doctor FOREIGN KEY (DoctorId) REFERENCES dbo.Doctor(Id) ON DELETE NO ACTION,
@@ -314,13 +315,13 @@ BEGIN
     END
 END
 
-INSERT INTO dbo.Appointment (PatientId, DoctorId, TimeSlotId, Date, Notes, CreatedAt, ModifiedAt) VALUES
-(@PatientId1, @DoctorId1, 5, '2025-11-25', 'Annual checkup', GETDATE(), GETDATE()), -- 10:00 AM
-(@PatientId2, @DoctorId2, 13, '2025-11-26', 'Heart consultation', GETDATE(), GETDATE()), -- 2:00 PM
-(@PatientId3, @DoctorId1, 7, '2025-11-22', 'Follow-up visit', GETDATE(), GETDATE()), -- 11:00 AM
-(@PatientId4, @DoctorId3, 15, '2025-11-27', 'Child vaccination', GETDATE(), GETDATE()), -- 3:00 PM
-(@PatientId5, @DoctorId2, 3, '2025-11-23', 'Cardiac screening', GETDATE(), GETDATE()), -- 9:00 AM
-(@PatientId1, @DoctorId2, 6, '2025-12-01', 'Blood pressure check', GETDATE(), GETDATE()); -- 10:30 AM
+INSERT INTO dbo.Appointment (PatientId, DoctorId, TimeSlotId, Date, Notes, Status, CreatedAt, ModifiedAt) VALUES
+(@PatientId1, @DoctorId1, 5, '2025-11-25', 'Annual checkup', 'COMPLETED', GETDATE(), GETDATE()), -- 10:00 AM
+(@PatientId2, @DoctorId2, 13, '2025-11-26', 'Heart consultation', 'COMPLETED', GETDATE(), GETDATE()), -- 2:00 PM
+(@PatientId3, @DoctorId1, 7, '2025-11-22', 'Follow-up visit', 'COMPLETED', GETDATE(), GETDATE()), -- 11:00 AM
+(@PatientId4, @DoctorId3, 15, '2025-11-27', 'Child vaccination', 'CANCELLED', GETDATE(), GETDATE()), -- 3:00 PM
+(@PatientId5, @DoctorId2, 3, '2025-11-23', 'Cardiac screening', 'CANCELLED', GETDATE(), GETDATE()), -- 9:00 AM
+(@PatientId1, @DoctorId2, 6, '2025-12-01', 'Blood pressure check', 'PENDING', GETDATE(), GETDATE()); -- 10:30 AM
 
 GO
 

@@ -3,7 +3,7 @@ using System.Data.Entity;
 
 namespace ClinicManagement_proj.DAL
 {
-    internal class ClinicDbContext : DbContext
+    public class ClinicDbContext : DbContext
     {
         public DbSet<AppointmentDTO> Appointments { get; set; }
         public DbSet<DoctorDTO> Doctors { get; set; }

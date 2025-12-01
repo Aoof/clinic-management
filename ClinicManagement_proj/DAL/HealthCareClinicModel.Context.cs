@@ -15,10 +15,10 @@ namespace ClinicManagement_proj.DAL
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class HealthCareClinicDBEntities : DbContext
+    public partial class HealthCareClinicDBEntities1 : DbContext
     {
-        public HealthCareClinicDBEntities()
-            : base("name=HealthCareClinicDBEntities")
+        public HealthCareClinicDBEntities1()
+            : base("name=HealthCareClinicDBEntities1")
         {
         }
     

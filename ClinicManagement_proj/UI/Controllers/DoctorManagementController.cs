@@ -20,8 +20,8 @@ namespace ClinicManagement_proj.UI
                 ?? throw new Exception("No control named [txtDoctorFName] found in grpDoctorMgmt controls collection."));
         private TextBox txtDoctorLName => (TextBox)(grpDoctorMgmt.Controls["txtDoctorLName"] 
                 ?? throw new Exception("No control named [txtDoctorLName] found in grpDoctorMgmt controls collection."));
-        private ComboBox comboSpecialization => (ComboBox)(grpDoctorMgmt.Controls["comboSpecialization"] 
-                ?? throw new Exception("No control named [comboSpecialization] found in grpDoctorMgmt controls collection."));
+        private ComboBox cmbSpecialization => (ComboBox)(grpDoctorMgmt.Controls["cmbSpecialization"] 
+                ?? throw new Exception("No control named [cmbSpecialization] found in grpDoctorMgmt controls collection."));
         private Button btnDoctorCreate => (Button)(actionsLayout.Controls["btnDoctorCreate"] 
                 ?? throw new Exception("No control named [btnDoctorCreate] found in actionsLayout controls collection."));
         private Button btnDoctorUpdate => (Button)(actionsLayout.Controls["btnDoctorUpdate"] 
@@ -68,7 +68,7 @@ namespace ClinicManagement_proj.UI
             txtDoctorLName.Text = string.Empty;
 
             // TODO: Load specializations when enum is available
-            comboSpecialization.SelectedIndex = -1;
+            cmbSpecialization.SelectedIndex = -1;
 
             dgvDoctors.ClearSelection();
         }

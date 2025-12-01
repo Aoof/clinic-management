@@ -17,8 +17,8 @@ namespace ClinicManagement_proj.DAL
         public int Id { get; set; }
         public int DoctorId { get; set; }
         public string DayOfWeek { get; set; }
-        public System.DateTime WorkStartTime { get; set; }
-        public System.DateTime WorkEndTime { get; set; }
+        public System.TimeSpan WorkStartTime { get; set; }
+        public System.TimeSpan WorkEndTime { get; set; }
         public System.DateTime CreatedAt { get; set; }
         public System.DateTime ModifiedAt { get; set; }
     

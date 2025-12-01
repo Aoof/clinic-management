@@ -1,5 +1,6 @@
 using ClinicManagement_proj.BLL.DTO;
 using ClinicManagement_proj.BLL.Services;
+using ClinicManagement_proj.BLL;
 using System;
 using System.Windows.Forms;
 
@@ -11,7 +12,7 @@ namespace ClinicManagement_proj.UI
     /// </summary>
     public class PatientRegistrationController : IPanelController
     {
-        private readonly PatientService patientService = new PatientService();
+        private readonly PatientService patientService = ClinicManagementApp.PatientService;
 
 
 
@@ -28,8 +29,8 @@ namespace ClinicManagement_proj.UI
                 ?? throw new Exception("No control named [txtPLName] found in grpPatientRegistration controls collection."));
         private TextBox txtMedicalNumber => (TextBox)(grpPatientRegistration.Controls["txtMedicalNumber"] 
                 ?? throw new Exception("No control named [txtMedicalNumber] found in grpPatientRegistration controls collection."));
-        private DateTimePicker dateDoB => (DateTimePicker)(grpPatientRegistration.Controls["dateDoB"] 
-                ?? throw new Exception("No control named [dateDoB] found in grpPatientRegistration controls collection."));
+        private DateTimePicker dtpDoB => (DateTimePicker)(grpPatientRegistration.Controls["dtpDoB"] 
+                ?? throw new Exception("No control named [dtpDoB] found in grpPatientRegistration controls collection."));
         private TextBox txtPPhone => (TextBox)(grpPatientRegistration.Controls["txtPPhone"] 
                 ?? throw new Exception("No control named [txtPPhone] found in grpPatientRegistration controls collection."));
         private TableLayoutPanel layoutPatientButtons => (TableLayoutPanel)(grpPatientRegistration.Controls["layoutPatientButtons"] 
@@ -91,7 +92,7 @@ namespace ClinicManagement_proj.UI
             txtPFName.Text = string.Empty;
             txtPLName.Text = string.Empty;
             txtMedicalNumber.Text = string.Empty;
-            dateDoB.Value = DateTime.Now;
+            dtpDoB.Value = DateTime.Now;
             txtPPhone.Text = string.Empty;
         }
 
@@ -116,7 +117,7 @@ namespace ClinicManagement_proj.UI
                 var user = patientService.Search(selectedUserId);
                 txtPFName.Text = user.FirstName;
                 txtPLName.Text = user.LastName;
-                dateDoB.Value = user.DateOfBirth;
+                dtpDoB.Value = user.DateOfBirth;
                 txtMedicalNumber.Text = user.InsuranceNumber;
                 txtPPhone.Text = user.PhoneNumber;
 
@@ -163,7 +164,7 @@ namespace ClinicManagement_proj.UI
             txtPLName.Text = result.LastName;
             txtMedicalNumber.Text = result.InsuranceNumber.ToString();
             txtPPhone.Text = result.PhoneNumber;
-            dateDoB.Text = result.DateOfBirth.ToString();
+            dtpDoB.Text = result.DateOfBirth.ToString();
 
             dgvPatients.DataSource = new[] { result };
 
@@ -186,7 +187,7 @@ namespace ClinicManagement_proj.UI
                 ||
                 string.IsNullOrWhiteSpace(txtPLName.Text)
                 ||
-                string.IsNullOrWhiteSpace(dateDoB.Text)
+                string.IsNullOrWhiteSpace(dtpDoB.Text)
                 ||
                 string.IsNullOrWhiteSpace(txtMedicalNumber.Text)
                 ||
@@ -207,7 +208,7 @@ namespace ClinicManagement_proj.UI
                 FirstName = txtPFName.Text,
                 LastName = txtPLName.Text,
                 InsuranceNumber = txtMedicalNumber.Text,
-                DateOfBirth = dateDoB.Value,
+                DateOfBirth = dtpDoB.Value,
                 PhoneNumber = txtPPhone.Text
             };
 
@@ -238,7 +239,7 @@ namespace ClinicManagement_proj.UI
                 FirstName = txtPFName.Text,
                 LastName = txtPLName.Text,
                 InsuranceNumber = txtMedicalNumber.Text,
-                DateOfBirth = DateTime.Parse(dateDoB.Text),
+                DateOfBirth = DateTime.Parse(dtpDoB.Text),
                 PhoneNumber = txtPPhone.Text
             };
 

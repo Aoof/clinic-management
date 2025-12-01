@@ -9,12 +9,13 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Date" Type="date" Nullable="false" />
           <Property Name="Notes" Type="varchar" MaxLength="512" />
           <Property Name="PatientId" Type="int" Nullable="false" />
           <Property Name="DoctorId" Type="int" Nullable="false" />
           <Property Name="TimeSlotId" Type="int" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="CreatedAt" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="ModifiedAt" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
@@ -22,7 +23,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FirstName" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="LastName" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="LicenseNumber" Type="varchar" MaxLength="24" Nullable="false" />
@@ -33,11 +34,11 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DoctorId" Type="int" Nullable="false" />
           <Property Name="DayOfWeek" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="WorkStartTime" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="WorkEndTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="WorkStartTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="WorkEndTime" Type="time" Precision="7" Nullable="false" />
           <Property Name="CreatedAt" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="ModifiedAt" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
@@ -53,7 +54,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FirstName" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="LastName" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="InsuranceNumber" Type="varchar" MaxLength="24" Nullable="false" />
@@ -66,7 +67,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoleName" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="CreatedAt" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="ModifiedAt" Type="datetime2" Precision="7" Nullable="false" />
@@ -75,14 +76,14 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="64" Nullable="false" />
         </EntityType>
         <EntityType Name="TimeSlots">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="HourOfDay" Type="int" Nullable="false" />
           <Property Name="MinuteOfHour" Type="int" Nullable="false" />
         </EntityType>
@@ -98,7 +99,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Username" Type="varchar" MaxLength="32" Nullable="false" />
           <Property Name="PasswordHash" Type="varchar" MaxLength="256" Nullable="false" />
           <Property Name="CreatedAt" Type="datetime2" Precision="7" Nullable="false" />
@@ -143,7 +144,7 @@ warning 6002: The table/view 'HealthCareClinicDB.dbo.vw_PatientRecordsSummary' d
             <PropertyRef Name="InsuranceNumber" />
             <PropertyRef Name="DateOfBirth" />
           </Key>
-          <Property Name="PatientId" Type="int" Nullable="false" />
+          <Property Name="PatientId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PatientName" Type="varchar" MaxLength="129" Nullable="false" />
           <Property Name="InsuranceNumber" Type="varchar" MaxLength="24" Nullable="false" />
           <Property Name="DateOfBirth" Type="datetime2" Precision="7" Nullable="false" />
@@ -401,12 +402,13 @@ warning 6002: The table/view 'HealthCareClinicDB.dbo.vw_UpcomingAppointments' do
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Notes" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
           <Property Name="PatientId" Type="Int32" Nullable="false" />
           <Property Name="DoctorId" Type="Int32" Nullable="false" />
           <Property Name="TimeSlotId" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="ModifiedAt" Type="DateTime" Nullable="false" Precision="7" />
           <NavigationProperty Name="Doctor" Relationship="Self.FK_Appointment_Doctor" FromRole="Appointment" ToRole="Doctor" />
@@ -417,7 +419,7 @@ warning 6002: The table/view 'HealthCareClinicDB.dbo.vw_UpcomingAppointments' do
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FirstName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="LastName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="LicenseNumber" Type="String" MaxLength="24" FixedLength="false" Unicode="false" Nullable="false" />
@@ -431,11 +433,11 @@ warning 6002: The table/view 'HealthCareClinicDB.dbo.vw_UpcomingAppointments' do
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DoctorId" Type="Int32" Nullable="false" />
           <Property Name="DayOfWeek" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="WorkStartTime" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="WorkEndTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="WorkStartTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="WorkEndTime" Type="Time" Nullable="false" Precision="7" />
           <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="ModifiedAt" Type="DateTime" Nullable="false" Precision="7" />
           <NavigationProperty Name="Doctor" Relationship="Self.FK_DoctorSchedule_Doctor" FromRole="DoctorSchedule" ToRole="Doctor" />
@@ -444,7 +446,7 @@ warning 6002: The table/view 'HealthCareClinicDB.dbo.vw_UpcomingAppointments' do
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FirstName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="LastName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="InsuranceNumber" Type="String" MaxLength="24" FixedLength="false" Unicode="false" Nullable="false" />
@@ -458,7 +460,7 @@ warning 6002: The table/view 'HealthCareClinicDB.dbo.vw_UpcomingAppointments' do
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RoleName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="ModifiedAt" Type="DateTime" Nullable="false" Precision="7" />
@@ -468,7 +470,7 @@ warning 6002: The table/view 'HealthCareClinicDB.dbo.vw_UpcomingAppointments' do
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Doctors" Relationship="Self.DoctorSpecialties" FromRole="Specialties" ToRole="Doctor" />
         </EntityType>
@@ -476,7 +478,7 @@ warning 6002: The table/view 'HealthCareClinicDB.dbo.vw_UpcomingAppointments' do
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="HourOfDay" Type="Int32" Nullable="false" />
           <Property Name="MinuteOfHour" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Appointments" Relationship="Self.FK_Appointment_TimeSlot" FromRole="TimeSlots" ToRole="Appointment" />
@@ -485,7 +487,7 @@ warning 6002: The table/view 'HealthCareClinicDB.dbo.vw_UpcomingAppointments' do
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Username" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PasswordHash" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="7" />
@@ -525,7 +527,7 @@ warning 6002: The table/view 'HealthCareClinicDB.dbo.vw_UpcomingAppointments' do
             <PropertyRef Name="InsuranceNumber" />
             <PropertyRef Name="DateOfBirth" />
           </Key>
-          <Property Name="PatientId" Type="Int32" Nullable="false" />
+          <Property Name="PatientId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PatientName" Type="String" MaxLength="129" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="InsuranceNumber" Type="String" MaxLength="24" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="7" />
@@ -615,7 +617,7 @@ warning 6002: The table/view 'HealthCareClinicDB.dbo.vw_UpcomingAppointments' do
           <End Role="Roles" Type="Self.Role" Multiplicity="*" />
           <End Role="Users" Type="Self.User" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="HealthCareClinicDBEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="HealthCareClinicDBEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Appointments" EntityType="Self.Appointment" />
           <EntitySet Name="Doctors" EntityType="Self.Doctor" />
           <EntitySet Name="DoctorSchedules" EntityType="Self.DoctorSchedule" />
@@ -713,7 +715,7 @@ warning 6002: The table/view 'HealthCareClinicDB.dbo.vw_UpcomingAppointments' do
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="HealthCareClinicDBModelStoreContainer" CdmEntityContainer="HealthCareClinicDBEntities">
+        <EntityContainerMapping StorageEntityContainer="HealthCareClinicDBModelStoreContainer" CdmEntityContainer="HealthCareClinicDBEntities1">
           <EntitySetMapping Name="Appointments">
             <EntityTypeMapping TypeName="HealthCareClinicDBModel.Appointment">
               <MappingFragment StoreEntitySet="Appointment">
@@ -723,6 +725,7 @@ warning 6002: The table/view 'HealthCareClinicDB.dbo.vw_UpcomingAppointments' do
                 <ScalarProperty Name="PatientId" ColumnName="PatientId" />
                 <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
                 <ScalarProperty Name="TimeSlotId" ColumnName="TimeSlotId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
                 <ScalarProperty Name="ModifiedAt" ColumnName="ModifiedAt" />
               </MappingFragment>

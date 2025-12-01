@@ -20,6 +20,7 @@ namespace ClinicManagement_proj.DAL
         public int PatientId { get; set; }
         public int DoctorId { get; set; }
         public int TimeSlotId { get; set; }
+        public string Status { get; set; }
         public System.DateTime CreatedAt { get; set; }
         public System.DateTime ModifiedAt { get; set; }
     

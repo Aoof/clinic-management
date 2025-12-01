@@ -6,9 +6,14 @@ using System.Linq;
 
 namespace ClinicManagement_proj.BLL.Services
 {
-    internal class AppointmentService
+    public class AppointmentService
     {
-        private readonly ClinicDbContext clinicDb = new ClinicDbContext();
+        private readonly ClinicDbContext clinicDb;
+
+        public AppointmentService(ClinicDbContext dbContext)
+        {
+            clinicDb = dbContext;
+        }
 
         public int CreateAppointment(AppointmentDTO appointmentDTO)
         {
