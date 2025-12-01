@@ -52,9 +52,9 @@ namespace ClinicManagement_proj.UI
 
         public Panel Panel => panel;
 
-        public PatientRegistrationController(Panel panel, PatientService patientService)
+        public PatientRegistrationController(Panel panel)
         {
-            this.patientService = patientService;
+            this.patientService = ClinicManagementApp.PatientService;
             this.panel = panel;
         }
 
