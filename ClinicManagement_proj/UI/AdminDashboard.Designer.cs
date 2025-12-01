@@ -407,7 +407,7 @@ namespace ClinicManagement_proj.UI
             this.pnlMainContent.Location = new System.Drawing.Point(298, 125);
             this.pnlMainContent.Margin = new System.Windows.Forms.Padding(2);
             this.pnlMainContent.Name = "pnlMainContent";
-            this.pnlMainContent.Padding = new System.Windows.Forms.Padding(20, 20, 20, 20);
+            this.pnlMainContent.Padding = new System.Windows.Forms.Padding(20);
             this.pnlMainContent.Size = new System.Drawing.Size(1378, 925);
             this.pnlMainContent.TabIndex = 3;
             // 
@@ -468,7 +468,7 @@ namespace ClinicManagement_proj.UI
             this.grpApptMgmt.Location = new System.Drawing.Point(0, 0);
             this.grpApptMgmt.Margin = new System.Windows.Forms.Padding(2);
             this.grpApptMgmt.Name = "grpApptMgmt";
-            this.grpApptMgmt.Padding = new System.Windows.Forms.Padding(25, 25, 25, 25);
+            this.grpApptMgmt.Padding = new System.Windows.Forms.Padding(25);
             this.grpApptMgmt.Size = new System.Drawing.Size(610, 885);
             this.grpApptMgmt.TabIndex = 7;
             this.grpApptMgmt.TabStop = false;
@@ -813,7 +813,7 @@ namespace ClinicManagement_proj.UI
             this.grpPatientRegistration.Location = new System.Drawing.Point(0, 0);
             this.grpPatientRegistration.Margin = new System.Windows.Forms.Padding(2);
             this.grpPatientRegistration.Name = "grpPatientRegistration";
-            this.grpPatientRegistration.Padding = new System.Windows.Forms.Padding(25, 25, 25, 25);
+            this.grpPatientRegistration.Padding = new System.Windows.Forms.Padding(25);
             this.grpPatientRegistration.Size = new System.Drawing.Size(610, 885);
             this.grpPatientRegistration.TabIndex = 6;
             this.grpPatientRegistration.TabStop = false;
@@ -1090,7 +1090,7 @@ namespace ClinicManagement_proj.UI
             this.grpDoctorScheduling.Location = new System.Drawing.Point(0, 0);
             this.grpDoctorScheduling.Margin = new System.Windows.Forms.Padding(2);
             this.grpDoctorScheduling.Name = "grpDoctorScheduling";
-            this.grpDoctorScheduling.Padding = new System.Windows.Forms.Padding(25, 25, 25, 25);
+            this.grpDoctorScheduling.Padding = new System.Windows.Forms.Padding(25);
             this.grpDoctorScheduling.Size = new System.Drawing.Size(1338, 885);
             this.grpDoctorScheduling.TabIndex = 6;
             this.grpDoctorScheduling.TabStop = false;
@@ -1598,7 +1598,7 @@ namespace ClinicManagement_proj.UI
             this.layoutSchedulingActions.Location = new System.Drawing.Point(774, 2);
             this.layoutSchedulingActions.Margin = new System.Windows.Forms.Padding(2);
             this.layoutSchedulingActions.Name = "layoutSchedulingActions";
-            this.layoutSchedulingActions.Padding = new System.Windows.Forms.Padding(10, 10, 10, 10);
+            this.layoutSchedulingActions.Padding = new System.Windows.Forms.Padding(10);
             this.layoutSchedulingActions.RowCount = 1;
             this.layoutSchedulingActions.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.layoutSchedulingActions.Size = new System.Drawing.Size(512, 74);
@@ -1687,7 +1687,7 @@ namespace ClinicManagement_proj.UI
             this.grpAdminForm.Location = new System.Drawing.Point(2, 2);
             this.grpAdminForm.Margin = new System.Windows.Forms.Padding(2);
             this.grpAdminForm.Name = "grpAdminForm";
-            this.grpAdminForm.Padding = new System.Windows.Forms.Padding(25, 25, 25, 25);
+            this.grpAdminForm.Padding = new System.Windows.Forms.Padding(25);
             this.grpAdminForm.Size = new System.Drawing.Size(635, 880);
             this.grpAdminForm.TabIndex = 5;
             this.grpAdminForm.TabStop = false;
@@ -2023,7 +2023,7 @@ namespace ClinicManagement_proj.UI
             this.grpDoctorMgmt.Location = new System.Drawing.Point(0, 0);
             this.grpDoctorMgmt.Margin = new System.Windows.Forms.Padding(2);
             this.grpDoctorMgmt.Name = "grpDoctorMgmt";
-            this.grpDoctorMgmt.Padding = new System.Windows.Forms.Padding(25, 25, 25, 25);
+            this.grpDoctorMgmt.Padding = new System.Windows.Forms.Padding(25);
             this.grpDoctorMgmt.Size = new System.Drawing.Size(539, 885);
             this.grpDoctorMgmt.TabIndex = 6;
             this.grpDoctorMgmt.TabStop = false;
@@ -2341,7 +2341,7 @@ namespace ClinicManagement_proj.UI
             this.lblToast.Location = new System.Drawing.Point(30, 39);
             this.lblToast.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblToast.Name = "lblToast";
-            this.lblToast.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.lblToast.Padding = new System.Windows.Forms.Padding(5);
             this.lblToast.Size = new System.Drawing.Size(701, 56);
             this.lblToast.TabIndex = 2;
             this.lblToast.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
