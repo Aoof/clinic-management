@@ -40,9 +40,9 @@ namespace ClinicManagement_proj.UI
                 ?? throw new Exception("No control named [btnPUpdate] found in layoutPatientButtons controls collection."));
         private Button btnPatientCancel => (Button)(layoutPatientButtons.Controls["btnPCancel"] 
                 ?? throw new Exception("No control named [btnPCancel] found in layoutPatientButtons controls collection."));
-        private Button btnPatientDelete => (Button)(layoutPatientButtons.Controls["btnPDelete"] 
-                ?? throw new Exception("No control named [btnPDelete] found in layoutPatientButtons controls collection."));
-        private Button btnPatientDisplay => (Button)(layoutPatientButtons.Controls["btnPDisplay"] 
+        //private Button btnPatientDelete => (Button)(layoutPatientButtons.Controls["btnPDelete"] 
+        //        ?? throw new Exception("No control named [btnPDelete] found in layoutPatientButtons controls collection."));
+        private Button btnPatientDisplay => (Button)(layoutPatientButtons.Controls["btnPDisplay"]
                 ?? throw new Exception("No control named [btnPDisplay] found in layoutPatientButtons controls collection."));
         private Button btnPatientSearch => (Button)(layoutPatientButtons.Controls["btnPSearch"] 
                 ?? throw new Exception("No control named [btnPSearch] found in layoutPatientButtons controls collection."));
@@ -61,7 +61,7 @@ namespace ClinicManagement_proj.UI
             btnPatientCreate.Click += new EventHandler(btnPatientCreate_Click);
             btnPatientUpdate.Click += new EventHandler(btnPatientUpdate_Click);
             btnPatientCancel.Click += new EventHandler(btnPatientCancel_Click);
-            btnPatientDelete.Click += new EventHandler(btnPatientDelete_Click);
+            //btnPatientDelete.Click += new EventHandler(btnPatientDelete_Click);
             btnPatientDisplay.Click += new EventHandler(btnPatientDisplay_Click);
             btnPatientSearch.Click += new EventHandler(btnPatientSearch_Click);
             dgvPatients.Click += new EventHandler(dgvPatients_Click);
