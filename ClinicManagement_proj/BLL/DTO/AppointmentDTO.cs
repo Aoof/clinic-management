@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace ClinicManagement_proj.BLL.DTO
-{ 
+{
     public class AppointmentDTO
     {
         public static int NOTES_MAX_LENGTH = 512;

@@ -2,8 +2,8 @@
 using ClinicManagement_proj.DAL;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Data.Entity;
+using System.Linq;
 
 namespace ClinicManagement_proj.BLL.Services
 {
@@ -31,7 +31,6 @@ namespace ClinicManagement_proj.BLL.Services
             if (!ClinicManagementApp.CurrentUserHasRole(UserService.UserRoles.Administrator))
                 throw new UnauthorizedAccessException("Only Admin users can update doctors.");
 
-            doctorDto.ModifiedAt = DateTime.Now;
             clinicDb.SaveChanges();
             return doctorDto;
         }

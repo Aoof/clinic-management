@@ -1,12 +1,10 @@
 using ClinicManagement_proj.BLL;
+using ClinicManagement_proj.BLL.DTO;
 using ClinicManagement_proj.BLL.Services;
 using System;
 using System.Drawing;
-using System.Drawing.Text;
-using System.Windows.Forms;
-using ClinicManagement_proj.BLL.DTO;
-using ClinicManagement_proj.DAL;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace ClinicManagement_proj.UI
 {
@@ -143,8 +141,8 @@ namespace ClinicManagement_proj.UI
                 selectedPatient = appointment.Patient;
                 selectedTimeSlot = appointment.TimeSlot;
 
-                cmbApptDoctor.BackColor = Color.Green;
-                cmbApptPatient.BackColor = Color.Green;
+                cmbApptDoctor.BackColor = Color.LightGreen;
+                cmbApptPatient.BackColor = Color.LightGreen;
 
                 // Load time slots and select the current one
                 dtpApptDate_ValueChanged(null, null);

@@ -1,4 +1,5 @@
-﻿using ClinicManagement_proj.BLL.Utils;
+﻿using ClinicManagement_proj.BLL;
+using ClinicManagement_proj.BLL.Utils;
 using System;
 using System.Drawing;
 using System.Linq;
@@ -177,6 +178,16 @@ namespace ClinicManagement_proj.UI
             {
                 RefreshNotificationsList();
             }
+        }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            Hide();
+            ClinicManagementApp.HasLoggedInBefore = true;
+            ClinicManagementApp.CurrentUser = null;
+            Form loginForm = new LoginForm();
+            loginForm.ShowDialog();
+            Close();
         }
     }
 }

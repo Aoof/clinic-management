@@ -38,7 +38,7 @@ namespace ClinicManagement_proj.BLL.DTO
         {
             if (string.IsNullOrWhiteSpace(username))
                 throw new ArgumentException("Username cannot be empty.");
-            
+
             if (username.Length > USERNAME_MAX_LENGTH || username.Length < 3)
                 throw new ArgumentException($"Username must be between 3 and {USERNAME_MAX_LENGTH} characters.");
 

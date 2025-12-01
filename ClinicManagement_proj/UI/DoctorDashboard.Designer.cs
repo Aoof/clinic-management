@@ -35,7 +35,6 @@ namespace ClinicManagement_proj.UI
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DoctorDashboard));
-            this.lblHeader = new System.Windows.Forms.Label();
             this.pnlSidebar = new System.Windows.Forms.Panel();
             this.btnAppointmentManagement = new System.Windows.Forms.Button();
             this.btnPatientRegistration = new System.Windows.Forms.Button();
@@ -89,15 +88,18 @@ namespace ClinicManagement_proj.UI
             this.lblPFName = new System.Windows.Forms.Label();
             this.pnlReports = new System.Windows.Forms.Panel();
             this.lblReportsPlaceholder = new System.Windows.Forms.Label();
-            this.pnlHeader = new System.Windows.Forms.Panel();
-            this.grpNotifications = new System.Windows.Forms.GroupBox();
-            this.btnNotifications = new System.Windows.Forms.Button();
-            this.lblToast = new System.Windows.Forms.Label();
             this.pnlNotifications = new System.Windows.Forms.Panel();
             this.lbNotifications = new System.Windows.Forms.ListBox();
             this.timerToast = new System.Windows.Forms.Timer(this.components);
             this.grpAppointmentForm = new System.Windows.Forms.GroupBox();
             this.lblAppointmentPlaceholder = new System.Windows.Forms.Label();
+            this.pnlHeader = new System.Windows.Forms.Panel();
+            this.grpNotifications = new System.Windows.Forms.GroupBox();
+            this.btnNotifications = new System.Windows.Forms.Button();
+            this.lblToast = new System.Windows.Forms.Label();
+            this.lblHeader = new System.Windows.Forms.Label();
+            this.pnlLogout = new System.Windows.Forms.Panel();
+            this.btnLogout = new System.Windows.Forms.Button();
             this.pnlSidebar.SuspendLayout();
             this.pnlSidebarHeader.SuspendLayout();
             this.pnlMainContent.SuspendLayout();
@@ -110,26 +112,11 @@ namespace ClinicManagement_proj.UI
             this.grpPatientRegistration.SuspendLayout();
             this.layoutPatientButtons.SuspendLayout();
             this.pnlReports.SuspendLayout();
+            this.pnlNotifications.SuspendLayout();
             this.pnlHeader.SuspendLayout();
             this.grpNotifications.SuspendLayout();
-            this.pnlNotifications.SuspendLayout();
+            this.pnlLogout.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // lblHeader
-            // 
-            this.lblHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
-            this.lblHeader.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblHeader.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.lblHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeader.ForeColor = System.Drawing.Color.White;
-            this.lblHeader.Location = new System.Drawing.Point(0, 0);
-            this.lblHeader.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblHeader.Name = "lblHeader";
-            this.lblHeader.Padding = new System.Windows.Forms.Padding(280, 0, 0, 0);
-            this.lblHeader.Size = new System.Drawing.Size(1676, 125);
-            this.lblHeader.TabIndex = 1;
-            this.lblHeader.Text = "Doctor Dashboard";
-            this.lblHeader.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // pnlSidebar
             // 
@@ -278,7 +265,7 @@ namespace ClinicManagement_proj.UI
             this.dgvAppointments.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dgvAppointments.RowTemplate.Height = 24;
             this.dgvAppointments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvAppointments.Size = new System.Drawing.Size(721, 895);
+            this.dgvAppointments.Size = new System.Drawing.Size(1761, 1022);
             this.dgvAppointments.TabIndex = 8;
             // 
             // grpApptMgmt
@@ -420,7 +407,7 @@ namespace ClinicManagement_proj.UI
             this.cmbApptDoctor.Location = new System.Drawing.Point(25, 162);
             this.cmbApptDoctor.Margin = new System.Windows.Forms.Padding(5, 2, 2, 5);
             this.cmbApptDoctor.Name = "cmbApptDoctor";
-            this.cmbApptDoctor.Size = new System.Drawing.Size(560, 30);
+            this.cmbApptDoctor.Size = new System.Drawing.Size(560, 33);
             this.cmbApptDoctor.TabIndex = 13;
             // 
             // lblApptPatient
@@ -444,7 +431,7 @@ namespace ClinicManagement_proj.UI
             this.cmbApptPatient.Location = new System.Drawing.Point(25, 248);
             this.cmbApptPatient.Margin = new System.Windows.Forms.Padding(5, 2, 2, 5);
             this.cmbApptPatient.Name = "cmbApptPatient";
-            this.cmbApptPatient.Size = new System.Drawing.Size(560, 30);
+            this.cmbApptPatient.Size = new System.Drawing.Size(560, 33);
             this.cmbApptPatient.TabIndex = 15;
             // 
             // lblApptDate
@@ -623,7 +610,7 @@ namespace ClinicManagement_proj.UI
             this.dgvRegPatients.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dgvRegPatients.RowTemplate.Height = 24;
             this.dgvRegPatients.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvRegPatients.Size = new System.Drawing.Size(721, 895);
+            this.dgvRegPatients.Size = new System.Drawing.Size(1761, 1022);
             this.dgvRegPatients.TabIndex = 7;
             // 
             // grpPatientRegistration
@@ -927,16 +914,65 @@ namespace ClinicManagement_proj.UI
             this.lblReportsPlaceholder.Text = "Reports Module - Coming Soon";
             this.lblReportsPlaceholder.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // pnlNotifications
+            // 
+            this.pnlNotifications.BackColor = System.Drawing.Color.White;
+            this.pnlNotifications.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlNotifications.Controls.Add(this.lbNotifications);
+            this.pnlNotifications.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pnlNotifications.Location = new System.Drawing.Point(1675, 125);
+            this.pnlNotifications.Margin = new System.Windows.Forms.Padding(2);
+            this.pnlNotifications.Name = "pnlNotifications";
+            this.pnlNotifications.Size = new System.Drawing.Size(1, 925);
+            this.pnlNotifications.TabIndex = 1;
+            this.pnlNotifications.Visible = false;
+            // 
+            // lbNotifications
+            // 
+            this.lbNotifications.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbNotifications.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lbNotifications.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbNotifications.FormattingEnabled = true;
+            this.lbNotifications.ItemHeight = 18;
+            this.lbNotifications.Location = new System.Drawing.Point(0, 0);
+            this.lbNotifications.Margin = new System.Windows.Forms.Padding(2);
+            this.lbNotifications.Name = "lbNotifications";
+            this.lbNotifications.Size = new System.Drawing.Size(0, 1008);
+            this.lbNotifications.TabIndex = 0;
+            // 
+            // timerToast
+            // 
+            this.timerToast.Interval = 5000;
+            this.timerToast.Tick += new System.EventHandler(this.timerToast_Tick);
+            // 
+            // grpAppointmentForm
+            // 
+            this.grpAppointmentForm.Location = new System.Drawing.Point(0, 0);
+            this.grpAppointmentForm.Name = "grpAppointmentForm";
+            this.grpAppointmentForm.Size = new System.Drawing.Size(200, 100);
+            this.grpAppointmentForm.TabIndex = 0;
+            this.grpAppointmentForm.TabStop = false;
+            // 
+            // lblAppointmentPlaceholder
+            // 
+            this.lblAppointmentPlaceholder.Location = new System.Drawing.Point(0, 0);
+            this.lblAppointmentPlaceholder.Name = "lblAppointmentPlaceholder";
+            this.lblAppointmentPlaceholder.Size = new System.Drawing.Size(100, 23);
+            this.lblAppointmentPlaceholder.TabIndex = 0;
+            // 
             // pnlHeader
             // 
             this.pnlHeader.Controls.Add(this.grpNotifications);
             this.pnlHeader.Controls.Add(this.lblHeader);
+            this.pnlHeader.Controls.Add(this.pnlLogout);
             this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlHeader.Location = new System.Drawing.Point(0, 0);
             this.pnlHeader.Margin = new System.Windows.Forms.Padding(2);
             this.pnlHeader.Name = "pnlHeader";
             this.pnlHeader.Size = new System.Drawing.Size(1676, 125);
-            this.pnlHeader.TabIndex = 4;
+            this.pnlHeader.TabIndex = 5;
             // 
             // grpNotifications
             // 
@@ -970,7 +1006,6 @@ namespace ClinicManagement_proj.UI
             this.btnNotifications.TabIndex = 0;
             this.btnNotifications.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnNotifications.UseVisualStyleBackColor = false;
-            this.btnNotifications.Click += new System.EventHandler(this.btnNotifications_Click);
             // 
             // lblToast
             // 
@@ -988,53 +1023,49 @@ namespace ClinicManagement_proj.UI
             this.lblToast.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lblToast.Visible = false;
             // 
-            // pnlNotifications
+            // lblHeader
             // 
-            this.pnlNotifications.BackColor = System.Drawing.Color.White;
-            this.pnlNotifications.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlNotifications.Controls.Add(this.lbNotifications);
-            this.pnlNotifications.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pnlNotifications.Location = new System.Drawing.Point(1675, 125);
-            this.pnlNotifications.Margin = new System.Windows.Forms.Padding(2);
-            this.pnlNotifications.Name = "pnlNotifications";
-            this.pnlNotifications.Size = new System.Drawing.Size(1, 925);
-            this.pnlNotifications.TabIndex = 1;
-            this.pnlNotifications.Visible = false;
+            this.lblHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
+            this.lblHeader.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblHeader.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.lblHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHeader.ForeColor = System.Drawing.Color.White;
+            this.lblHeader.Location = new System.Drawing.Point(290, 0);
+            this.lblHeader.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblHeader.Name = "lblHeader";
+            this.lblHeader.Size = new System.Drawing.Size(1386, 125);
+            this.lblHeader.TabIndex = 1;
+            this.lblHeader.Text = "Doctor Dashboard";
+            this.lblHeader.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // lbNotifications
+            // pnlLogout
             // 
-            this.lbNotifications.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbNotifications.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lbNotifications.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbNotifications.FormattingEnabled = true;
-            this.lbNotifications.ItemHeight = 18;
-            this.lbNotifications.Location = new System.Drawing.Point(0, 0);
-            this.lbNotifications.Margin = new System.Windows.Forms.Padding(2);
-            this.lbNotifications.Name = "lbNotifications";
-            this.lbNotifications.Size = new System.Drawing.Size(0, 810);
-            this.lbNotifications.TabIndex = 0;
+            this.pnlLogout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
+            this.pnlLogout.Controls.Add(this.btnLogout);
+            this.pnlLogout.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pnlLogout.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.pnlLogout.Location = new System.Drawing.Point(0, 0);
+            this.pnlLogout.Margin = new System.Windows.Forms.Padding(2);
+            this.pnlLogout.Name = "pnlLogout";
+            this.pnlLogout.Padding = new System.Windows.Forms.Padding(40, 30, 40, 30);
+            this.pnlLogout.Size = new System.Drawing.Size(290, 125);
+            this.pnlLogout.TabIndex = 5;
             // 
-            // timerToast
+            // btnLogout
             // 
-            this.timerToast.Interval = 5000;
-            this.timerToast.Tick += new System.EventHandler(this.timerToast_Tick);
-            // 
-            // grpAppointmentForm
-            // 
-            this.grpAppointmentForm.Location = new System.Drawing.Point(0, 0);
-            this.grpAppointmentForm.Name = "grpAppointmentForm";
-            this.grpAppointmentForm.Size = new System.Drawing.Size(200, 100);
-            this.grpAppointmentForm.TabIndex = 0;
-            this.grpAppointmentForm.TabStop = false;
-            // 
-            // lblAppointmentPlaceholder
-            // 
-            this.lblAppointmentPlaceholder.Location = new System.Drawing.Point(0, 0);
-            this.lblAppointmentPlaceholder.Name = "lblAppointmentPlaceholder";
-            this.lblAppointmentPlaceholder.Size = new System.Drawing.Size(100, 23);
-            this.lblAppointmentPlaceholder.TabIndex = 0;
+            this.btnLogout.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnLogout.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnLogout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLogout.ForeColor = System.Drawing.Color.White;
+            this.btnLogout.Location = new System.Drawing.Point(40, 30);
+            this.btnLogout.Margin = new System.Windows.Forms.Padding(0);
+            this.btnLogout.Name = "btnLogout";
+            this.btnLogout.Size = new System.Drawing.Size(210, 65);
+            this.btnLogout.TabIndex = 3;
+            this.btnLogout.Text = "Logout";
+            this.btnLogout.UseVisualStyleBackColor = false;
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
             // 
             // DoctorDashboard
             // 
@@ -1071,16 +1102,15 @@ namespace ClinicManagement_proj.UI
             this.layoutPatientButtons.ResumeLayout(false);
             this.layoutPatientButtons.PerformLayout();
             this.pnlReports.ResumeLayout(false);
+            this.pnlNotifications.ResumeLayout(false);
             this.pnlHeader.ResumeLayout(false);
             this.grpNotifications.ResumeLayout(false);
-            this.pnlNotifications.ResumeLayout(false);
+            this.pnlLogout.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Label lblHeader;
         private System.Windows.Forms.Panel pnlSidebar;
         private System.Windows.Forms.Button btnPatientRegistration;
         private System.Windows.Forms.Button btnReports;
@@ -1106,10 +1136,6 @@ namespace ClinicManagement_proj.UI
         private System.Windows.Forms.Label lblPFName;
         private System.Windows.Forms.Panel pnlReports;
         private System.Windows.Forms.Label lblReportsPlaceholder;
-        private System.Windows.Forms.Panel pnlHeader;
-        private System.Windows.Forms.GroupBox grpNotifications;
-        private System.Windows.Forms.Button btnNotifications;
-        private System.Windows.Forms.Label lblToast;
         private System.Windows.Forms.Panel pnlNotifications;
         private System.Windows.Forms.ListBox lbNotifications;
         private System.Windows.Forms.Timer timerToast;
@@ -1143,5 +1169,12 @@ namespace ClinicManagement_proj.UI
         private System.Windows.Forms.ComboBox cmbApptStatus;
         private System.Windows.Forms.Label lblApptId;
         private System.Windows.Forms.TextBox txtApptId;
+        private System.Windows.Forms.Panel pnlHeader;
+        private System.Windows.Forms.GroupBox grpNotifications;
+        private System.Windows.Forms.Button btnNotifications;
+        private System.Windows.Forms.Label lblToast;
+        private System.Windows.Forms.Label lblHeader;
+        private System.Windows.Forms.Panel pnlLogout;
+        private System.Windows.Forms.Button btnLogout;
     }
 }

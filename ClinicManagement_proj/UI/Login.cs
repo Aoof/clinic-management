@@ -1,5 +1,5 @@
-﻿using ClinicManagement_proj.BLL.Services;
-using ClinicManagement_proj.BLL;
+﻿using ClinicManagement_proj.BLL;
+using ClinicManagement_proj.BLL.Services;
 using System;
 using System.Windows.Forms;
 
@@ -21,12 +21,14 @@ namespace ClinicManagement_proj.UI
             if (!string.IsNullOrEmpty(txtUsername.Text) && !string.IsNullOrEmpty(txtPassword.Text))
             {
                 checkRememberPassword.Checked = true;
+                if (!ClinicManagementApp.HasLoggedInBefore)
+                    btnLogin.PerformClick();
             }
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            var user = ClinicManagementApp.LoginService.Authenticate(txtUsername.Text, txtPassword.Text);
+            var user = ClinicManagementApp.UserService.Authenticate(txtUsername.Text, txtPassword.Text);
 
             if (user != null)
             {

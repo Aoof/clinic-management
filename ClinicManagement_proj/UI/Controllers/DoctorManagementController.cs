@@ -10,25 +10,25 @@ namespace ClinicManagement_proj.UI
     public class DoctorManagementController : IPanelController
     {
         private readonly Panel panel;
-        private DataGridView dgvDoctors => (DataGridView)(panel.Controls["dgvDoctors"] 
+        private DataGridView dgvDoctors => (DataGridView)(panel.Controls["dgvDoctors"]
                 ?? throw new Exception("No control named [dgvDoctors] found in panel controls collection."));
-        private GroupBox grpDoctorMgmt => (GroupBox)(panel.Controls["grpDoctorMgmt"] 
+        private GroupBox grpDoctorMgmt => (GroupBox)(panel.Controls["grpDoctorMgmt"]
                 ?? throw new Exception("No control named [grpDoctorMgmt] found in panel controls collection."));
-        private TableLayoutPanel actionsLayout => (TableLayoutPanel)(grpDoctorMgmt.Controls["layoutDoctorActions"] 
+        private TableLayoutPanel actionsLayout => (TableLayoutPanel)(grpDoctorMgmt.Controls["layoutDoctorActions"]
                 ?? throw new Exception("No control named [layoutDoctorActions] found in grpDoctorMgmt controls collection."));
-        private TextBox txtDoctorFName => (TextBox)(grpDoctorMgmt.Controls["txtDoctorFName"] 
+        private TextBox txtDoctorFName => (TextBox)(grpDoctorMgmt.Controls["txtDoctorFName"]
                 ?? throw new Exception("No control named [txtDoctorFName] found in grpDoctorMgmt controls collection."));
-        private TextBox txtDoctorLName => (TextBox)(grpDoctorMgmt.Controls["txtDoctorLName"] 
+        private TextBox txtDoctorLName => (TextBox)(grpDoctorMgmt.Controls["txtDoctorLName"]
                 ?? throw new Exception("No control named [txtDoctorLName] found in grpDoctorMgmt controls collection."));
-        private ComboBox cmbSpecialization => (ComboBox)(grpDoctorMgmt.Controls["cmbSpecialization"] 
+        private ComboBox cmbSpecialization => (ComboBox)(grpDoctorMgmt.Controls["cmbSpecialization"]
                 ?? throw new Exception("No control named [cmbSpecialization] found in grpDoctorMgmt controls collection."));
-        private Button btnDoctorCreate => (Button)(actionsLayout.Controls["btnDoctorCreate"] 
+        private Button btnDoctorCreate => (Button)(actionsLayout.Controls["btnDoctorCreate"]
                 ?? throw new Exception("No control named [btnDoctorCreate] found in actionsLayout controls collection."));
-        private Button btnDoctorUpdate => (Button)(actionsLayout.Controls["btnDoctorUpdate"] 
+        private Button btnDoctorUpdate => (Button)(actionsLayout.Controls["btnDoctorUpdate"]
                 ?? throw new Exception("No control named [btnDoctorUpdate] found in actionsLayout controls collection."));
-        private Button btnDoctorCancel => (Button)(actionsLayout.Controls["btnDoctorCancel"] 
+        private Button btnDoctorCancel => (Button)(actionsLayout.Controls["btnDoctorCancel"]
                 ?? throw new Exception("No control named [btnDoctorCancel] found in actionsLayout controls collection."));
-        private Button btnDoctorDelete => (Button)(actionsLayout.Controls["btnDoctorDelete"] 
+        private Button btnDoctorDelete => (Button)(actionsLayout.Controls["btnDoctorDelete"]
                 ?? throw new Exception("No control named [btnDoctorDelete] found in actionsLayout controls collection."));
 
         public Panel Panel => panel;

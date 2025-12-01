@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ClinicManagement_proj.BLL.DTO;
+﻿using ClinicManagement_proj.BLL.DTO;
 using ClinicManagement_proj.BLL.Services;
 using ClinicManagement_proj.DAL;
+using System;
+using System.Linq;
 
 namespace ClinicManagement_proj.BLL
 {

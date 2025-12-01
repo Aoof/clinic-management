@@ -24,6 +24,16 @@ namespace ClinicManagement_proj.BLL.Services
             Receptionist
         }
 
+        public UserDTO Authenticate(string username, string password)
+        {
+            var user = GetUserByUsername(username);
+            if (user != null && ComparePassword(password, user.PasswordHash))
+            {
+                return user;
+            }
+            return null;
+        }
+
         private static string HashPassword(string plainPassword)
         {
             UserDTO.ValidatePassword(plainPassword);
@@ -77,7 +87,7 @@ namespace ClinicManagement_proj.BLL.Services
             var user = clinicDb.Users
                 .Where(u => u.Username == username)
                 .Include(u => u.Roles)
-                .SingleOrDefault() 
+                .SingleOrDefault()
                 ?? throw new ArgumentException("User not found");
 
             return user;
@@ -92,8 +102,6 @@ namespace ClinicManagement_proj.BLL.Services
                 throw new ArgumentException("Username already exists");
 
             user.PasswordHash = HashPassword(password);
-            user.CreatedAt = DateTime.Now;
-            user.ModifiedAt = DateTime.Now;
             clinicDb.Users.Add(user);
             clinicDb.SaveChanges();
         }
@@ -106,7 +114,6 @@ namespace ClinicManagement_proj.BLL.Services
             if (!string.IsNullOrEmpty(password))
                 user.PasswordHash = HashPassword(password);
 
-            user.ModifiedAt = DateTime.Now;
             clinicDb.SaveChanges();
             return user;
         }
@@ -118,7 +125,7 @@ namespace ClinicManagement_proj.BLL.Services
 
             var user = clinicDb.Users
                     .Where(u => u.Id == id)
-                    .FirstOrDefault() 
+                    .FirstOrDefault()
                     ?? throw new ArgumentException("User not found");
 
             clinicDb.Users.Remove(user);

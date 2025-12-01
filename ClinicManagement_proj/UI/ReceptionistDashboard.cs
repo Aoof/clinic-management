@@ -1,5 +1,5 @@
-﻿using ClinicManagement_proj.BLL.Utils;
-using ClinicManagement_proj.BLL;
+﻿using ClinicManagement_proj.BLL;
+using ClinicManagement_proj.BLL.Utils;
 using System;
 using System.Drawing;
 using System.Linq;
@@ -34,7 +34,7 @@ namespace ClinicManagement_proj.UI
             navigationManager = new NavigationManager(SIDEBAR_BG, SIDEBAR_ACTIVE);
 
             // Initialize panel controllers
-            patientRegistrationController = new PatientRegistrationController(pnlPatientRegistration, ClinicManagementApp.PatientService );
+            patientRegistrationController = new PatientRegistrationController(pnlPatientRegistration, ClinicManagementApp.PatientService);
             appointmentManagementController = new ApptMgmtController(pnlAppointmentManagement);
         }
 
@@ -164,6 +164,16 @@ namespace ClinicManagement_proj.UI
             {
                 RefreshNotificationsList();
             }
+        }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            Hide();
+            ClinicManagementApp.HasLoggedInBefore = true;
+            ClinicManagementApp.CurrentUser = null;
+            Form loginForm = new LoginForm();
+            loginForm.ShowDialog();
+            Close();
         }
     }
 }

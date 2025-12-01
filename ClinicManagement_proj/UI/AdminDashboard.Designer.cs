@@ -178,6 +178,8 @@ namespace ClinicManagement_proj.UI
             this.timerToast = new System.Windows.Forms.Timer(this.components);
             this.grpAppointmentForm = new System.Windows.Forms.GroupBox();
             this.lblAppointmentPlaceholder = new System.Windows.Forms.Label();
+            this.pnlLogout = new System.Windows.Forms.Panel();
+            this.btnLogout = new System.Windows.Forms.Button();
             this.pnlSidebar.SuspendLayout();
             this.pnlSidebarHeader.SuspendLayout();
             this.pnlMainContent.SuspendLayout();
@@ -209,6 +211,7 @@ namespace ClinicManagement_proj.UI
             this.pnlHeader.SuspendLayout();
             this.grpNotifications.SuspendLayout();
             this.pnlNotifications.SuspendLayout();
+            this.pnlLogout.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblHeader
@@ -218,11 +221,10 @@ namespace ClinicManagement_proj.UI
             this.lblHeader.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.lblHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblHeader.ForeColor = System.Drawing.Color.White;
-            this.lblHeader.Location = new System.Drawing.Point(0, 0);
+            this.lblHeader.Location = new System.Drawing.Point(290, 0);
             this.lblHeader.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblHeader.Name = "lblHeader";
-            this.lblHeader.Padding = new System.Windows.Forms.Padding(280, 0, 0, 0);
-            this.lblHeader.Size = new System.Drawing.Size(1676, 125);
+            this.lblHeader.Size = new System.Drawing.Size(1386, 125);
             this.lblHeader.TabIndex = 1;
             this.lblHeader.Text = "Admin Dashboard";
             this.lblHeader.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -2288,6 +2290,7 @@ namespace ClinicManagement_proj.UI
             // 
             this.pnlHeader.Controls.Add(this.grpNotifications);
             this.pnlHeader.Controls.Add(this.lblHeader);
+            this.pnlHeader.Controls.Add(this.pnlLogout);
             this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlHeader.Location = new System.Drawing.Point(0, 0);
             this.pnlHeader.Margin = new System.Windows.Forms.Padding(2);
@@ -2393,6 +2396,35 @@ namespace ClinicManagement_proj.UI
             this.lblAppointmentPlaceholder.Size = new System.Drawing.Size(100, 23);
             this.lblAppointmentPlaceholder.TabIndex = 0;
             // 
+            // pnlLogout
+            // 
+            this.pnlLogout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
+            this.pnlLogout.Controls.Add(this.btnLogout);
+            this.pnlLogout.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pnlLogout.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.pnlLogout.Location = new System.Drawing.Point(0, 0);
+            this.pnlLogout.Margin = new System.Windows.Forms.Padding(2);
+            this.pnlLogout.Name = "pnlLogout";
+            this.pnlLogout.Padding = new System.Windows.Forms.Padding(40, 30, 40, 30);
+            this.pnlLogout.Size = new System.Drawing.Size(290, 125);
+            this.pnlLogout.TabIndex = 5;
+            // 
+            // btnLogout
+            // 
+            this.btnLogout.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnLogout.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnLogout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLogout.ForeColor = System.Drawing.Color.White;
+            this.btnLogout.Location = new System.Drawing.Point(40, 30);
+            this.btnLogout.Margin = new System.Windows.Forms.Padding(0);
+            this.btnLogout.Name = "btnLogout";
+            this.btnLogout.Size = new System.Drawing.Size(210, 65);
+            this.btnLogout.TabIndex = 3;
+            this.btnLogout.Text = "Logout";
+            this.btnLogout.UseVisualStyleBackColor = false;
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
+            // 
             // AdminDashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -2455,6 +2487,7 @@ namespace ClinicManagement_proj.UI
             this.pnlHeader.ResumeLayout(false);
             this.grpNotifications.ResumeLayout(false);
             this.pnlNotifications.ResumeLayout(false);
+            this.pnlLogout.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -2604,5 +2637,7 @@ namespace ClinicManagement_proj.UI
         private System.Windows.Forms.ComboBox cmbApptStatus;
         private System.Windows.Forms.Label lblApptId;
         private System.Windows.Forms.TextBox txtApptId;
+        private System.Windows.Forms.Panel pnlLogout;
+        private System.Windows.Forms.Button btnLogout;
     }
 }

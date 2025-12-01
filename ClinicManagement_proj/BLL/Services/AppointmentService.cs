@@ -2,7 +2,7 @@
 using ClinicManagement_proj.DAL;
 using System;
 using System.Collections.Generic;
-using static System.Data.Entity.DbFunctions;
+using System.Data.Entity;
 using System.Linq;
 
 namespace ClinicManagement_proj.BLL.Services
@@ -27,8 +27,6 @@ namespace ClinicManagement_proj.BLL.Services
                )
                 throw new UnauthorizedAccessException("Only authorized users can create appointments.");
 
-            appointment.CreatedAt = DateTime.Now;
-            appointment.ModifiedAt = DateTime.Now;
             clinicDb.Appointments.Add(appointment);
             clinicDb.SaveChanges();
             return appointment;
@@ -44,7 +42,6 @@ namespace ClinicManagement_proj.BLL.Services
                     )
                )
                 throw new UnauthorizedAccessException("Only authorized users can create appointments.");
-            appointment.ModifiedAt = DateTime.Now;
             clinicDb.SaveChanges();
             return appointment;
         }
@@ -74,9 +71,9 @@ namespace ClinicManagement_proj.BLL.Services
                )
                 throw new UnauthorizedAccessException("Only authorized users can create appointments.");
             return clinicDb.Appointments
-                .Include("Doctor")
-                .Include("Patient")
-                .Include("TimeSlot")
+                .Include(a => a.Doctor)
+                .Include(a => a.Patient)
+                .Include(a => a.TimeSlot)
                 .ToList();
         }
 
@@ -91,9 +88,9 @@ namespace ClinicManagement_proj.BLL.Services
                )
                 throw new UnauthorizedAccessException("Only authorized users can create appointments.");
             return clinicDb.Appointments
-                .Include("Doctor")
-                .Include("Patient")
-                .Include("TimeSlot")
+                .Include(a => a.Doctor)
+                .Include(a => a.Patient)
+                .Include(a => a.TimeSlot)
                 .Where(a => a.Id.ToString().Contains(id.ToString()))
                 .ToList();
         }
@@ -109,10 +106,10 @@ namespace ClinicManagement_proj.BLL.Services
                )
                 throw new UnauthorizedAccessException("Only authorized users can create appointments.");
             return clinicDb.Appointments
-                .Include("Doctor")
-                .Include("Patient")
-                .Include("TimeSlot")
-                .Where(a => a.Date >= date.Date && a.Date < AddDays(date.Date, 1))
+                .Include(a => a.Doctor)
+                .Include(a => a.Patient)
+                .Include(a => a.TimeSlot)
+                .Where(a => DateTime.Compare(a.Date, date.Date) == 0)
                 .ToList();
         }
 
@@ -126,11 +123,11 @@ namespace ClinicManagement_proj.BLL.Services
                     )
                )
                 throw new UnauthorizedAccessException("Only authorized users can create appointments.");
-            
+
             return clinicDb.Appointments
-                .Include("Doctor")
-                .Include("Patient")
-                .Include("TimeSlot")
+                .Include(a => a.Doctor)
+                .Include(a => a.Patient)
+                .Include(a => a.TimeSlot)
                 .Where(a => a.DoctorId == doctor.Id)
                 .ToList();
         }
@@ -146,9 +143,9 @@ namespace ClinicManagement_proj.BLL.Services
                )
                 throw new UnauthorizedAccessException("Only authorized users can create appointments.");
             return clinicDb.Appointments
-                .Include("Doctor")
-                .Include("Patient")
-                .Include("TimeSlot")
+                .Include(a => a.Doctor)
+                .Include(a => a.Patient)
+                .Include(a => a.TimeSlot)
                 .Where(a => a.PatientId == patient.Id)
                 .ToList();
         }
@@ -164,7 +161,7 @@ namespace ClinicManagement_proj.BLL.Services
                )
                 throw new UnauthorizedAccessException("Only authorized users can create appointments.");
             var bookedSlotIds = clinicDb.Appointments
-                                        .Where(a => a.Date >= date.Date && a.Date < AddDays(date.Date, 1))
+                                        .Where(a => DateTime.Compare(a.Date, date.Date) == 0)
                                         .Select(a => a.TimeSlotId)
                                         .ToList();
             var availableSlots = clinicDb.TimeSlots

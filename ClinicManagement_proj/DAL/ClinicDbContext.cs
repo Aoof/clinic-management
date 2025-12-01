@@ -1,6 +1,8 @@
 ﻿using ClinicManagement_proj.BLL.DTO;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 
 namespace ClinicManagement_proj.DAL
 {
@@ -15,8 +17,55 @@ namespace ClinicManagement_proj.DAL
         public DbSet<TimeSlotDTO> TimeSlots { get; set; }
         public DbSet<UserDTO> Users { get; set; }
 
-        public ClinicDbContext() : base("data source=.\\SQLEXPRESS;initial catalog=HealthCareClinicDB;integrated security=True;encrypt=False;MultipleActiveResultSets=True;App=EntityFramework")
+        public ClinicDbContext() : base("data source=.\\SQLEXPRESS;initial catalog=HealthCareClinicDB_T2;integrated security=True;encrypt=False;MultipleActiveResultSets=True;App=EntityFramework")
         { }
+
+        public override int SaveChanges()
+        {
+            foreach (DbEntityEntry<PatientDTO> entry in ChangeTracker.Entries<PatientDTO>())
+            {
+                if (entry.State == EntityState.Modified || entry.State == EntityState.Added)
+                {
+                    entry.Entity.ModifiedAt = DateTime.Now;
+                }
+            }
+            foreach (DbEntityEntry<AppointmentDTO> entry in ChangeTracker.Entries<AppointmentDTO>())
+            {
+                if (entry.State == EntityState.Modified || entry.State == EntityState.Added)
+                {
+                    entry.Entity.ModifiedAt = DateTime.Now;
+                }
+            }
+            foreach (DbEntityEntry<DoctorDTO> entry in ChangeTracker.Entries<DoctorDTO>())
+            {
+                if (entry.State == EntityState.Modified || entry.State == EntityState.Added)
+                {
+                    entry.Entity.ModifiedAt = DateTime.Now;
+                }
+            }
+            foreach (DbEntityEntry<DoctorScheduleDTO> entry in ChangeTracker.Entries<DoctorScheduleDTO>())
+            {
+                if (entry.State == EntityState.Modified || entry.State == EntityState.Added)
+                {
+                    entry.Entity.ModifiedAt = DateTime.Now;
+                }
+            }
+            foreach (DbEntityEntry<RoleDTO> entry in ChangeTracker.Entries<RoleDTO>())
+            {
+                if (entry.State == EntityState.Modified || entry.State == EntityState.Added)
+                {
+                    entry.Entity.ModifiedAt = DateTime.Now;
+                }
+            }
+            foreach (DbEntityEntry<UserDTO> entry in ChangeTracker.Entries<UserDTO>())
+            {
+                if (entry.State == EntityState.Modified || entry.State == EntityState.Added)
+                {
+                    entry.Entity.ModifiedAt = DateTime.Now;
+                }
+            }
+            return base.SaveChanges();
+        }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -42,7 +91,7 @@ namespace ClinicManagement_proj.DAL
             modelBuilder.Entity<AppointmentDTO>()
                 .Property(a => a.TimeSlotId).HasColumnName("TimeSlotId");
             modelBuilder.Entity<AppointmentDTO>()
-                .Property(a => a.CreatedAt).HasColumnName("CreatedAt").HasColumnType("datetime2").HasPrecision(7);
+                .Property(a => a.CreatedAt).HasColumnName("CreatedAt").HasColumnType("datetime2").HasPrecision(7).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
             modelBuilder.Entity<AppointmentDTO>()
                 .Property(a => a.ModifiedAt).HasColumnName("ModifiedAt").HasColumnType("datetime2").HasPrecision(7);
 
@@ -68,7 +117,7 @@ namespace ClinicManagement_proj.DAL
                 .HasMaxLength(DoctorDTO.LICENSE_MAX_LENGTH)
                 .HasColumnName("LicenseNumber");
             modelBuilder.Entity<DoctorDTO>()
-                .Property(d => d.CreatedAt).HasColumnName("CreatedAt").HasColumnType("datetime2").HasPrecision(7);
+                .Property(d => d.CreatedAt).HasColumnName("CreatedAt").HasColumnType("datetime2").HasPrecision(7).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
             modelBuilder.Entity<DoctorDTO>()
                 .Property(d => d.ModifiedAt).HasColumnName("ModifiedAt").HasColumnType("datetime2").HasPrecision(7);
 
@@ -90,7 +139,7 @@ namespace ClinicManagement_proj.DAL
             modelBuilder.Entity<DoctorScheduleDTO>()
                 .Property(ds => ds.WorkEndTime).HasColumnName("WorkEndTime").HasColumnType("time");
             modelBuilder.Entity<DoctorScheduleDTO>()
-                .Property(ds => ds.CreatedAt).HasColumnName("CreatedAt").HasColumnType("datetime2").HasPrecision(7);
+                .Property(ds => ds.CreatedAt).HasColumnName("CreatedAt").HasColumnType("datetime2").HasPrecision(7).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
             modelBuilder.Entity<DoctorScheduleDTO>()
                 .Property(ds => ds.ModifiedAt).HasColumnName("ModifiedAt").HasColumnType("datetime2").HasPrecision(7);
 
@@ -125,7 +174,7 @@ namespace ClinicManagement_proj.DAL
             modelBuilder.Entity<PatientDTO>()
                 .Property(p => p.CreatedAt).HasColumnName("CreatedAt").HasColumnType("datetime2").HasPrecision(7).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
             modelBuilder.Entity<PatientDTO>()
-                .Property(p => p.ModifiedAt).HasColumnName("ModifiedAt").HasColumnType("datetime2").HasPrecision(7).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
+                .Property(p => p.ModifiedAt).HasColumnName("ModifiedAt").HasColumnType("datetime2").HasPrecision(7);
 
             // RoleDTO
             modelBuilder.Entity<RoleDTO>()
@@ -139,7 +188,7 @@ namespace ClinicManagement_proj.DAL
                 .HasMaxLength(RoleDTO.ROLENAME_MAXLENGTH)
                 .HasColumnName("RoleName");
             modelBuilder.Entity<RoleDTO>()
-                .Property(r => r.CreatedAt).HasColumnName("CreatedAt").HasColumnType("datetime2").HasPrecision(7);
+                .Property(r => r.CreatedAt).HasColumnName("CreatedAt").HasColumnType("datetime2").HasPrecision(7).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
             modelBuilder.Entity<RoleDTO>()
                 .Property(r => r.ModifiedAt).HasColumnName("ModifiedAt").HasColumnType("datetime2").HasPrecision(7);
 
@@ -183,7 +232,7 @@ namespace ClinicManagement_proj.DAL
                 .HasColumnType("varchar")
                 .HasColumnName("PasswordHash");
             modelBuilder.Entity<UserDTO>()
-                .Property(u => u.CreatedAt).HasColumnName("CreatedAt").HasColumnType("datetime2").HasPrecision(7);
+                .Property(u => u.CreatedAt).HasColumnName("CreatedAt").HasColumnType("datetime2").HasPrecision(7).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
             modelBuilder.Entity<UserDTO>()
                 .Property(u => u.ModifiedAt).HasColumnName("ModifiedAt").HasColumnType("datetime2").HasPrecision(7);
 
