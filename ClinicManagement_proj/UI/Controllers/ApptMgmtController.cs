@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Drawing.Text;
 using System.Windows.Forms;
 using ClinicManagement_proj.BLL.DTO;
+using ClinicManagement_proj.DAL;
 
 namespace ClinicManagement_proj.UI
 {
@@ -70,16 +71,12 @@ namespace ClinicManagement_proj.UI
 
         private void LoadAppointments()
         {
-            dgvAppointments.AutoGenerateColumns = false;
-            dgvAppointments.Columns.Clear();
-            dgvAppointments.Columns.Add(new DataGridViewTextBoxColumn { Name = "Id", HeaderText = "ID", Width = 50 });
-            dgvAppointments.Columns.Add(new DataGridViewTextBoxColumn { Name = "Date", HeaderText = "Date", Width = 100 });
-            dgvAppointments.Columns.Add(new DataGridViewTextBoxColumn { Name = "Doctor", HeaderText = "Doctor", Width = 150 });
-            dgvAppointments.Columns.Add(new DataGridViewTextBoxColumn { Name = "Patient", HeaderText = "Patient", Width = 150 });
-            dgvAppointments.Columns.Add(new DataGridViewTextBoxColumn { Name = "TimeSlot", HeaderText = "Time", Width = 80 });
-            dgvAppointments.Columns.Add(new DataGridViewTextBoxColumn { Name = "Status", HeaderText = "Status", Width = 100 });
-            dgvAppointments.Columns.Add(new DataGridViewTextBoxColumn { Name = "Notes", HeaderText = "Notes", Width = 200 });
             dgvAppointments.DataSource = appointmentService.GetAllAppointments();
+
+            dgvAppointments.Columns["Id"].Visible = false;
+            dgvAppointments.Columns["DoctorId"].Visible = false;
+            dgvAppointments.Columns["TimeSlotId"].Visible = false;
+            dgvAppointments.Columns["PatientId"].Visible = false;
         }
 
         private void ResetAppointmentForm()
@@ -154,38 +151,6 @@ namespace ClinicManagement_proj.UI
 
         private void dgvAppointments_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
-            {
-                var appointment = (AppointmentDTO)dgvAppointments.Rows[e.RowIndex].DataBoundItem;
-                if (appointment != null)
-                {
-                    switch (dgvAppointments.Columns[e.ColumnIndex].Name)
-                    {
-                        case "Id":
-                            e.Value = appointment.Id;
-                            break;
-                        case "Date":
-                            e.Value = appointment.Date.ToString("yyyy-MM-dd");
-                            break;
-                        case "Doctor":
-                            e.Value = appointment.Doctor != null ? $"{appointment.Doctor.FirstName} {appointment.Doctor.LastName}" : "N/A";
-                            break;
-                        case "Patient":
-                            e.Value = appointment.Patient != null ? $"{appointment.Patient.FirstName} {appointment.Patient.LastName}" : "N/A";
-                            break;
-                        case "TimeSlot":
-                            e.Value = appointment.TimeSlot != null ? $"{appointment.TimeSlot.HourOfDay:D2}:{appointment.TimeSlot.MinuteOfHour:D2}" : "N/A";
-                            break;
-                        case "Status":
-                            e.Value = appointment.Status;
-                            break;
-                        case "Notes":
-                            e.Value = appointment.Notes;
-                            break;
-                    }
-                    e.FormattingApplied = true;
-                }
-            }
         }
 
         public void OnHide()
