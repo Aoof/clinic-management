@@ -1,4 +1,5 @@
 ﻿using ClinicManagement_proj.BLL.DTO;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 
 namespace ClinicManagement_proj.DAL
@@ -122,9 +123,9 @@ namespace ClinicManagement_proj.DAL
                 .HasMaxLength(PatientDTO.PHONE_MAX_LENGTH)
                 .HasColumnName("PhoneNumber");
             modelBuilder.Entity<PatientDTO>()
-                .Property(p => p.CreatedAt).HasColumnName("CreatedAt").HasColumnType("datetime2").HasPrecision(7);
+                .Property(p => p.CreatedAt).HasColumnName("CreatedAt").HasColumnType("datetime2").HasPrecision(7).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
             modelBuilder.Entity<PatientDTO>()
-                .Property(p => p.ModifiedAt).HasColumnName("ModifiedAt").HasColumnType("datetime2").HasPrecision(7);
+                .Property(p => p.ModifiedAt).HasColumnName("ModifiedAt").HasColumnType("datetime2").HasPrecision(7).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
 
             // RoleDTO
             modelBuilder.Entity<RoleDTO>()
