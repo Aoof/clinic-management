@@ -2,6 +2,7 @@ using ClinicManagement_proj.BLL;
 using ClinicManagement_proj.BLL.DTO;
 using ClinicManagement_proj.BLL.Services;
 using System;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace ClinicManagement_proj.UI
@@ -79,7 +80,7 @@ namespace ClinicManagement_proj.UI
 
         private void LoadPatients()
         {
-            var users = patientService.GetAll();
+            var users = patientService.GetAllPatients();
             dgvPatients.DataSource = users;
             dgvPatients.AutoGenerateColumns = true;
         }
@@ -148,14 +149,17 @@ namespace ClinicManagement_proj.UI
                 return;
             }
 
-            var result = patientService.Search(id);
+            var results = patientService.Search(id);
 
-            if (result == null)
+            if (!results.Any())
             {
-                MessageBox.Show("Student not found.");
+                MessageBox.Show("Patient not found.");
 
                 return;
             }
+
+            var result = results.First();
+
             ResetPatientForm();
 
             txtPatientId.Text = result.Id.ToString();

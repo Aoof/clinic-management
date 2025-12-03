@@ -96,7 +96,7 @@ namespace ClinicManagement_proj.BLL.DTO
 
         public override string ToString()
         {
-            return $"{FirstName} {LastName} (Phone: {PhoneNumber})";
+            return $"{FirstName} {LastName} (Phone: {PhoneNumber}) [{Id}]";
         }
     }
 }

@@ -2,6 +2,7 @@ using ClinicManagement_proj.BLL;
 using ClinicManagement_proj.BLL.DTO;
 using ClinicManagement_proj.BLL.Services;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -21,6 +22,9 @@ namespace ClinicManagement_proj.UI
         private PatientDTO selectedPatient;
         private TimeSlotDTO selectedTimeSlot;
 
+        private bool isUpdatingDoctorCombo = false;
+        private bool isUpdatingPatientCombo = false;
+
         private readonly Panel panel;
 
         // Access to existing controls
@@ -34,9 +38,8 @@ namespace ClinicManagement_proj.UI
         private Button btnApptSearch => (Button)(layoutApptButtons.Controls["btnApptSearch"] ?? throw new Exception("No control named [btnApptSearch] found in layoutApptButtons controls collection."));
         private ComboBox cmbApptDoctor => (ComboBox)(grpApptMgmt.Controls["cmbApptDoctor"] ?? throw new Exception("No control named [txtDoctor] found in layoutApptMgmt controls collection."));
         private ComboBox cmbApptPatient => (ComboBox)(grpApptMgmt.Controls["cmbApptPatient"] ?? throw new Exception("No control named [txtPatient] found in layoutApptMgmt controls collection."));
-        private TextBox txtApptPhone => (TextBox)(grpApptMgmt.Controls["txtPhone"] ?? throw new Exception("No control named [txtPhone] found in layoutApptMgmt controls collection."));
         private DateTimePicker dtpApptDate => (DateTimePicker)(grpApptMgmt.Controls["dtpApptDate"] ?? throw new Exception("No control named [dtpApptDate] found in layoutApptMgmt controls collection."));
-        private FlowLayoutPanel flpApptTimeSlots => (FlowLayoutPanel)(grpApptMgmt.Controls["flpApptTimeSlots"] ?? throw new Exception("No control named [flpApptTimeSlots] found in layoutApptMgmt controls collection."));
+        private ComboBox cmbApptTimeSlots => (ComboBox)(grpApptMgmt.Controls["cmbApptTimeSlots"] ?? throw new Exception("No control named [cmbApptTimeSlots] found in layoutApptMgmt controls collection."));
         private TextBox txtApptNotes => (TextBox)(grpApptMgmt.Controls["txtApptNotes"] ?? throw new Exception("No control named [txtApptNotes] found in layoutApptMgmt controls collection."));
         private ComboBox cmbApptStatus => (ComboBox)(grpApptMgmt.Controls["cmbApptStatus"] ?? throw new Exception("No control named [cmbStatus] found in layoutApptMgmt controls collection."));
 
@@ -45,9 +48,9 @@ namespace ClinicManagement_proj.UI
         public ApptMgmtController(Panel panel)
         {
             this.panel = panel;
-            this.appointmentService = ClinicManagementApp.AppointmentService;
-            this.doctorService = ClinicManagementApp.DoctorService;
-            this.patientService = ClinicManagementApp.PatientService;
+            appointmentService = ClinicManagementApp.AppointmentService;
+            doctorService = ClinicManagementApp.DoctorService;
+            patientService = ClinicManagementApp.PatientService;
         }
 
         public void Initialize()
@@ -57,12 +60,6 @@ namespace ClinicManagement_proj.UI
             cmbApptStatus.Items.AddRange(new string[] { "Pending", "Cancelled", "Confirmed", "Completed" });
             cmbApptStatus.SelectedIndex = 0; // Default to Pending
 
-            // Set up autocomplete for doctor and patient fields
-            cmbApptDoctor.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            cmbApptDoctor.AutoCompleteSource = AutoCompleteSource.CustomSource;
-            cmbApptPatient.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            cmbApptPatient.AutoCompleteSource = AutoCompleteSource.CustomSource;
-
             // Wire event handlers (scaffolding, no implementation)
             btnApptCreate.Click += new EventHandler(btnApptCreate_Click);
             btnApptUpdate.Click += new EventHandler(btnApptUpdate_Click);
@@ -71,12 +68,12 @@ namespace ClinicManagement_proj.UI
             btnApptSearch.Click += new EventHandler(btnApptSearch_Click);
             dgvAppointments.Click += new EventHandler(dgvAppointments_Click);
             dtpApptDate.ValueChanged += new EventHandler(dtpApptDate_ValueChanged);
-            cmbApptDoctor.TextChanged += new EventHandler(cmbApptDoctor_TextChanged);
+            cmbApptDoctor.SelectedIndexChanged += new EventHandler(cmbApptDoctor_SelectedIndexChanged);
+            cmbApptPatient.SelectedIndexChanged += new EventHandler(cmbApptPatient_SelectedIndexChanged);
             cmbApptPatient.TextChanged += new EventHandler(cmbApptPatient_TextChanged);
+            cmbApptDoctor.TextChanged += new EventHandler(cmbApptDoctor_TextChanged);
             dgvAppointments.CellFormatting += new DataGridViewCellFormattingEventHandler(dgvAppointments_CellFormatting);
-
-            // Ensure scrollbars are enabled
-            dgvAppointments.ScrollBars = ScrollBars.Both;
+            cmbApptTimeSlots.SelectedIndexChanged += new EventHandler(cmbApptTimeSlots_SelectedIndexChanged);
         }
 
         public void OnShow()
@@ -118,7 +115,6 @@ namespace ClinicManagement_proj.UI
             cmbApptDoctor.Text = string.Empty;
             cmbApptPatient.Text = string.Empty;
             dtpApptDate.Value = DateTime.Now;
-            flpApptTimeSlots.Controls.Clear();
             txtApptNotes.Text = string.Empty;
             cmbApptStatus.SelectedIndex = 0;
 
@@ -128,6 +124,22 @@ namespace ClinicManagement_proj.UI
 
             cmbApptDoctor.BackColor = SystemColors.Window;
             cmbApptPatient.BackColor = SystemColors.Window;
+
+            cmbApptDoctor.DataSource = doctorService.GetAllDoctors();
+            cmbApptDoctor.DisplayMember = null;
+            cmbApptDoctor.ValueMember = null;
+            cmbApptDoctor.SelectedIndex = -1;
+
+            cmbApptPatient.DataSource = patientService.GetAllPatients();
+            cmbApptPatient.DisplayMember = null;
+            cmbApptPatient.ValueMember = null;
+            cmbApptPatient.SelectedIndex = -1;
+
+            cmbApptTimeSlots.DataSource = null;
+            cmbApptTimeSlots.Items.Clear();
+            cmbApptTimeSlots.DropDownStyle = ComboBoxStyle.DropDownList;
+
+            cmbApptTimeSlots.SelectedIndex = -1;
         }
 
         private void dgvAppointments_Click(object sender, EventArgs e)
@@ -135,8 +147,8 @@ namespace ClinicManagement_proj.UI
             if (dgvAppointments.CurrentRow != null)
             {
                 var appointment = (AppointmentDTO)dgvAppointments.CurrentRow.DataBoundItem;
-                cmbApptDoctor.Text = appointment.Doctor?.ToString() ?? "";
-                cmbApptPatient.Text = appointment.Patient?.ToString() ?? "";
+                cmbApptDoctor.SelectedItem = appointment.Doctor;
+                cmbApptPatient.SelectedItem = appointment.Patient;
                 dtpApptDate.Value = appointment.Date;
                 txtApptNotes.Text = appointment.Notes;
                 cmbApptStatus.SelectedItem = appointment.Status;
@@ -145,15 +157,9 @@ namespace ClinicManagement_proj.UI
                 selectedPatient = appointment.Patient;
                 selectedTimeSlot = appointment.TimeSlot;
 
-                cmbApptDoctor.BackColor = Color.LightGreen;
-                cmbApptPatient.BackColor = Color.LightGreen;
-
                 // Load time slots and select the current one
                 dtpApptDate_ValueChanged(null, null);
-                foreach (RadioButton rb in flpApptTimeSlots.Controls)
-                {
-                    if ((TimeSlotDTO)rb.Tag == selectedTimeSlot) rb.Checked = true;
-                }
+                cmbApptTimeSlots.SelectedItem = selectedTimeSlot;
             }
         }
 
@@ -222,78 +228,116 @@ namespace ClinicManagement_proj.UI
 
         private void dtpApptDate_ValueChanged(object sender, EventArgs e)
         {
-            flpApptTimeSlots.Controls.Clear();
+            cmbApptTimeSlots.DataSource = null;
+            cmbApptTimeSlots.Items.Clear();
             var slots = appointmentService.GetAvailableTimeSlots(dtpApptDate.Value);
-            foreach (var slot in slots)
+            if (selectedTimeSlot != null && !slots.Contains(selectedTimeSlot))
             {
-                var rb = new RadioButton { Text = slot.ToString(), Tag = slot };
-                rb.CheckedChanged += (s, args) => { if (rb.Checked) selectedTimeSlot = slot; };
-                flpApptTimeSlots.Controls.Add(rb);
+                slots.Add(selectedTimeSlot);
             }
+            cmbApptTimeSlots.DataSource = slots;
+            cmbApptTimeSlots.SelectedIndex = -1;
         }
 
         private void cmbApptDoctor_TextChanged(object sender, EventArgs e)
         {
-            if (cmbApptDoctor.Text.Length >= 1)
+            if (isUpdatingDoctorCombo) return;
+
+            isUpdatingDoctorCombo = true;
+
+            string currentText = cmbApptDoctor.Text;
+            int selStart = cmbApptDoctor.SelectionStart;
+            int selLen = cmbApptDoctor.SelectionLength;
+            var trimmed = currentText.Trim();
+            List<DoctorDTO> filtered;
+            if (string.IsNullOrEmpty(trimmed))
             {
-                var doctors = doctorService.Search(cmbApptDoctor.Text);
-                var source = new AutoCompleteStringCollection();
-                foreach (var d in doctors)
-                {
-                    source.Add(d.ToString());
-                }
-                cmbApptDoctor.AutoCompleteCustomSource = source;
-                // Check if exact match by name or id
-                var exact = doctors.FirstOrDefault(d => d.ToString() == cmbApptDoctor.Text || d.Id.ToString() == cmbApptDoctor.Text);
-                if (exact != null)
-                {
-                    selectedDoctor = exact;
-                    cmbApptDoctor.BackColor = Color.LightGreen;
-                }
-                else
-                {
-                    selectedDoctor = null;
-                    cmbApptDoctor.BackColor = Color.Red;
-                }
+                filtered = doctorService.GetAllDoctors();
             }
             else
             {
-                cmbApptDoctor.AutoCompleteCustomSource = new AutoCompleteStringCollection();
-                selectedDoctor = null;
-                cmbApptDoctor.BackColor = SystemColors.Window;
+                filtered = doctorService.Search(trimmed);
+                if (filtered.Count == 0)
+                {
+                    filtered = doctorService.GetAllDoctors();
+                }
             }
+            cmbApptDoctor.DataSource = filtered;
+            cmbApptDoctor.SelectedIndex = -1;
+            if (cmbApptDoctor.Text != trimmed)
+            {
+                cmbApptDoctor.Text = trimmed;
+                int newSelStart = Math.Min(selStart, trimmed.Length);
+                int newSelLen = Math.Min(selLen, trimmed.Length - newSelStart);
+                cmbApptDoctor.SelectionStart = newSelStart;
+                cmbApptDoctor.SelectionLength = newSelLen;
+            }
+            if (filtered.Count == 1 && !string.IsNullOrEmpty(trimmed))
+            {
+                cmbApptDoctor.SelectedIndex = 0;
+                cmbApptPatient.Focus();
+            }
+
+            isUpdatingDoctorCombo = false;
         }
 
         private void cmbApptPatient_TextChanged(object sender, EventArgs e)
         {
-            if (cmbApptPatient.Text.Length >= 1)
+            if (isUpdatingPatientCombo) return;
+
+            isUpdatingPatientCombo = true;
+
+            string currentText = cmbApptPatient.Text;
+            int selStart = cmbApptPatient.SelectionStart;
+            int selLen = cmbApptPatient.SelectionLength;
+            var trimmed = currentText.Trim();
+            List<PatientDTO> filtered;
+            if (string.IsNullOrEmpty(trimmed))
             {
-                var patients = patientService.GetAll().Where(p => p.FirstName.Contains(cmbApptPatient.Text) || p.LastName.Contains(cmbApptPatient.Text) || p.Id.ToString().Contains(cmbApptPatient.Text)).ToList();
-                var source = new AutoCompleteStringCollection();
-                foreach (var p in patients)
-                {
-                    source.Add(p.ToString());
-                }
-                cmbApptPatient.AutoCompleteCustomSource = source;
-                // Check if exact match by name or id
-                var exact = patients.FirstOrDefault(p => p.ToString() == cmbApptPatient.Text || p.Id.ToString() == cmbApptPatient.Text);
-                if (exact != null)
-                {
-                    selectedPatient = exact;
-                    cmbApptPatient.BackColor = Color.LightGreen;
-                }
-                else
-                {
-                    selectedPatient = null;
-                    cmbApptPatient.BackColor = Color.Red;
-                }
+                filtered = patientService.GetAllPatients();
             }
             else
             {
-                cmbApptPatient.AutoCompleteCustomSource = new AutoCompleteStringCollection();
-                selectedPatient = null;
-                cmbApptPatient.BackColor = SystemColors.Window;
+                filtered = patientService.Search(trimmed);
+                if (filtered.Count == 0)
+                {
+                    filtered = patientService.GetAllPatients();
+                }
             }
+            cmbApptPatient.DataSource = filtered;
+            cmbApptPatient.SelectedIndex = -1;
+            if (cmbApptPatient.Text != trimmed)
+            {
+                cmbApptPatient.Text = trimmed;
+                int newSelStart = Math.Min(selStart, trimmed.Length);
+                int newSelLen = Math.Min(selLen, trimmed.Length - newSelStart);
+                cmbApptPatient.SelectionStart = newSelStart;
+                cmbApptPatient.SelectionLength = newSelLen;
+            }
+            if (filtered.Count == 1 && !string.IsNullOrEmpty(trimmed))
+            {
+                cmbApptPatient.SelectedIndex = 0;
+                dtpApptDate.Focus();
+            }
+
+            isUpdatingPatientCombo = false;
+        }
+
+        private void cmbApptDoctor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            selectedDoctor = cmbApptDoctor.SelectedIndex != -1 ? (DoctorDTO)cmbApptDoctor.SelectedItem : null;
+            cmbApptDoctor.BackColor = selectedDoctor != null ? Color.LightGreen : SystemColors.Window;
+        }
+
+        private void cmbApptPatient_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            selectedPatient = cmbApptPatient.SelectedIndex != -1 ? (PatientDTO)cmbApptPatient.SelectedItem : null;
+            cmbApptPatient.BackColor = selectedPatient != null ? Color.LightGreen : SystemColors.Window;
+        }
+
+        private void cmbApptTimeSlots_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            selectedTimeSlot = cmbApptTimeSlots.SelectedIndex != -1 ? (TimeSlotDTO)cmbApptTimeSlots.SelectedItem : null;
         }
 
         private void dgvAppointments_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)

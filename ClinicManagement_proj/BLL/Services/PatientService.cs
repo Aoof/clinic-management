@@ -16,7 +16,7 @@ namespace ClinicManagement_proj.BLL.Services
             clinicDb = dbContext;
         }
 
-        public List<PatientDTO> GetAll()
+        public List<PatientDTO> GetAllPatients()
         {
             return clinicDb.Patients
                 .Include(pat => pat.Appointments)
@@ -42,6 +42,14 @@ namespace ClinicManagement_proj.BLL.Services
             return patientDto;
         }
 
+        public List<PatientDTO> Search(string name)
+        {
+            return clinicDb.Patients
+                .Where(p => p.FirstName.Contains(name) || p.LastName.Contains(name))
+                .Include(p => p.Appointments)
+                .ToList();
+        }
+
         //public void DeletePatient(int id)
         //{
         //    var patient = clinicDb.Patients.Find(id);
@@ -55,9 +63,9 @@ namespace ClinicManagement_proj.BLL.Services
 
 
 
-        public PatientDTO Search(int id)
+        public List<PatientDTO> Search(int id)
         {
-            return clinicDb.Patients.FirstOrDefault(s => s.Id == id);
+            return clinicDb.Patients.Where(p => p.Id == id).Include(p => p.Appointments).ToList();
 
         }
 
