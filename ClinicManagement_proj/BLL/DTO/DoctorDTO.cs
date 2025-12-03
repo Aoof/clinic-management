@@ -85,5 +85,11 @@ namespace ClinicManagement_proj.BLL.DTO
         {
             return $"{FirstName} {LastName} (License: {LicenseNumber})";
         }
+
+        public string DisplayText
+        {
+            get { return $"{Id} - {FirstName} {LastName} (License: {LicenseNumber})"; }
+        }
+
     }
 }
