@@ -1,10 +1,17 @@
+using ClinicManagement_proj.BLL;
+using ClinicManagement_proj.BLL.DTO;
+using ClinicManagement_proj.BLL.Services;
+using ClinicManagement_proj.DAL;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace ClinicManagement_proj.UI
 {
+    
+
     /// <summary>
     /// Controller for the Doctor Scheduling panel
     /// </summary>
@@ -17,6 +24,12 @@ namespace ClinicManagement_proj.UI
                 ?? throw new Exception("No control named [grpDoctorScheduling] found in panel controls collection."));
         private TableLayoutPanel schedulingLayout => (TableLayoutPanel)(grpScheduling.Controls["layoutSchedulingContent"]
                 ?? throw new Exception("No control named [layoutSchedulingContent] found in grpScheduling controls collection."));
+        private TableLayoutPanel schedulingHeaderLayout => (TableLayoutPanel)(grpScheduling.Controls["layoutSchedulingHeader"]
+                ?? throw new Exception("No control named [layoutSchedulingHeader] found in grpScheduling controls collection."));
+        private TableLayoutPanel layoutSchedulingActions => (TableLayoutPanel)(schedulingHeaderLayout.Controls["layoutSchedulingActions"]
+                ?? throw new Exception("No control named [layoutSchedulingActions] found in layoutSchedulingHeader controls collection."));
+        private Panel pnlDoctorPicker => (Panel)(schedulingHeaderLayout.Controls["pnlDoctorPicker"]
+                ?? throw new Exception("No control named [pnlDoctorPicker] found in layoutSchedulingHeader controls collection."));
         private ListBox lbSunday => (ListBox)(schedulingLayout.Controls["lbSunday"]
                 ?? throw new Exception("No control named [lbSunday] found in schedulingLayout controls collection."));
         private ListBox lbMonday => (ListBox)(schedulingLayout.Controls["lbMonday"]
@@ -31,6 +44,12 @@ namespace ClinicManagement_proj.UI
                 ?? throw new Exception("No control named [lbFriday] found in schedulingLayout controls collection."));
         private ListBox lbSaturday => (ListBox)(schedulingLayout.Controls["lbSaturday"]
                 ?? throw new Exception("No control named [lbSaturday] found in schedulingLayout controls collection."));
+        private ComboBox cmbDoctorSelect => (ComboBox)(pnlDoctorPicker.Controls["cmbDoctorSelect"]
+               ?? throw new Exception("No control named [cmbRoles] found in grpAdminForm controls collection."));
+        private Button btnScheduleSave => (Button)(layoutSchedulingActions.Controls["btnScheduleSave"]
+                ?? throw new Exception("No control named [btnScheduleSave] found in layoutSchedulingActions controls collection."));
+        private Button btnScheduleRevert => (Button)(layoutSchedulingActions.Controls["btnScheduleRevert"]
+                ?? throw new Exception("No control named [btnScheduleRevert] found in layoutSchedulingActions controls collection."));
 
         public Panel Panel => panel;
 
@@ -41,14 +60,72 @@ namespace ClinicManagement_proj.UI
 
         public void Initialize()
         {
-            SetupSchedulingListViews();
             adminDashboard.ResizeEnd += new System.EventHandler(AdminDashboard_ResizeEnd);
+            btnScheduleSave.Click += new EventHandler(btnScheduleSave_Click);
+            btnScheduleRevert.Click += new EventHandler(btnScheduleRevert_Click);
+            SetupSchedulingListViews();
+            
+            // Populate doctor ComboBox here
+            var doctorService = new DoctorService(new ClinicDbContext());
+            List<DoctorDTO> doctors = doctorService.GetAllDoctors();
+
+            cmbDoctorSelect.DataSource = doctors;
+            cmbDoctorSelect.DisplayMember = "DisplayText"; 
+            cmbDoctorSelect.ValueMember = "Id";
+            cmbDoctorSelect.SelectedIndex = -1;
+            cmbDoctorSelect.Text = "Please select a doctor";
+
+
+            cmbDoctorSelect.SelectedIndexChanged += cmbDoctorSelect_SelectedIndexChanged;
+
+        }
+
+        private void cmbDoctorSelect_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbDoctorSelect.SelectedValue is int doctorId)
+            {
+                var scheduleService = new DoctorScheduleService(new ClinicDbContext());
+                var schedules = scheduleService.GetAllSchedules()
+                                               .Where(s => s.DoctorId == doctorId)
+                                               .ToList();
+
+                RefreshSchedulingListViews();
+
+                foreach (var schedule in schedules)
+                {
+                    ListBox targetListBox = null;
+                    switch (schedule.DayOfWeek)
+                    {
+                        case "SUNDAY": targetListBox = lbSunday; break;
+                        case "MONDAY": targetListBox = lbMonday; break;
+                        case "TUESDAY": targetListBox = lbTuesday; break;
+                        case "WEDNESDAY": targetListBox = lbWednesday; break;
+                        case "THURSDAY": targetListBox = lbThursday; break;
+                        case "FRIDAY": targetListBox = lbFriday; break;
+                        case "SATURDAY": targetListBox = lbSaturday; break;
+                    }
+
+                    if (targetListBox != null)
+                    {
+                        int startHour = schedule.WorkStartTime.Hours;
+                        int endHour = schedule.WorkEndTime.Hours;
+
+                        for (int hour = startHour; hour < endHour; hour++)
+                        {
+                            targetListBox.Items[hour] = $"{hour}:00 - {(hour + 1)}:00";
+                            targetListBox.SetSelected(hour, true); // highlight
+                        }
+                    }
+                }
+            }
         }
 
         public void OnShow()
         {
             RefreshSchedulingListViews();
         }
+
+        
 
         private void AdminDashboard_ResizeEnd(object sender, System.EventArgs e)
         {
@@ -123,6 +200,119 @@ namespace ClinicManagement_proj.UI
             }
         }
 
+        private void btnScheduleSave_Click(object sender, EventArgs e)
+        {
+            if (cmbDoctorSelect.SelectedValue is int doctorId)
+            {
+                var scheduleService = new DoctorScheduleService(new ClinicDbContext());
+
+                // Map each day’s listbox to its enum
+                var dayListBoxes = new Dictionary<DaysOfWeekEnum, ListBox>
+        {
+            { DaysOfWeekEnum.SUNDAY,    lbSunday },
+            { DaysOfWeekEnum.MONDAY,    lbMonday },
+            { DaysOfWeekEnum.TUESDAY,   lbTuesday },
+            { DaysOfWeekEnum.WEDNESDAY, lbWednesday },
+            { DaysOfWeekEnum.THURSDAY,  lbThursday },
+            { DaysOfWeekEnum.FRIDAY,    lbFriday },
+            { DaysOfWeekEnum.SATURDAY,  lbSaturday }
+        };
+
+                foreach (var kvp in dayListBoxes)
+                {
+                    DaysOfWeekEnum dayEnum = kvp.Key;
+                    ListBox listBox = kvp.Value;
+
+                    // Remove existing schedule rows for this doctor/day
+                    var existing = scheduleService.GetAllSchedules()
+                        .Where(s => s.DoctorId == doctorId && s.DayOfWeek == dayEnum.ToString())
+                        .ToList();
+                    foreach (var s in existing)
+                        scheduleService.DeleteSchedule(s);
+
+                    // Group contiguous selections into blocks
+                    var selectedIndices = listBox.SelectedIndices.Cast<int>().OrderBy(i => i).ToList();
+                    if (selectedIndices.Count == 0) continue;
+
+                    int blockStart = selectedIndices[0];
+                    int prevIndex = blockStart;
+
+                    for (int i = 1; i <= selectedIndices.Count; i++)
+                    {
+                        bool endOfBlock = (i == selectedIndices.Count) || (selectedIndices[i] != prevIndex + 1);
+
+                        if (endOfBlock)
+                        {
+                            // Convert indices to times
+                            TimeSpan start = TimeSpan.FromHours(blockStart);
+                            TimeSpan end = TimeSpan.FromHours(prevIndex + 1);
+
+                            var scheduleDto = new DoctorScheduleDTO(
+                                doctorId,
+                                dayEnum,
+                                start,
+                                end,
+                                DateTime.Now,
+                                DateTime.Now
+                            );
+                            scheduleService.CreateSchedule(scheduleDto);
+
+                            if (i < selectedIndices.Count)
+                            {
+                                blockStart = selectedIndices[i];
+                                prevIndex = blockStart;
+                            }
+                        }
+                        else
+                        {
+                            prevIndex = selectedIndices[i];
+                        }
+                    }
+                }
+
+                MessageBox.Show("Weekly schedule saved successfully!");
+            }
+        }
+
+        private void btnScheduleRevert_Click(object sender, EventArgs e)
+        {
+            if (cmbDoctorSelect.SelectedValue is int doctorId)
+            {
+                var scheduleService = new DoctorScheduleService(new ClinicDbContext());
+                var schedules = scheduleService.GetAllSchedules()
+                                               .Where(s => s.DoctorId == doctorId)
+                                               .ToList();
+
+                RefreshSchedulingListViews();
+
+                foreach (var schedule in schedules)
+                {
+                    ListBox targetListBox = null;
+                    switch (schedule.DayOfWeek)
+                    {
+                        case "SUNDAY": targetListBox = lbSunday; break;
+                        case "MONDAY": targetListBox = lbMonday; break;
+                        case "TUESDAY": targetListBox = lbTuesday; break;
+                        case "WEDNESDAY": targetListBox = lbWednesday; break;
+                        case "THURSDAY": targetListBox = lbThursday; break;
+                        case "FRIDAY": targetListBox = lbFriday; break;
+                        case "SATURDAY": targetListBox = lbSaturday; break;
+                    }
+
+                    if (targetListBox != null)
+                    {
+                        int startHour = schedule.WorkStartTime.Hours;
+                        int endHour = schedule.WorkEndTime.Hours;
+
+                        for (int hour = startHour; hour < endHour; hour++)
+                        {
+                            targetListBox.Items[hour] = $"{hour}:00 - {(hour + 1)}:00";
+                            targetListBox.SetSelected(hour, true); // highlight
+                        }
+                    }
+                }
+            }
+        }
         public void OnHide()
         {
             // Cleanup when leaving panel

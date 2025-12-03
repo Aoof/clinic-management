@@ -83,7 +83,13 @@ namespace ClinicManagement_proj.BLL.DTO
 
         public override string ToString()
         {
-            return $"{FirstName} {LastName} (License: {LicenseNumber})";
+            return $"{FirstName} {LastName} (License: {LicenseNumber}) [{Id}]";
         }
+
+        public string DisplayText
+        {
+            get { return $"{Id} - {FirstName} {LastName} (License: {LicenseNumber})"; }
+        }
+
     }
 }

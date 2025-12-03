@@ -26,6 +26,9 @@ namespace ClinicManagement_proj.UI
             StyleButtons();
         }
 
+        public void ReceptionistDashboard_Load(object sender, EventArgs e)
+        { }
+
         /// <summary>
         /// Initialize all managers and controllers
         /// </summary>
@@ -34,7 +37,7 @@ namespace ClinicManagement_proj.UI
             navigationManager = new NavigationManager(SIDEBAR_BG, SIDEBAR_ACTIVE);
 
             // Initialize panel controllers
-            patientRegistrationController = new PatientRegistrationController(pnlPatientRegistration, ClinicManagementApp.PatientService);
+            patientRegistrationController = new PatientRegistrationController(pnlPatientRegistration);
             appointmentManagementController = new ApptMgmtController(pnlAppointmentManagement);
         }
 
