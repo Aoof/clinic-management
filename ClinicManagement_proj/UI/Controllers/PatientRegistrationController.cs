@@ -1,6 +1,7 @@
 using ClinicManagement_proj.BLL;
 using ClinicManagement_proj.BLL.DTO;
 using ClinicManagement_proj.BLL.Services;
+using ClinicManagement_proj.BLL.Utils;
 using System;
 using System.Data.Common;
 using System.Linq;
@@ -94,6 +95,7 @@ namespace ClinicManagement_proj.UI
         /// </summary>
         private void ResetPatientForm()
         {
+            dgvPatients.ClearSelection();
             txtPatientId.Text = string.Empty;
             txtPFName.Text = string.Empty;
             txtPLName.Text = string.Empty;
@@ -132,6 +134,7 @@ namespace ClinicManagement_proj.UI
         /// </summary>
         private void btnPatientCancel_Click(object sender, EventArgs e)
         {
+            LoadPatients();
             ResetPatientForm();
         }
 
@@ -145,34 +148,46 @@ namespace ClinicManagement_proj.UI
 
         private void btnPatientSearch_Click(object sender, EventArgs e)
         {
-
-            if (!int.TryParse(txtPatientId.Text, out int id))
+            string idText = txtPatientId.Text.Trim();
+            if (string.IsNullOrWhiteSpace(idText))
             {
-                MessageBox.Show("Enter a valid Patient ID.");
+                NotificationManager.AddNotification("Please enter a Patient ID to search.", NotificationType.Warning);
                 return;
             }
 
-            var results = patientService.Search(id);
-
-            if (!results.Any())
+            if (!int.TryParse(idText, out int id))
             {
-                MessageBox.Show("Patient not found.");
-
+                NotificationManager.AddNotification("Enter a valid Patient ID.", NotificationType.Warning);
                 return;
             }
 
-            var result = results.First();
+            try
+            {
+                var results = patientService.Search(id);
 
-            ResetPatientForm();
+                if (!results.Any())
+                {
+                    NotificationManager.AddNotification("Patient not found.", NotificationType.Info);
+                    return;
+                }
 
-            txtPatientId.Text = result.Id.ToString();
-            txtPFName.Text = result.FirstName;
-            txtPLName.Text = result.LastName;
-            txtMedicalNumber.Text = result.InsuranceNumber.ToString();
-            txtPPhone.Text = result.PhoneNumber;
-            dtpDoB.Text = result.DateOfBirth.ToString();
+                var result = results.First();
 
-            dgvPatients.DataSource = new[] { result };
+                ResetPatientForm();
+
+                txtPatientId.Text = result.Id.ToString();
+                txtPFName.Text = result.FirstName;
+                txtPLName.Text = result.LastName;
+                txtMedicalNumber.Text = result.InsuranceNumber.ToString();
+                txtPPhone.Text = result.PhoneNumber;
+                dtpDoB.Text = result.DateOfBirth.ToString();
+
+                dgvPatients.DataSource = new[] { result };
+            }
+            catch (Exception ex)
+            {
+                NotificationManager.AddNotification($"Error during patient search: {ex.Message}", NotificationType.Error);
+            }
 
         }
 
@@ -199,7 +214,7 @@ namespace ClinicManagement_proj.UI
                 ||
                 string.IsNullOrWhiteSpace(txtPPhone.Text))
             {
-                MessageBox.Show("All fields are required.");
+                NotificationManager.AddNotification("All fields are required.", NotificationType.Warning);
                 return;
             }
             //if (patientService.Exists(id))
@@ -218,38 +233,56 @@ namespace ClinicManagement_proj.UI
                 PhoneNumber = txtPPhone.Text
             };
 
-            patientService.AddPatient(dto);
-            LoadPatients();
-            ResetPatientForm();
+            try
+            {
+                patientService.AddPatient(dto);
+                LoadPatients();
+                ResetPatientForm();
+                NotificationManager.AddNotification("Patient created successfully.", NotificationType.Info);
+            }
+            catch (Exception ex)
+            {
+                NotificationManager.AddNotification($"Error creating patient: {ex.Message}", NotificationType.Error);
+            }
         }
         /// <summary>
         /// Submit patient form and Update existing patient
         /// </summary>
         private void btnPatientUpdate_Click(object sender, EventArgs e)
         {
-            if (dgvPatients.CurrentRow != null)
+            if (dgvPatients.CurrentRow == null)
             {
+                NotificationManager.AddNotification("Please select a patient to update.", NotificationType.Warning);
+                return;
+            }
 
-                PatientDTO selectedPatient = (PatientDTO)dgvPatients.CurrentRow.DataBoundItem;
-                // Note: Id shouldnt be modifiable 
-                selectedPatient.FirstName = txtPFName.Text;
-                selectedPatient.LastName = txtPLName.Text;
-                selectedPatient.DateOfBirth = dtpDoB.Value;
-                selectedPatient.InsuranceNumber = txtMedicalNumber.Text;
-                selectedPatient.PhoneNumber = txtPPhone.Text;
+            if (string.IsNullOrWhiteSpace(txtPFName.Text)
+                || string.IsNullOrWhiteSpace(txtPLName.Text)
+                || string.IsNullOrWhiteSpace(txtMedicalNumber.Text)
+                || string.IsNullOrWhiteSpace(txtPPhone.Text))
+            {
+                NotificationManager.AddNotification("Please fill out the required fields.", NotificationType.Warning);
+                return;
+            }
 
+            PatientDTO selectedPatient = (PatientDTO)dgvPatients.CurrentRow.DataBoundItem;
+            // Note: Id shouldnt be modifiable 
+            selectedPatient.FirstName = txtPFName.Text;
+            selectedPatient.LastName = txtPLName.Text;
+            selectedPatient.DateOfBirth = dtpDoB.Value;
+            selectedPatient.InsuranceNumber = txtMedicalNumber.Text;
+            selectedPatient.PhoneNumber = txtPPhone.Text;
+
+            try
+            {
                 patientService.UpdatePatient(selectedPatient);
                 dgvPatients.Refresh();
-
+                NotificationManager.AddNotification("Patient updated successfully.", NotificationType.Info);
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("This patient cannot update.");
-                return;
-
+                NotificationManager.AddNotification($"Error updating patient: {ex.Message}", NotificationType.Error);
             }
-
-
         }
 
         /// <summary>

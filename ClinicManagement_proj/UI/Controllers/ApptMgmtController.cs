@@ -1,6 +1,7 @@
 using ClinicManagement_proj.BLL;
 using ClinicManagement_proj.BLL.DTO;
 using ClinicManagement_proj.BLL.Services;
+using ClinicManagement_proj.BLL.Utils;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -176,15 +177,26 @@ namespace ClinicManagement_proj.UI
 
         private void btnApptSearch_Click(object sender, EventArgs e)
         {
-            var results = appointmentService.Search(dtpApptDate.Value);
-            dgvAppointments.DataSource = results;
+            try
+            {
+                var results = appointmentService.Search(dtpApptDate.Value);
+                dgvAppointments.DataSource = results;
+                if (!results.Any())
+                {
+                    NotificationManager.AddNotification("No appointments found for the selected date.", NotificationType.Info);
+                }
+            }
+            catch (Exception ex)
+            {
+                NotificationManager.AddNotification($"Error searching appointments: {ex.Message}", NotificationType.Error);
+            }
         }
 
         private void btnApptCreate_Click(object sender, EventArgs e)
         {
             if (selectedDoctor == null || selectedPatient == null || selectedTimeSlot == null)
             {
-                MessageBox.Show("Please select valid doctor, patient, and time slot.");
+                NotificationManager.AddNotification("Please select valid doctor, patient, and time slot.", NotificationType.Warning);
                 return;
             }
 
@@ -198,16 +210,24 @@ namespace ClinicManagement_proj.UI
                 TimeSlotId = selectedTimeSlot.Id,
             };
 
-            appointmentService.CreateAppointment(dto);
-            LoadAppointments();
-            ResetAppointmentForm();
+            try
+            {
+                appointmentService.CreateAppointment(dto);
+                LoadAppointments();
+                ResetAppointmentForm();
+                NotificationManager.AddNotification("Appointment created successfully.", NotificationType.Info);
+            }
+            catch (Exception ex)
+            {
+                NotificationManager.AddNotification($"Error creating appointment: {ex.Message}", NotificationType.Error);
+            }
         }
 
         private void btnApptUpdate_Click(object sender, EventArgs e)
         {
             if (dgvAppointments.CurrentRow == null)
             {
-                MessageBox.Show("Please select an appointment to update.");
+                NotificationManager.AddNotification("Please select an appointment to update.", NotificationType.Warning);
                 return;
             }
 
@@ -219,9 +239,17 @@ namespace ClinicManagement_proj.UI
             appointment.PatientId = selectedPatient?.Id ?? appointment.PatientId;
             appointment.TimeSlotId = selectedTimeSlot?.Id ?? appointment.TimeSlotId;
 
-            appointmentService.UpdateAppointment(appointment);
-            LoadAppointments();
-            ResetAppointmentForm();
+            try
+            {
+                appointmentService.UpdateAppointment(appointment);
+                LoadAppointments();
+                ResetAppointmentForm();
+                NotificationManager.AddNotification("Appointment updated successfully.", NotificationType.Info);
+            }
+            catch (Exception ex)
+            {
+                NotificationManager.AddNotification($"Error updating appointment: {ex.Message}", NotificationType.Error);
+            }
         }
 
         private void dtpApptDate_ValueChanged(object sender, EventArgs e)

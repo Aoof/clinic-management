@@ -1,6 +1,7 @@
 using ClinicManagement_proj.BLL;
 using ClinicManagement_proj.BLL.DTO;
 using ClinicManagement_proj.BLL.Services;
+using ClinicManagement_proj.BLL.Utils;
 using ClinicManagement_proj.DAL;
 using System;
 using System.Collections.Generic;
@@ -86,8 +87,9 @@ namespace ClinicManagement_proj.UI
 
         private void cmbDoctorSelect_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cmbDoctorSelect.SelectedValue is int doctorId)
+            if (cmbDoctorSelect.SelectedItem is DoctorDTO doctor)
             {
+                int doctorId = doctor.Id;
                 var scheduleService = new DoctorScheduleService(new ClinicDbContext());
                 var schedules = scheduleService.GetAllSchedules()
                                                .Where(s => s.DoctorId == doctorId)
@@ -248,11 +250,19 @@ namespace ClinicManagement_proj.UI
 
         private void btnScheduleSave_Click(object sender, EventArgs e)
         {
-            if (cmbDoctorSelect.SelectedValue is int doctorId)
+            if (!(cmbDoctorSelect.SelectedItem is DoctorDTO doctor))
+            {
+                NotificationManager.AddNotification("Please select a doctor to save the schedule.", NotificationType.Warning);
+                return;
+            }
+
+            int doctorId = doctor.Id;
+
+            try
             {
                 var scheduleService = new DoctorScheduleService(new ClinicDbContext());
 
-                // Map each day’s listbox to its enum
+                // Map each dayï¿½s listbox to its enum
                 var dayListBoxes = new Dictionary<DaysOfWeekEnum, ListBox>
         {
             { DaysOfWeekEnum.SUNDAY,    lbSunday },
@@ -316,13 +326,25 @@ namespace ClinicManagement_proj.UI
                     }
                 }
 
-                MessageBox.Show("Weekly schedule saved successfully!");
+                NotificationManager.AddNotification("Weekly schedule saved successfully!", NotificationType.Info);
+            }
+            catch (Exception ex)
+            {
+                NotificationManager.AddNotification($"Error saving schedule: {ex.Message}", NotificationType.Error);
             }
         }
 
         private void btnScheduleRevert_Click(object sender, EventArgs e)
         {
-            if (cmbDoctorSelect.SelectedValue is int doctorId)
+            if (!(cmbDoctorSelect.SelectedItem is DoctorDTO doctor))
+            {
+                NotificationManager.AddNotification("Please select a doctor to revert the schedule.", NotificationType.Warning);
+                return;
+            }
+
+            int doctorId = doctor.Id;
+
+            try
             {
                 var scheduleService = new DoctorScheduleService(new ClinicDbContext());
                 var schedules = scheduleService.GetAllSchedules()
@@ -357,6 +379,12 @@ namespace ClinicManagement_proj.UI
                         }
                     }
                 }
+
+                NotificationManager.AddNotification("Schedule reverted successfully.", NotificationType.Info);
+            }
+            catch (Exception ex)
+            {
+                NotificationManager.AddNotification($"Error reverting schedule: {ex.Message}", NotificationType.Error);
             }
         }
         public void OnHide()
