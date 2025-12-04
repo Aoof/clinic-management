@@ -205,6 +205,40 @@ CREATE TABLE dbo.Appointment(
 );
 GO
 
+-- TABLE: Audit_Appointment
+ CREATE TABLE dbo.Audit_Appointment (
+    AuditId INT IDENTITY(1,1) PRIMARY KEY,
+    AppointmentId INT NOT NULL,
+    PatientName VARCHAR(255) NOT NULL,
+    DoctorName VARCHAR(255) NOT NULL,
+    NewStatus VARCHAR(20) NOT NULL,
+    AuditDate DATETIME2(7) NOT NULL DEFAULT(GETDATE())
+);
+GO
+
+CREATE TRIGGER trg_AuditAppointmentStatus
+ON dbo.Appointment
+AFTER UPDATE
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    INSERT INTO dbo.Audit_Appointment (AppointmentId, PatientName, DoctorName, NewStatus)
+    SELECT 
+        i.Id,
+        p.FirstName + ' ' + p.LastName AS PatientName,
+        d.FirstName + ' ' + d.LastName AS DoctorName,
+        i.Status
+    FROM inserted i
+    INNER JOIN deleted d_old ON i.Id = d_old.Id
+    INNER JOIN dbo.Patient p ON i.PatientId = p.Id
+    INNER JOIN dbo.Doctor d ON i.DoctorId = d.Id
+    WHERE i.Status IN ('CONFIRMED', 'CANCELLED')
+      AND i.Status <> d_old.Status; -- ensure status actually changed
+END;
+GO
+
+
 -- INSERT SAMPLE DATA
 
 DECLARE @RoleId1 INT, @RoleId2 INT, @RoleId3 INT;

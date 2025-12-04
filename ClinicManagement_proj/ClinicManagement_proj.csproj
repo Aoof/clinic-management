@@ -63,6 +63,7 @@
     <Compile Include="BLL\DTO\AppointmentDTO.cs" />
     <Compile Include="BLL\DTO\DaysOfWeekEnum.cs" />
     <Compile Include="BLL\DTO\DoctorDTO.cs" />
+    <Compile Include="BLL\DTO\AuditAppointmentDTO.cs" />
     <Compile Include="BLL\DTO\PatientDTO.cs" />
     <Compile Include="BLL\DTO\RoleDTO.cs" />
     <Compile Include="BLL\DTO\DoctorScheduleDTO.cs" />
@@ -141,6 +142,7 @@
     </Compile>
     <Compile Include="UI\Controllers\ApptMgmtController.cs" />
     <Compile Include="UI\Controllers\DoctorManagementController.cs" />
+    <Compile Include="UI\Controllers\NotificationController.cs" />
     <Compile Include="UI\Utils\ImageHelper.cs" />
     <Compile Include="UI\IPanelController.cs" />
     <Compile Include="UI\Utils\NavigationManager.cs" />

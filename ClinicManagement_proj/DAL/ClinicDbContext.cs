@@ -8,6 +8,7 @@ namespace ClinicManagement_proj.DAL
 {
     public class ClinicDbContext : DbContext
     {
+        public DbSet<AuditAppointmentDTO> AuditAppointments { get; set; }
         public DbSet<AppointmentDTO> Appointments { get; set; }
         public DbSet<DoctorDTO> Doctors { get; set; }
         public DbSet<DoctorScheduleDTO> DoctorSchedules { get; set; }
@@ -73,6 +74,42 @@ namespace ClinicManagement_proj.DAL
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            // AuditAppointmentDTO
+            modelBuilder.Entity<AuditAppointmentDTO>()
+                .ToTable("Audit_Appointment")
+                .HasKey(a => a.AuditId);
+
+            modelBuilder.Entity<AuditAppointmentDTO>()
+                .Property(a => a.AuditId).HasColumnName("AuditId");
+
+            modelBuilder.Entity<AuditAppointmentDTO>()
+                .Property(a => a.AppointmentId).HasColumnName("AppointmentId");
+
+            modelBuilder.Entity<AuditAppointmentDTO>()
+                .Property(a => a.PatientName)
+                .HasColumnType("varchar")
+                .HasMaxLength(255)
+                .HasColumnName("PatientName");
+
+            modelBuilder.Entity<AuditAppointmentDTO>()
+                .Property(a => a.DoctorName)
+                .HasColumnType("varchar")
+                .HasMaxLength(255)
+                .HasColumnName("DoctorName");
+
+            modelBuilder.Entity<AuditAppointmentDTO>()
+                .Property(a => a.NewStatus)
+                .HasColumnType("varchar")
+                .HasMaxLength(20)
+                .HasColumnName("NewStatus");
+
+            modelBuilder.Entity<AuditAppointmentDTO>()
+                .Property(a => a.AuditDate)
+                .HasColumnName("AuditDate")
+                .HasColumnType("datetime2")
+                .HasPrecision(7)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
+
 
             // AppointmentDTO
             modelBuilder.Entity<AppointmentDTO>()

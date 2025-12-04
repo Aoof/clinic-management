@@ -12,7 +12,7 @@ namespace ClinicManagement_proj.UI
         private readonly Color SIDEBAR_BG = Color.FromArgb(44, 62, 80);
         private readonly Color SIDEBAR_ACTIVE = Color.FromArgb(52, 73, 94);
         private readonly Color HEADER_BG = Color.FromArgb(41, 128, 185);
-
+        private readonly Panel sidebarPanel;
         private NavigationManager navigationManager;
         private UserManagementController userManagementController;
         private DoctorManagementController doctorManagementController;
@@ -20,6 +20,7 @@ namespace ClinicManagement_proj.UI
         private PatientRegistrationController patientRegistrationController;
         private ApptMgmtController appointmentManagementController;
         private ReportsController reportsController;
+        private NotificationsController notificationController;
 
         public AdminDashboard()
         {
@@ -44,7 +45,9 @@ namespace ClinicManagement_proj.UI
             patientRegistrationController = new PatientRegistrationController(pnlPatientRegistration);
             reportsController = new ReportsController(pnlReports);
             appointmentManagementController = new ApptMgmtController(pnlAppointmentManagement);
+            notificationController = new NotificationsController(pnlNotification);
         }
+        
 
         /// <summary>
         /// Setup navigation between panels
@@ -57,6 +60,8 @@ namespace ClinicManagement_proj.UI
             navigationManager.RegisterPanel(btnPatientRegistration, patientRegistrationController);
             navigationManager.RegisterPanel(btnReports, reportsController);
             navigationManager.RegisterPanel(btnAppointmentManagement, appointmentManagementController);
+            navigationManager.RegisterPanel(btnNotification, notificationController);
+
 
             navigationManager.InitializeAll();
             navigationManager.NavigateTo(btnUserManagement);
@@ -123,6 +128,7 @@ namespace ClinicManagement_proj.UI
             navigationManager.NavigateTo(btnAppointmentManagement);
         }
 
+        
         /// <summary>
         /// Cleanup resources on form closing
         /// </summary>
@@ -130,6 +136,7 @@ namespace ClinicManagement_proj.UI
         {
             navigationManager?.CleanupAll();
             ImageHelper.ClearCache();
+            notificationController?.Cleanup();
             NotificationManager.NotificationAdded -= OnNotificationAdded;
             base.OnFormClosing(e);
         }
@@ -207,6 +214,11 @@ namespace ClinicManagement_proj.UI
             {
                 RefreshNotificationsList();
             }
+        }
+        private void btnNotification_Click(object sender, EventArgs e)
+        {
+            pnlNotifications.Visible = true;
+            notificationController.OnShow(); // controller builds cards
         }
 
         private void btnLogout_Click(object sender, EventArgs e)
