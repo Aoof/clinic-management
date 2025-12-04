@@ -12,7 +12,7 @@ namespace ClinicManagement_proj.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class vw_UpcomingAppointments
+    public partial class vw_DoctorTodaySchedule
     {
         public int AppointmentId { get; set; }
         public int DoctorId { get; set; }
@@ -22,13 +22,12 @@ namespace ClinicManagement_proj.DAL
         public string PatientName { get; set; }
         public string PatientPhone { get; set; }
         public System.DateTime DateOfBirth { get; set; }
+        public Nullable<int> PatientAge { get; set; }
         public System.DateTime AppointmentDate { get; set; }
-        public string DayOfWeek { get; set; }
         public string AppointmentTime { get; set; }
         public int HourOfDay { get; set; }
         public int MinuteOfHour { get; set; }
         public string Status { get; set; }
         public string Notes { get; set; }
-        public string DaysUntil { get; set; }
     }
 }

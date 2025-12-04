@@ -106,6 +106,58 @@
           <Property Name="ModifiedAt" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'HealthCareClinicDB_T2.dbo.vw_DoctorTodaySchedule' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_DoctorTodaySchedule">
+          <Key>
+            <PropertyRef Name="AppointmentId" />
+            <PropertyRef Name="DoctorId" />
+            <PropertyRef Name="DoctorName" />
+            <PropertyRef Name="PatientId" />
+            <PropertyRef Name="PatientName" />
+            <PropertyRef Name="DateOfBirth" />
+            <PropertyRef Name="AppointmentDate" />
+            <PropertyRef Name="HourOfDay" />
+            <PropertyRef Name="MinuteOfHour" />
+            <PropertyRef Name="Status" />
+          </Key>
+          <Property Name="AppointmentId" Type="int" Nullable="false" />
+          <Property Name="DoctorId" Type="int" Nullable="false" />
+          <Property Name="DoctorName" Type="varchar" MaxLength="129" Nullable="false" />
+          <Property Name="Specialization" Type="varchar" MaxLength="64" />
+          <Property Name="PatientId" Type="int" Nullable="false" />
+          <Property Name="PatientName" Type="varchar" MaxLength="129" Nullable="false" />
+          <Property Name="PatientPhone" Type="varchar" MaxLength="20" />
+          <Property Name="DateOfBirth" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="PatientAge" Type="int" />
+          <Property Name="AppointmentDate" Type="date" Nullable="false" />
+          <Property Name="AppointmentTime" Type="varchar" MaxLength="5" />
+          <Property Name="HourOfDay" Type="int" Nullable="false" />
+          <Property Name="MinuteOfHour" Type="int" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Notes" Type="varchar" MaxLength="512" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'HealthCareClinicDB_T2.dbo.vw_PatientClinicalSummary' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_PatientClinicalSummary">
+          <Key>
+            <PropertyRef Name="PatientId" />
+            <PropertyRef Name="PatientName" />
+            <PropertyRef Name="DateOfBirth" />
+            <PropertyRef Name="InsuranceNumber" />
+          </Key>
+          <Property Name="PatientId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PatientName" Type="varchar" MaxLength="129" Nullable="false" />
+          <Property Name="DateOfBirth" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Age" Type="int" />
+          <Property Name="InsuranceNumber" Type="varchar" MaxLength="24" Nullable="false" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="20" />
+          <Property Name="CompletedVisits" Type="int" />
+          <Property Name="CancelledVisits" Type="int" />
+          <Property Name="LastVisitDate" Type="date" />
+          <Property Name="LastSeenDoctor" Type="varchar" MaxLength="129" />
+          <Property Name="NextAppointmentDate" Type="date" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'HealthCareClinicDB_T2.dbo.vw_PatientRecordsSummary' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_PatientRecordsSummary">
           <Key>
@@ -114,39 +166,52 @@ warning 6002: The table/view 'HealthCareClinicDB_T2.dbo.vw_PatientRecordsSummary
             <PropertyRef Name="InsuranceNumber" />
             <PropertyRef Name="DateOfBirth" />
           </Key>
-          <Property Name="PatientId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VisitNumber" Type="bigint" />
+          <Property Name="PatientId" Type="int" Nullable="false" />
           <Property Name="PatientName" Type="varchar" MaxLength="129" Nullable="false" />
           <Property Name="InsuranceNumber" Type="varchar" MaxLength="24" Nullable="false" />
           <Property Name="DateOfBirth" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="Age" Type="int" />
           <Property Name="PhoneNumber" Type="varchar" MaxLength="20" />
-          <Property Name="TotalAppointments" Type="int" />
-          <Property Name="LastAppointmentDate" Type="date" />
+          <Property Name="AppointmentId" Type="int" />
+          <Property Name="VisitDate" Type="date" />
+          <Property Name="DoctorName" Type="varchar" MaxLength="129" />
+          <Property Name="Specialization" Type="varchar" MaxLength="64" />
+          <Property Name="VisitStatus" Type="varchar" MaxLength="20" />
+          <Property Name="ClinicalNotes" Type="varchar" MaxLength="512" />
+          <Property Name="DaysSinceVisit" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'HealthCareClinicDB_T2.dbo.vw_UpcomingAppointments' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_UpcomingAppointments">
           <Key>
             <PropertyRef Name="AppointmentId" />
-            <PropertyRef Name="PatientName" />
+            <PropertyRef Name="DoctorId" />
             <PropertyRef Name="DoctorName" />
+            <PropertyRef Name="PatientId" />
+            <PropertyRef Name="PatientName" />
+            <PropertyRef Name="DateOfBirth" />
             <PropertyRef Name="AppointmentDate" />
             <PropertyRef Name="HourOfDay" />
             <PropertyRef Name="MinuteOfHour" />
-            <PropertyRef Name="PatientId" />
-            <PropertyRef Name="DoctorId" />
+            <PropertyRef Name="Status" />
           </Key>
           <Property Name="AppointmentId" Type="int" Nullable="false" />
-          <Property Name="PatientName" Type="varchar" MaxLength="129" Nullable="false" />
-          <Property Name="PhoneNumber" Type="varchar" MaxLength="20" />
+          <Property Name="DoctorId" Type="int" Nullable="false" />
           <Property Name="DoctorName" Type="varchar" MaxLength="129" Nullable="false" />
           <Property Name="Specialization" Type="varchar" MaxLength="64" />
+          <Property Name="PatientId" Type="int" Nullable="false" />
+          <Property Name="PatientName" Type="varchar" MaxLength="129" Nullable="false" />
+          <Property Name="PatientPhone" Type="varchar" MaxLength="20" />
+          <Property Name="DateOfBirth" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="AppointmentDate" Type="date" Nullable="false" />
+          <Property Name="DayOfWeek" Type="nvarchar" MaxLength="30" />
+          <Property Name="AppointmentTime" Type="varchar" MaxLength="5" />
           <Property Name="HourOfDay" Type="int" Nullable="false" />
           <Property Name="MinuteOfHour" Type="int" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Notes" Type="varchar" MaxLength="512" />
-          <Property Name="PatientId" Type="int" Nullable="false" />
-          <Property Name="DoctorId" Type="int" Nullable="false" />
+          <Property Name="DaysUntil" Type="varchar" MaxLength="15" />
         </EntityType>
         <Association Name="FK_Appointment_Doctor">
           <End Role="Doctor" Type="Self.Doctor" Multiplicity="1" />
@@ -269,31 +334,76 @@ warning 6002: The table/view 'HealthCareClinicDB_T2.dbo.vw_UpcomingAppointments'
           <EntitySet Name="TimeSlots" EntityType="Self.TimeSlots" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vw_DoctorTodaySchedule" EntityType="Self.vw_DoctorTodaySchedule" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_DoctorTodaySchedule].[AppointmentId] AS [AppointmentId], 
+    [vw_DoctorTodaySchedule].[DoctorId] AS [DoctorId], 
+    [vw_DoctorTodaySchedule].[DoctorName] AS [DoctorName], 
+    [vw_DoctorTodaySchedule].[Specialization] AS [Specialization], 
+    [vw_DoctorTodaySchedule].[PatientId] AS [PatientId], 
+    [vw_DoctorTodaySchedule].[PatientName] AS [PatientName], 
+    [vw_DoctorTodaySchedule].[PatientPhone] AS [PatientPhone], 
+    [vw_DoctorTodaySchedule].[DateOfBirth] AS [DateOfBirth], 
+    [vw_DoctorTodaySchedule].[PatientAge] AS [PatientAge], 
+    [vw_DoctorTodaySchedule].[AppointmentDate] AS [AppointmentDate], 
+    [vw_DoctorTodaySchedule].[AppointmentTime] AS [AppointmentTime], 
+    [vw_DoctorTodaySchedule].[HourOfDay] AS [HourOfDay], 
+    [vw_DoctorTodaySchedule].[MinuteOfHour] AS [MinuteOfHour], 
+    [vw_DoctorTodaySchedule].[Status] AS [Status], 
+    [vw_DoctorTodaySchedule].[Notes] AS [Notes]
+    FROM [dbo].[vw_DoctorTodaySchedule] AS [vw_DoctorTodaySchedule]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_PatientClinicalSummary" EntityType="Self.vw_PatientClinicalSummary" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_PatientClinicalSummary].[PatientId] AS [PatientId], 
+    [vw_PatientClinicalSummary].[PatientName] AS [PatientName], 
+    [vw_PatientClinicalSummary].[DateOfBirth] AS [DateOfBirth], 
+    [vw_PatientClinicalSummary].[Age] AS [Age], 
+    [vw_PatientClinicalSummary].[InsuranceNumber] AS [InsuranceNumber], 
+    [vw_PatientClinicalSummary].[PhoneNumber] AS [PhoneNumber], 
+    [vw_PatientClinicalSummary].[CompletedVisits] AS [CompletedVisits], 
+    [vw_PatientClinicalSummary].[CancelledVisits] AS [CancelledVisits], 
+    [vw_PatientClinicalSummary].[LastVisitDate] AS [LastVisitDate], 
+    [vw_PatientClinicalSummary].[LastSeenDoctor] AS [LastSeenDoctor], 
+    [vw_PatientClinicalSummary].[NextAppointmentDate] AS [NextAppointmentDate]
+    FROM [dbo].[vw_PatientClinicalSummary] AS [vw_PatientClinicalSummary]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vw_PatientRecordsSummary" EntityType="Self.vw_PatientRecordsSummary" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
+    [vw_PatientRecordsSummary].[VisitNumber] AS [VisitNumber], 
     [vw_PatientRecordsSummary].[PatientId] AS [PatientId], 
     [vw_PatientRecordsSummary].[PatientName] AS [PatientName], 
     [vw_PatientRecordsSummary].[InsuranceNumber] AS [InsuranceNumber], 
     [vw_PatientRecordsSummary].[DateOfBirth] AS [DateOfBirth], 
     [vw_PatientRecordsSummary].[Age] AS [Age], 
     [vw_PatientRecordsSummary].[PhoneNumber] AS [PhoneNumber], 
-    [vw_PatientRecordsSummary].[TotalAppointments] AS [TotalAppointments], 
-    [vw_PatientRecordsSummary].[LastAppointmentDate] AS [LastAppointmentDate]
+    [vw_PatientRecordsSummary].[AppointmentId] AS [AppointmentId], 
+    [vw_PatientRecordsSummary].[VisitDate] AS [VisitDate], 
+    [vw_PatientRecordsSummary].[DoctorName] AS [DoctorName], 
+    [vw_PatientRecordsSummary].[Specialization] AS [Specialization], 
+    [vw_PatientRecordsSummary].[VisitStatus] AS [VisitStatus], 
+    [vw_PatientRecordsSummary].[ClinicalNotes] AS [ClinicalNotes], 
+    [vw_PatientRecordsSummary].[DaysSinceVisit] AS [DaysSinceVisit]
     FROM [dbo].[vw_PatientRecordsSummary] AS [vw_PatientRecordsSummary]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vw_UpcomingAppointments" EntityType="Self.vw_UpcomingAppointments" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vw_UpcomingAppointments].[AppointmentId] AS [AppointmentId], 
-    [vw_UpcomingAppointments].[PatientName] AS [PatientName], 
-    [vw_UpcomingAppointments].[PhoneNumber] AS [PhoneNumber], 
+    [vw_UpcomingAppointments].[DoctorId] AS [DoctorId], 
     [vw_UpcomingAppointments].[DoctorName] AS [DoctorName], 
     [vw_UpcomingAppointments].[Specialization] AS [Specialization], 
+    [vw_UpcomingAppointments].[PatientId] AS [PatientId], 
+    [vw_UpcomingAppointments].[PatientName] AS [PatientName], 
+    [vw_UpcomingAppointments].[PatientPhone] AS [PatientPhone], 
+    [vw_UpcomingAppointments].[DateOfBirth] AS [DateOfBirth], 
     [vw_UpcomingAppointments].[AppointmentDate] AS [AppointmentDate], 
+    [vw_UpcomingAppointments].[DayOfWeek] AS [DayOfWeek], 
+    [vw_UpcomingAppointments].[AppointmentTime] AS [AppointmentTime], 
     [vw_UpcomingAppointments].[HourOfDay] AS [HourOfDay], 
     [vw_UpcomingAppointments].[MinuteOfHour] AS [MinuteOfHour], 
+    [vw_UpcomingAppointments].[Status] AS [Status], 
     [vw_UpcomingAppointments].[Notes] AS [Notes], 
-    [vw_UpcomingAppointments].[PatientId] AS [PatientId], 
-    [vw_UpcomingAppointments].[DoctorId] AS [DoctorId]
+    [vw_UpcomingAppointments].[DaysUntil] AS [DaysUntil]
     FROM [dbo].[vw_UpcomingAppointments] AS [vw_UpcomingAppointments]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_Appointment_Doctor" Association="Self.FK_Appointment_Doctor">
@@ -430,6 +540,54 @@ warning 6002: The table/view 'HealthCareClinicDB_T2.dbo.vw_UpcomingAppointments'
           <Property Name="ModifiedAt" Type="DateTime" Nullable="false" Precision="7" />
           <NavigationProperty Name="Roles" Relationship="Self.UserRoles" FromRole="Users" ToRole="Roles" />
         </EntityType>
+        <EntityType Name="vw_DoctorTodaySchedule">
+          <Key>
+            <PropertyRef Name="AppointmentId" />
+            <PropertyRef Name="DoctorId" />
+            <PropertyRef Name="DoctorName" />
+            <PropertyRef Name="PatientId" />
+            <PropertyRef Name="PatientName" />
+            <PropertyRef Name="DateOfBirth" />
+            <PropertyRef Name="AppointmentDate" />
+            <PropertyRef Name="HourOfDay" />
+            <PropertyRef Name="MinuteOfHour" />
+            <PropertyRef Name="Status" />
+          </Key>
+          <Property Name="AppointmentId" Type="Int32" Nullable="false" />
+          <Property Name="DoctorId" Type="Int32" Nullable="false" />
+          <Property Name="DoctorName" Type="String" MaxLength="129" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Specialization" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="PatientId" Type="Int32" Nullable="false" />
+          <Property Name="PatientName" Type="String" MaxLength="129" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PatientPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="PatientAge" Type="Int32" />
+          <Property Name="AppointmentDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="AppointmentTime" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="HourOfDay" Type="Int32" Nullable="false" />
+          <Property Name="MinuteOfHour" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Notes" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vw_PatientClinicalSummary">
+          <Key>
+            <PropertyRef Name="PatientId" />
+            <PropertyRef Name="PatientName" />
+            <PropertyRef Name="DateOfBirth" />
+            <PropertyRef Name="InsuranceNumber" />
+          </Key>
+          <Property Name="PatientId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PatientName" Type="String" MaxLength="129" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Age" Type="Int32" />
+          <Property Name="InsuranceNumber" Type="String" MaxLength="24" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CompletedVisits" Type="Int32" />
+          <Property Name="CancelledVisits" Type="Int32" />
+          <Property Name="LastVisitDate" Type="DateTime" Precision="0" />
+          <Property Name="LastSeenDoctor" Type="String" MaxLength="129" FixedLength="false" Unicode="false" />
+          <Property Name="NextAppointmentDate" Type="DateTime" Precision="0" />
+        </EntityType>
         <EntityType Name="vw_PatientRecordsSummary">
           <Key>
             <PropertyRef Name="PatientId" />
@@ -437,37 +595,50 @@ warning 6002: The table/view 'HealthCareClinicDB_T2.dbo.vw_UpcomingAppointments'
             <PropertyRef Name="InsuranceNumber" />
             <PropertyRef Name="DateOfBirth" />
           </Key>
-          <Property Name="PatientId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VisitNumber" Type="Int64" />
+          <Property Name="PatientId" Type="Int32" Nullable="false" />
           <Property Name="PatientName" Type="String" MaxLength="129" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="InsuranceNumber" Type="String" MaxLength="24" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="Age" Type="Int32" />
           <Property Name="PhoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="TotalAppointments" Type="Int32" />
-          <Property Name="LastAppointmentDate" Type="DateTime" Precision="0" />
+          <Property Name="AppointmentId" Type="Int32" />
+          <Property Name="VisitDate" Type="DateTime" Precision="0" />
+          <Property Name="DoctorName" Type="String" MaxLength="129" FixedLength="false" Unicode="false" />
+          <Property Name="Specialization" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="VisitStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ClinicalNotes" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+          <Property Name="DaysSinceVisit" Type="Int32" />
         </EntityType>
         <EntityType Name="vw_UpcomingAppointments">
           <Key>
             <PropertyRef Name="AppointmentId" />
-            <PropertyRef Name="PatientName" />
+            <PropertyRef Name="DoctorId" />
             <PropertyRef Name="DoctorName" />
+            <PropertyRef Name="PatientId" />
+            <PropertyRef Name="PatientName" />
+            <PropertyRef Name="DateOfBirth" />
             <PropertyRef Name="AppointmentDate" />
             <PropertyRef Name="HourOfDay" />
             <PropertyRef Name="MinuteOfHour" />
-            <PropertyRef Name="PatientId" />
-            <PropertyRef Name="DoctorId" />
+            <PropertyRef Name="Status" />
           </Key>
           <Property Name="AppointmentId" Type="Int32" Nullable="false" />
-          <Property Name="PatientName" Type="String" MaxLength="129" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DoctorId" Type="Int32" Nullable="false" />
           <Property Name="DoctorName" Type="String" MaxLength="129" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Specialization" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="PatientId" Type="Int32" Nullable="false" />
+          <Property Name="PatientName" Type="String" MaxLength="129" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PatientPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="AppointmentDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DayOfWeek" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="AppointmentTime" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Name="HourOfDay" Type="Int32" Nullable="false" />
           <Property Name="MinuteOfHour" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Notes" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
-          <Property Name="PatientId" Type="Int32" Nullable="false" />
-          <Property Name="DoctorId" Type="Int32" Nullable="false" />
+          <Property Name="DaysUntil" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_Appointment_Doctor">
           <End Role="Doctor" Type="Self.Doctor" Multiplicity="1" />
@@ -536,6 +707,8 @@ warning 6002: The table/view 'HealthCareClinicDB_T2.dbo.vw_UpcomingAppointments'
           <EntitySet Name="Specialties" EntityType="Self.Specialty" />
           <EntitySet Name="TimeSlots" EntityType="Self.TimeSlot" />
           <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="vw_DoctorTodaySchedule" EntityType="Self.vw_DoctorTodaySchedule" />
+          <EntitySet Name="vw_PatientClinicalSummary" EntityType="Self.vw_PatientClinicalSummary" />
           <EntitySet Name="vw_PatientRecordsSummary" EntityType="Self.vw_PatientRecordsSummary" />
           <EntitySet Name="vw_UpcomingAppointments" EntityType="Self.vw_UpcomingAppointments" />
           <AssociationSet Name="FK_Appointment_Doctor" Association="Self.FK_Appointment_Doctor">
@@ -675,17 +848,61 @@ warning 6002: The table/view 'HealthCareClinicDB_T2.dbo.vw_UpcomingAppointments'
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="vw_DoctorTodaySchedule">
+            <EntityTypeMapping TypeName="HealthCareClinicDB_T2Model.vw_DoctorTodaySchedule">
+              <MappingFragment StoreEntitySet="vw_DoctorTodaySchedule">
+                <ScalarProperty Name="AppointmentId" ColumnName="AppointmentId" />
+                <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+                <ScalarProperty Name="DoctorName" ColumnName="DoctorName" />
+                <ScalarProperty Name="Specialization" ColumnName="Specialization" />
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="PatientName" ColumnName="PatientName" />
+                <ScalarProperty Name="PatientPhone" ColumnName="PatientPhone" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="PatientAge" ColumnName="PatientAge" />
+                <ScalarProperty Name="AppointmentDate" ColumnName="AppointmentDate" />
+                <ScalarProperty Name="AppointmentTime" ColumnName="AppointmentTime" />
+                <ScalarProperty Name="HourOfDay" ColumnName="HourOfDay" />
+                <ScalarProperty Name="MinuteOfHour" ColumnName="MinuteOfHour" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_PatientClinicalSummary">
+            <EntityTypeMapping TypeName="HealthCareClinicDB_T2Model.vw_PatientClinicalSummary">
+              <MappingFragment StoreEntitySet="vw_PatientClinicalSummary">
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="PatientName" ColumnName="PatientName" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="InsuranceNumber" ColumnName="InsuranceNumber" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="CompletedVisits" ColumnName="CompletedVisits" />
+                <ScalarProperty Name="CancelledVisits" ColumnName="CancelledVisits" />
+                <ScalarProperty Name="LastVisitDate" ColumnName="LastVisitDate" />
+                <ScalarProperty Name="LastSeenDoctor" ColumnName="LastSeenDoctor" />
+                <ScalarProperty Name="NextAppointmentDate" ColumnName="NextAppointmentDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="vw_PatientRecordsSummary">
             <EntityTypeMapping TypeName="HealthCareClinicDB_T2Model.vw_PatientRecordsSummary">
               <MappingFragment StoreEntitySet="vw_PatientRecordsSummary">
+                <ScalarProperty Name="VisitNumber" ColumnName="VisitNumber" />
                 <ScalarProperty Name="PatientId" ColumnName="PatientId" />
                 <ScalarProperty Name="PatientName" ColumnName="PatientName" />
                 <ScalarProperty Name="InsuranceNumber" ColumnName="InsuranceNumber" />
                 <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
                 <ScalarProperty Name="Age" ColumnName="Age" />
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="TotalAppointments" ColumnName="TotalAppointments" />
-                <ScalarProperty Name="LastAppointmentDate" ColumnName="LastAppointmentDate" />
+                <ScalarProperty Name="AppointmentId" ColumnName="AppointmentId" />
+                <ScalarProperty Name="VisitDate" ColumnName="VisitDate" />
+                <ScalarProperty Name="DoctorName" ColumnName="DoctorName" />
+                <ScalarProperty Name="Specialization" ColumnName="Specialization" />
+                <ScalarProperty Name="VisitStatus" ColumnName="VisitStatus" />
+                <ScalarProperty Name="ClinicalNotes" ColumnName="ClinicalNotes" />
+                <ScalarProperty Name="DaysSinceVisit" ColumnName="DaysSinceVisit" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -693,16 +910,21 @@ warning 6002: The table/view 'HealthCareClinicDB_T2.dbo.vw_UpcomingAppointments'
             <EntityTypeMapping TypeName="HealthCareClinicDB_T2Model.vw_UpcomingAppointments">
               <MappingFragment StoreEntitySet="vw_UpcomingAppointments">
                 <ScalarProperty Name="AppointmentId" ColumnName="AppointmentId" />
-                <ScalarProperty Name="PatientName" ColumnName="PatientName" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
                 <ScalarProperty Name="DoctorName" ColumnName="DoctorName" />
                 <ScalarProperty Name="Specialization" ColumnName="Specialization" />
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="PatientName" ColumnName="PatientName" />
+                <ScalarProperty Name="PatientPhone" ColumnName="PatientPhone" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
                 <ScalarProperty Name="AppointmentDate" ColumnName="AppointmentDate" />
+                <ScalarProperty Name="DayOfWeek" ColumnName="DayOfWeek" />
+                <ScalarProperty Name="AppointmentTime" ColumnName="AppointmentTime" />
                 <ScalarProperty Name="HourOfDay" ColumnName="HourOfDay" />
                 <ScalarProperty Name="MinuteOfHour" ColumnName="MinuteOfHour" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
-                <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+                <ScalarProperty Name="DaysUntil" ColumnName="DaysUntil" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

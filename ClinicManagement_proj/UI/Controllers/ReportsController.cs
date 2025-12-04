@@ -4,6 +4,7 @@ using ClinicManagement_proj.BLL;
 using ClinicManagement_proj.BLL.Services;
 using ClinicManagement_proj.BLL.DTO;
 using System.Drawing;
+using System.Linq;
 
 namespace ClinicManagement_proj.UI
 {
@@ -23,24 +24,16 @@ namespace ClinicManagement_proj.UI
         private bool isUpdatingPatientCombo = false;
         private bool isUpdatingDoctorCombo = false;
 
-        private TabControl tabControlReports => (TabControl)(panel.Controls["tabControlReports"]
-                ?? throw new Exception("No control named [tabControlReports] found in panel controls collection."));
-        private TabPage tabPatientRecords => (TabPage)(tabControlReports.TabPages["tabPatientRecords"]
-                ?? throw new Exception("No tab page named [tabPatientRecords] found in tabControlReports tab pages collection."));
-        private DataGridView dgvPatientRecords => (DataGridView)(tabPatientRecords.Controls["dgvPatientRecords"]
-                ?? throw new Exception("No control named [dgvPatientRecords] found in tabPatientRecords controls collection."));
-        private Panel pnlPatientRecordsTop => (Panel)(tabPatientRecords.Controls["pnlPatientRecordsTop"]
-                ?? throw new Exception("No control named [pnlPatientRecordsTop] found in tabPatientRecords controls collection."));
-        private ComboBox cmbVwPatientSelect => (ComboBox)(pnlPatientRecordsTop.Controls["cmbVwPatientSelect"]
-                ?? throw new Exception("No control named [cmbVwPatientSelect] found in pnlPatientRecordsTop controls collection."));
-        private TabPage tabUpcomingAppointments => (TabPage)(tabControlReports.TabPages["tabUpcomingAppointments"]
-                ?? throw new Exception("No tab page named [tabUpcomingAppointments] found in tabControlReports tab pages collection."));
-        private DataGridView dgvUpcomingAppointments => (DataGridView)(tabUpcomingAppointments.Controls["dgvUpcomingAppointments"]
-                ?? throw new Exception("No control named [dgvUpcomingAppointments] found in tabUpcomingAppointments controls collection."));
-        private Panel pnlUpcomingApptTop => (Panel)(tabUpcomingAppointments.Controls["pnlUpcomingApptTop"]
-                ?? throw new Exception("No control named [pnlUpcomingApptTop] found in tabUpcomingAppointments controls collection."));
-        private ComboBox cmbVwDoctorSelect => (ComboBox)(pnlUpcomingApptTop.Controls["cmbVwDoctorSelect"]
-                ?? throw new Exception("No control named [cmbVwDoctorSelect] found in pnlUpcomingApptTop controls collection."));
+        private PatientDTO selectedPatientClinical = null;
+        private bool isUpdatingPatientClinicalCombo = false;
+
+        private DataGridView dgvPatientRecords => (DataGridView)(panel.Controls.Find("dgvPatientRecords", true).FirstOrDefault() ?? throw new Exception("No control named [dgvPatientRecords] found."));
+        private ComboBox cmbVwPatientSelect => (ComboBox)(panel.Controls.Find("cmbVwPatientSelect", true).FirstOrDefault() ?? throw new Exception("No control named [cmbVwPatientSelect] found."));
+        private DataGridView dgvUpcomingAppointments => (DataGridView)(panel.Controls.Find("dgvUpcomingAppointments", true).FirstOrDefault() ?? throw new Exception("No control named [dgvUpcomingAppointments] found."));
+        private ComboBox cmbVwDoctorSelect => (ComboBox)(panel.Controls.Find("cmbVwDoctorSelect", true).FirstOrDefault() ?? throw new Exception("No control named [cmbVwDoctorSelect] found."));
+        private DataGridView dgvDoctorTodaySchedule => (DataGridView)(panel.Controls.Find("dgvDoctorTodaySchedule", true).FirstOrDefault() ?? throw new Exception("No control named [dgvDoctorTodaySchedule] found."));
+        private DataGridView dgvPatientClinicalSummary => (DataGridView)(panel.Controls.Find("dgvPatientClinicalSummary", true).FirstOrDefault() ?? throw new Exception("No control named [dgvPatientClinicalSummary] found."));
+        private ComboBox cmbVwPatientSelectClinical => (ComboBox)(panel.Controls.Find("cmbVwPatientSelectClinical", true).FirstOrDefault() ?? throw new Exception("No control named [cmbVwPatientSelectClinical] found."));
 
         public Panel Panel => panel;
 
@@ -59,6 +52,8 @@ namespace ClinicManagement_proj.UI
             cmbVwPatientSelect.SelectedIndexChanged += new EventHandler(cmbVwPatientSelect_SelectedIndexChanged);
             cmbVwDoctorSelect.TextChanged += new EventHandler(cmbVwDoctorSelect_TextChanged);
             cmbVwDoctorSelect.SelectedIndexChanged += new EventHandler(cmbVwDoctorSelect_SelectedIndexChanged);
+            cmbVwPatientSelectClinical.TextChanged += new EventHandler(cmbVwPatientSelectClinical_TextChanged);
+            cmbVwPatientSelectClinical.SelectedIndexChanged += new EventHandler(cmbVwPatientSelectClinical_SelectedIndexChanged);
         }
 
         public void OnShow()
@@ -66,6 +61,8 @@ namespace ClinicManagement_proj.UI
             // Refresh reports when panel becomes visible
             LoadPatientRecords();
             LoadUpcomingAppointments();
+            LoadDoctorTodaySchedule();
+            LoadPatientClinicalSummary();
             ResetCombos();
         }
 
@@ -113,6 +110,64 @@ namespace ClinicManagement_proj.UI
             dgvUpcomingAppointments.AutoResizeColumns();
         }
 
+        private void LoadDoctorTodaySchedule()
+        {
+            dgvDoctorTodaySchedule.DataSource = viewsService.GetDoctorTodaySchedule();
+
+            // Format columns
+            if (dgvDoctorTodaySchedule.Columns.Contains("AppointmentId")) dgvDoctorTodaySchedule.Columns["AppointmentId"].Visible = false;
+            if (dgvDoctorTodaySchedule.Columns.Contains("DoctorId")) dgvDoctorTodaySchedule.Columns["DoctorId"].Visible = false;
+            if (dgvDoctorTodaySchedule.Columns.Contains("PatientId")) dgvDoctorTodaySchedule.Columns["PatientId"].Visible = false;
+            if (dgvDoctorTodaySchedule.Columns.Contains("DoctorName")) dgvDoctorTodaySchedule.Columns["DoctorName"].HeaderText = "Doctor Name";
+            if (dgvDoctorTodaySchedule.Columns.Contains("Specialization")) dgvDoctorTodaySchedule.Columns["Specialization"].HeaderText = "Specialization";
+            if (dgvDoctorTodaySchedule.Columns.Contains("PatientName")) dgvDoctorTodaySchedule.Columns["PatientName"].HeaderText = "Patient Name";
+            if (dgvDoctorTodaySchedule.Columns.Contains("PatientPhone")) dgvDoctorTodaySchedule.Columns["PatientPhone"].HeaderText = "Phone";
+            if (dgvDoctorTodaySchedule.Columns.Contains("DateOfBirth")) dgvDoctorTodaySchedule.Columns["DateOfBirth"].HeaderText = "Date of Birth";
+            if (dgvDoctorTodaySchedule.Columns.Contains("PatientAge")) dgvDoctorTodaySchedule.Columns["PatientAge"].HeaderText = "Age";
+            if (dgvDoctorTodaySchedule.Columns.Contains("AppointmentDate")) dgvDoctorTodaySchedule.Columns["AppointmentDate"].HeaderText = "Date";
+            if (dgvDoctorTodaySchedule.Columns.Contains("AppointmentTime")) dgvDoctorTodaySchedule.Columns["AppointmentTime"].HeaderText = "Time";
+            if (dgvDoctorTodaySchedule.Columns.Contains("HourOfDay")) dgvDoctorTodaySchedule.Columns["HourOfDay"].Visible = false;
+            if (dgvDoctorTodaySchedule.Columns.Contains("MinuteOfHour")) dgvDoctorTodaySchedule.Columns["MinuteOfHour"].Visible = false;
+            if (dgvDoctorTodaySchedule.Columns.Contains("Status")) dgvDoctorTodaySchedule.Columns["Status"].HeaderText = "Status";
+            if (dgvDoctorTodaySchedule.Columns.Contains("Notes")) dgvDoctorTodaySchedule.Columns["Notes"].HeaderText = "Notes";
+
+            dgvDoctorTodaySchedule.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            if (dgvDoctorTodaySchedule.Columns.Contains("AppointmentDate")) dgvDoctorTodaySchedule.Columns["AppointmentDate"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            if (dgvDoctorTodaySchedule.Columns.Contains("AppointmentTime")) dgvDoctorTodaySchedule.Columns["AppointmentTime"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            if (dgvDoctorTodaySchedule.Columns.Contains("PatientAge")) dgvDoctorTodaySchedule.Columns["PatientAge"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            if (dgvDoctorTodaySchedule.Columns.Contains("Status")) dgvDoctorTodaySchedule.Columns["Status"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            dgvDoctorTodaySchedule.AutoResizeColumns();
+        }
+
+        private void LoadPatientClinicalSummary(int? patientId = null)
+        {
+            dgvPatientClinicalSummary.DataSource = viewsService.GetPatientClinicalSummary(patientId);
+
+            // Format columns
+            if (dgvPatientClinicalSummary.Columns.Contains("PatientId")) dgvPatientClinicalSummary.Columns["PatientId"].Visible = false;
+            if (dgvPatientClinicalSummary.Columns.Contains("PatientName")) dgvPatientClinicalSummary.Columns["PatientName"].HeaderText = "Patient Name";
+            if (dgvPatientClinicalSummary.Columns.Contains("DateOfBirth")) dgvPatientClinicalSummary.Columns["DateOfBirth"].HeaderText = "Date of Birth";
+            if (dgvPatientClinicalSummary.Columns.Contains("Age")) dgvPatientClinicalSummary.Columns["Age"].HeaderText = "Age";
+            if (dgvPatientClinicalSummary.Columns.Contains("InsuranceNumber")) dgvPatientClinicalSummary.Columns["InsuranceNumber"].HeaderText = "Insurance Number";
+            if (dgvPatientClinicalSummary.Columns.Contains("PhoneNumber")) dgvPatientClinicalSummary.Columns["PhoneNumber"].HeaderText = "Phone Number";
+            if (dgvPatientClinicalSummary.Columns.Contains("CompletedVisits")) dgvPatientClinicalSummary.Columns["CompletedVisits"].HeaderText = "Completed Visits";
+            if (dgvPatientClinicalSummary.Columns.Contains("CancelledVisits")) dgvPatientClinicalSummary.Columns["CancelledVisits"].HeaderText = "Cancelled Visits";
+            if (dgvPatientClinicalSummary.Columns.Contains("LastVisitDate")) dgvPatientClinicalSummary.Columns["LastVisitDate"].HeaderText = "Last Visit Date";
+            if (dgvPatientClinicalSummary.Columns.Contains("LastSeenDoctor")) dgvPatientClinicalSummary.Columns["LastSeenDoctor"].HeaderText = "Last Seen Doctor";
+            if (dgvPatientClinicalSummary.Columns.Contains("NextAppointmentDate")) dgvPatientClinicalSummary.Columns["NextAppointmentDate"].HeaderText = "Next Appointment Date";
+
+            dgvPatientClinicalSummary.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            if (dgvPatientClinicalSummary.Columns.Contains("DateOfBirth")) dgvPatientClinicalSummary.Columns["DateOfBirth"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            if (dgvPatientClinicalSummary.Columns.Contains("Age")) dgvPatientClinicalSummary.Columns["Age"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            if (dgvPatientClinicalSummary.Columns.Contains("CompletedVisits")) dgvPatientClinicalSummary.Columns["CompletedVisits"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            if (dgvPatientClinicalSummary.Columns.Contains("CancelledVisits")) dgvPatientClinicalSummary.Columns["CancelledVisits"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            if (dgvPatientClinicalSummary.Columns.Contains("LastVisitDate")) dgvPatientClinicalSummary.Columns["LastVisitDate"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            if (dgvPatientClinicalSummary.Columns.Contains("NextAppointmentDate")) dgvPatientClinicalSummary.Columns["NextAppointmentDate"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            dgvPatientClinicalSummary.AutoResizeColumns();
+        }
+
         private void ResetCombos()
         {
             cmbVwPatientSelect.DataSource = patientService.GetAllPatients();
@@ -131,8 +186,17 @@ namespace ClinicManagement_proj.UI
             cmbVwDoctorSelect.DropDownStyle = ComboBoxStyle.DropDown;
             cmbVwDoctorSelect.BackColor = SystemColors.Window;
 
+            cmbVwPatientSelectClinical.DataSource = patientService.GetAllPatients();
+            cmbVwPatientSelectClinical.DisplayMember = null;
+            cmbVwPatientSelectClinical.ValueMember = null;
+            cmbVwPatientSelectClinical.SelectedIndex = -1;
+            cmbVwPatientSelectClinical.Text = string.Empty;
+            cmbVwPatientSelectClinical.DropDownStyle = ComboBoxStyle.DropDown;
+            cmbVwPatientSelectClinical.BackColor = SystemColors.Window;
+
             selectedPatient = null;
             selectedDoctor = null;
+            selectedPatientClinical = null;
         }
 
         private void cmbVwPatientSelect_TextChanged(object sender, EventArgs e)
@@ -209,6 +273,44 @@ namespace ClinicManagement_proj.UI
             selectedDoctor = cmbVwDoctorSelect.SelectedIndex != -1 ? (DoctorDTO)cmbVwDoctorSelect.SelectedItem : null;
             cmbVwDoctorSelect.BackColor = selectedDoctor != null ? System.Drawing.Color.LightGreen : SystemColors.Window;
             LoadUpcomingAppointments(selectedDoctor?.Id);
+        }
+
+        private void cmbVwPatientSelectClinical_TextChanged(object sender, EventArgs e)
+        {
+            if (isUpdatingPatientClinicalCombo) return;
+
+            isUpdatingPatientClinicalCombo = true;
+
+            string currentText = cmbVwPatientSelectClinical.Text;
+            int selStart = cmbVwPatientSelectClinical.SelectionStart;
+            int selLen = cmbVwPatientSelectClinical.SelectionLength;
+            var trimmed = currentText.Trim();
+            var filtered = string.IsNullOrEmpty(trimmed) ? patientService.GetAllPatients() : patientService.Search(trimmed);
+            if (filtered.Count == 0) filtered = patientService.GetAllPatients();
+            cmbVwPatientSelectClinical.DataSource = filtered;
+            cmbVwPatientSelectClinical.SelectedIndex = -1;
+            if (cmbVwPatientSelectClinical.Text != trimmed)
+            {
+                cmbVwPatientSelectClinical.Text = trimmed;
+                int newSelStart = Math.Min(selStart, trimmed.Length);
+                int newSelLen = Math.Min(selLen, trimmed.Length - newSelStart);
+                cmbVwPatientSelectClinical.SelectionStart = newSelStart;
+                cmbVwPatientSelectClinical.SelectionLength = newSelLen;
+            }
+            if (filtered.Count == 1 && !string.IsNullOrEmpty(trimmed))
+            {
+                cmbVwPatientSelectClinical.SelectedIndex = 0;
+                dgvPatientClinicalSummary.Focus();
+            }
+
+            isUpdatingPatientClinicalCombo = false;
+        }
+
+        private void cmbVwPatientSelectClinical_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            selectedPatientClinical = cmbVwPatientSelectClinical.SelectedIndex != -1 ? (PatientDTO)cmbVwPatientSelectClinical.SelectedItem : null;
+            cmbVwPatientSelectClinical.BackColor = selectedPatientClinical != null ? System.Drawing.Color.LightGreen : SystemColors.Window;
+            LoadPatientClinicalSummary(selectedPatientClinical?.Id);
         }
 
         public void OnHide()

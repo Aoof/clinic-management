@@ -21,7 +21,10 @@ namespace ClinicManagement_proj.BLL.Services
             {
                 query = query.Where(v => v.PatientId == patientId.Value);
             }
-            return query.ToList();
+            // Only return recent visits (top N per patient)
+            return query.OrderBy(v => v.PatientId)
+                .ThenBy(v => v.VisitNumber)
+                .ToList();
         }
 
         public List<vw_UpcomingAppointments> GetUpcomingAppointments(int? doctorId = null)
@@ -31,7 +34,33 @@ namespace ClinicManagement_proj.BLL.Services
             {
                 query = query.Where(v => v.DoctorId == doctorId.Value);
             }
-            return query.ToList();
+            return query.OrderBy(v => v.AppointmentDate)
+                .ThenBy(v => v.HourOfDay)
+                .ThenBy(v => v.MinuteOfHour)
+                .ToList();
+        }
+
+        public List<vw_DoctorTodaySchedule> GetDoctorTodaySchedule(int? doctorId = null)
+        {
+            var query = _context.vw_DoctorTodaySchedule.AsQueryable();
+            if (doctorId.HasValue)
+            {
+                query = query.Where(v => v.DoctorId == doctorId.Value);
+            }
+            return query.OrderBy(v => v.DoctorId)
+                .ThenBy(v => v.HourOfDay)
+                .ThenBy(v => v.MinuteOfHour)
+                .ToList();
+        }
+
+        public List<vw_PatientClinicalSummary> GetPatientClinicalSummary(int? patientId = null)
+        {
+            var query = _context.vw_PatientClinicalSummary.AsQueryable();
+            if (patientId.HasValue)
+            {
+                query = query.Where(v => v.PatientId == patientId.Value);
+            }
+            return query.OrderBy(v => v.PatientName).ToList();
         }
     }
 }

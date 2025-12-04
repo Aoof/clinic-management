@@ -14,13 +14,19 @@ namespace ClinicManagement_proj.DAL
     
     public partial class vw_PatientRecordsSummary
     {
+        public Nullable<long> VisitNumber { get; set; }
         public int PatientId { get; set; }
         public string PatientName { get; set; }
         public string InsuranceNumber { get; set; }
         public System.DateTime DateOfBirth { get; set; }
         public Nullable<int> Age { get; set; }
         public string PhoneNumber { get; set; }
-        public Nullable<int> TotalAppointments { get; set; }
-        public Nullable<System.DateTime> LastAppointmentDate { get; set; }
+        public Nullable<int> AppointmentId { get; set; }
+        public Nullable<System.DateTime> VisitDate { get; set; }
+        public string DoctorName { get; set; }
+        public string Specialization { get; set; }
+        public string VisitStatus { get; set; }
+        public string ClinicalNotes { get; set; }
+        public Nullable<int> DaysSinceVisit { get; set; }
     }
 }

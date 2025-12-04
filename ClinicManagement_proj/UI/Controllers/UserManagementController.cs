@@ -18,38 +18,20 @@ namespace ClinicManagement_proj.UI
         private readonly Panel panel;
         private readonly UserService userService;
 
-        private DataGridView dgvUsers => (DataGridView)(panel.Controls["dgvUsers"]
-                ?? throw new Exception("No control named [dgvUsers] found in panel controls collection."));
-        private GroupBox grpAdminForm => (GroupBox)(panel.Controls["grpAdminForm"]
-                ?? throw new Exception("No control named [grpAdminForm] found in panel controls collection."));
-        private Panel pnlButtons => (Panel)(grpAdminForm.Controls["pnlButtons"]
-                ?? throw new Exception("No control named [pnlButtons] found in grpAdminForm controls collection."));
-        private Button btnUsrCreate => (Button)(pnlButtons.Controls["btnUsrCreate"]
-                ?? throw new Exception("No control named [btnUsrCreate] found in pnlButtons controls collection."));
-        private Button btnUsrUpdate => (Button)(pnlButtons.Controls["btnUsrUpdate"]
-                ?? throw new Exception("No control named [btnUsrUpdate] found in pnlButtons controls collection."));
-        private Button btnUsrCancel => (Button)(pnlButtons.Controls["btnUsrCancel"]
-                ?? throw new Exception("No control named [btnUsrCancel] found in pnlButtons controls collection."));
-        private Button btnUsrDelete => (Button)(pnlButtons.Controls["btnUsrDelete"]
-                ?? throw new Exception("No control named [btnUsrDelete] found in pnlButtons controls collection."));
-        private Button btnUsrDisplay => (Button)(pnlButtons.Controls["btnUsrDisplay"]
-                ?? throw new Exception("No control named [btnUsrDisplay] found in pnlButtons controls collection."));
-        private Button btnUsrSearch => (Button)(pnlButtons.Controls["btnUsrSearch"]
-                ?? throw new Exception("No control named [btnUsrSearch] found in pnlButtons controls collection."));
-        private Panel pnlPassword => (Panel)(grpAdminForm.Controls["pnlPassword"]
-                ?? throw new Exception("No control named [pnlPassword] found in grpAdminForm controls collection."));
-        private Button btnTogglePassword => (Button)(pnlPassword.Controls["btnTogglePassword"]
-                ?? throw new Exception("No control named [btnTogglePassword] found in pnlPassword controls collection."));
-        private Button btnGenPassword => (Button)(pnlButtons.Controls["btnGenPassword"]
-                ?? throw new Exception("No control named [btnGenPassword] found in pnlButtons controls collection."));
-        private TextBox txtUsrId => (TextBox)(grpAdminForm.Controls["txtUsrId"]
-                ?? throw new Exception("No control named [txtUsrId] found in grpAdminForm controls collection."));
-        private TextBox txtUsrUsername => (TextBox)(grpAdminForm.Controls["txtUsrUsername"]
-                ?? throw new Exception("No control named [txtUsrUsername] found in grpAdminForm controls collection."));
-        private TextBox txtUsrPassword => (TextBox)(pnlPassword.Controls["txtUsrPassword"]
-                ?? throw new Exception("No control named [txtUsrPassword] found in pnlPassword controls collection."));
-        private ComboBox cmbRoles => (ComboBox)(grpAdminForm.Controls["cmbRoles"]
-                ?? throw new Exception("No control named [cmbRoles] found in grpAdminForm controls collection."));
+        private DataGridView dgvUsers => (DataGridView)(panel.Controls.Find("dgvUsers", true).FirstOrDefault() ?? throw new Exception("No control named [dgvUsers] found."));
+        private GroupBox grpAdminForm => (GroupBox)(panel.Controls.Find("grpAdminForm", true).FirstOrDefault() ?? throw new Exception("No control named [grpAdminForm] found."));
+        private Button btnUsrCreate => (Button)(panel.Controls.Find("btnUsrCreate", true).FirstOrDefault() ?? throw new Exception("No control named [btnUsrCreate] found."));
+        private Button btnUsrUpdate => (Button)(panel.Controls.Find("btnUsrUpdate", true).FirstOrDefault() ?? throw new Exception("No control named [btnUsrUpdate] found."));
+        private Button btnUsrCancel => (Button)(panel.Controls.Find("btnUsrCancel", true).FirstOrDefault() ?? throw new Exception("No control named [btnUsrCancel] found."));
+        private Button btnUsrDelete => (Button)(panel.Controls.Find("btnUsrDelete", true).FirstOrDefault() ?? throw new Exception("No control named [btnUsrDelete] found."));
+        private Button btnUsrDisplay => (Button)(panel.Controls.Find("btnUsrDisplay", true).FirstOrDefault() ?? throw new Exception("No control named [btnUsrDisplay] found."));
+        private Button btnUsrSearch => (Button)(panel.Controls.Find("btnUsrSearch", true).FirstOrDefault() ?? throw new Exception("No control named [btnUsrSearch] found."));
+        private Button btnTogglePassword => (Button)(panel.Controls.Find("btnTogglePassword", true).FirstOrDefault() ?? throw new Exception("No control named [btnTogglePassword] found."));
+        private Button btnGenPassword => (Button)(panel.Controls.Find("btnGenPassword", true).FirstOrDefault() ?? throw new Exception("No control named [btnGenPassword] found."));
+        private TextBox txtUsrId => (TextBox)(panel.Controls.Find("txtUsrId", true).FirstOrDefault() ?? throw new Exception("No control named [txtUsrId] found."));
+        private TextBox txtUsrUsername => (TextBox)(panel.Controls.Find("txtUsrUsername", true).FirstOrDefault() ?? throw new Exception("No control named [txtUsrUsername] found."));
+        private TextBox txtUsrPassword => (TextBox)(panel.Controls.Find("txtUsrPassword", true).FirstOrDefault() ?? throw new Exception("No control named [txtUsrPassword] found."));
+        private ComboBox cmbRoles => (ComboBox)(panel.Controls.Find("cmbRoles", true).FirstOrDefault() ?? throw new Exception("No control named [cmbRoles] found."));
 
         private bool isEditMode = false;
         private bool isPasswordChanged = false;

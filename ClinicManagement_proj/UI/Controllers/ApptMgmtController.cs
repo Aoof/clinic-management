@@ -29,20 +29,18 @@ namespace ClinicManagement_proj.UI
         private readonly Panel panel;
 
         // Access to existing controls
-        private GroupBox grpApptMgmt => (GroupBox)(panel.Controls["grpApptMgmt"] ?? throw new Exception("No control named [grpApptMgmt] found in panel controls collection."));
-        private DataGridView dgvAppointments => (DataGridView)(panel.Controls["dgvAppointments"] ?? throw new Exception("No control named [dgvAppointments] found in layoutApptMgmt controls collection."));
-        private TableLayoutPanel layoutApptButtons => (TableLayoutPanel)(grpApptMgmt.Controls["layoutApptButtons"] ?? throw new Exception("No control named [layoutApptButtons] found in layoutApptMgmt controls collection."));
-        private Button btnApptCreate => (Button)(layoutApptButtons.Controls["btnApptCreate"] ?? throw new Exception("No control named [btnApptCreate] found in layoutApptButtons controls collection."));
-        private Button btnApptUpdate => (Button)(layoutApptButtons.Controls["btnApptUpdate"] ?? throw new Exception("No control named [btnApptUpdate] found in layoutApptButtons controls collection."));
-        private Button btnApptCancel => (Button)(layoutApptButtons.Controls["btnApptCancel"] ?? throw new Exception("No control named [btnApptCancel] found in layoutApptButtons controls collection."));
-        private Button btnApptDisplay => (Button)(layoutApptButtons.Controls["btnApptDisplay"] ?? throw new Exception("No control named [btnApptDisplay] found in layoutApptButtons controls collection."));
-        private Button btnApptSearch => (Button)(layoutApptButtons.Controls["btnApptSearch"] ?? throw new Exception("No control named [btnApptSearch] found in layoutApptButtons controls collection."));
-        private ComboBox cmbApptDoctor => (ComboBox)(grpApptMgmt.Controls["cmbApptDoctor"] ?? throw new Exception("No control named [txtDoctor] found in layoutApptMgmt controls collection."));
-        private ComboBox cmbApptPatient => (ComboBox)(grpApptMgmt.Controls["cmbApptPatient"] ?? throw new Exception("No control named [txtPatient] found in layoutApptMgmt controls collection."));
-        private DateTimePicker dtpApptDate => (DateTimePicker)(grpApptMgmt.Controls["dtpApptDate"] ?? throw new Exception("No control named [dtpApptDate] found in layoutApptMgmt controls collection."));
-        private ComboBox cmbApptTimeSlots => (ComboBox)(grpApptMgmt.Controls["cmbApptTimeSlots"] ?? throw new Exception("No control named [cmbApptTimeSlots] found in layoutApptMgmt controls collection."));
-        private TextBox txtApptNotes => (TextBox)(grpApptMgmt.Controls["txtApptNotes"] ?? throw new Exception("No control named [txtApptNotes] found in layoutApptMgmt controls collection."));
-        private ComboBox cmbApptStatus => (ComboBox)(grpApptMgmt.Controls["cmbApptStatus"] ?? throw new Exception("No control named [cmbStatus] found in layoutApptMgmt controls collection."));
+        private DataGridView dgvAppointments => (DataGridView)(panel.Controls.Find("dgvAppointments", true).FirstOrDefault() ?? throw new Exception("No control named [dgvAppointments] found."));
+        private Button btnApptCreate => (Button)(panel.Controls.Find("btnApptCreate", true).FirstOrDefault() ?? throw new Exception("No control named [btnApptCreate] found."));
+        private Button btnApptUpdate => (Button)(panel.Controls.Find("btnApptUpdate", true).FirstOrDefault() ?? throw new Exception("No control named [btnApptUpdate] found."));
+        private Button btnApptCancel => (Button)(panel.Controls.Find("btnApptCancel", true).FirstOrDefault() ?? throw new Exception("No control named [btnApptCancel] found."));
+        private Button btnApptDisplay => (Button)(panel.Controls.Find("btnApptDisplay", true).FirstOrDefault() ?? throw new Exception("No control named [btnApptDisplay] found."));
+        private Button btnApptSearch => (Button)(panel.Controls.Find("btnApptSearch", true).FirstOrDefault() ?? throw new Exception("No control named [btnApptSearch] found."));
+        private ComboBox cmbApptDoctor => (ComboBox)(panel.Controls.Find("cmbApptDoctor", true).FirstOrDefault() ?? throw new Exception("No control named [cmbApptDoctor] found."));
+        private ComboBox cmbApptPatient => (ComboBox)(panel.Controls.Find("cmbApptPatient", true).FirstOrDefault() ?? throw new Exception("No control named [cmbApptPatient] found."));
+        private DateTimePicker dtpApptDate => (DateTimePicker)(panel.Controls.Find("dtpApptDate", true).FirstOrDefault() ?? throw new Exception("No control named [dtpApptDate] found."));
+        private ComboBox cmbApptTimeSlots => (ComboBox)(panel.Controls.Find("cmbApptTimeSlots", true).FirstOrDefault() ?? throw new Exception("No control named [cmbApptTimeSlots] found."));
+        private TextBox txtApptNotes => (TextBox)(panel.Controls.Find("txtApptNotes", true).FirstOrDefault() ?? throw new Exception("No control named [txtApptNotes] found."));
+        private ComboBox cmbApptStatus => (ComboBox)(panel.Controls.Find("cmbApptStatus", true).FirstOrDefault() ?? throw new Exception("No control named [cmbApptStatus] found."));
 
         public Panel Panel => panel;
 

@@ -71,6 +71,8 @@ namespace ClinicManagement_proj.UI
                 }
 
                 this.Hide();
+                Label lblLogout = dashboard.Controls.Find("lblLogout", true)[0] as Label;
+                lblLogout.Text = $"Welcome {ClinicManagementApp.CurrentUser.Username}";
                 dashboard.ShowDialog();
                 Close();
             }

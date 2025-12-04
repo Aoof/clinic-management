@@ -20,36 +20,18 @@ namespace ClinicManagement_proj.UI
 
 
         private readonly Panel panel;
-        private DataGridView dgvPatients => (DataGridView)(panel.Controls["dgvRegPatients"]
-                ?? throw new Exception("No control named [dgvRegPatients] found in panel controls collection."));
-        private GroupBox grpPatientRegistration => (GroupBox)(panel.Controls["grpPatientRegistration"]
-                ?? throw new Exception("No control named [grpPatientRegistration] found in panel controls collection."));
-        private TextBox txtPatientId => (TextBox)(grpPatientRegistration.Controls["txtPatientId"]
-                ?? throw new Exception("No control named [txtPatientId] found in grpPatientRegistration controls collection."));
-        private TextBox txtPFName => (TextBox)(grpPatientRegistration.Controls["txtPFName"]
-                ?? throw new Exception("No control named [txtPFName] found in grpPatientRegistration controls collection."));
-        private TextBox txtPLName => (TextBox)(grpPatientRegistration.Controls["txtPLName"]
-                ?? throw new Exception("No control named [txtPLName] found in grpPatientRegistration controls collection."));
-        private TextBox txtMedicalNumber => (TextBox)(grpPatientRegistration.Controls["txtMedicalNumber"]
-                ?? throw new Exception("No control named [txtMedicalNumber] found in grpPatientRegistration controls collection."));
-        private DateTimePicker dtpDoB => (DateTimePicker)(grpPatientRegistration.Controls["dtpDoB"]
-                ?? throw new Exception("No control named [dtpDoB] found in grpPatientRegistration controls collection."));
-        private TextBox txtPPhone => (TextBox)(grpPatientRegistration.Controls["txtPPhone"]
-                ?? throw new Exception("No control named [txtPPhone] found in grpPatientRegistration controls collection."));
-        private TableLayoutPanel layoutPatientButtons => (TableLayoutPanel)(grpPatientRegistration.Controls["layoutPatientButtons"]
-                ?? throw new Exception("No control named [layoutPatientButtons] found in grpPatientRegistration controls collection."));
-        private Button btnPatientCreate => (Button)(layoutPatientButtons.Controls["btnPCreate"]
-                ?? throw new Exception("No control named [btnPCreate] found in layoutPatientButtons controls collection."));
-        private Button btnPatientUpdate => (Button)(layoutPatientButtons.Controls["btnPUpdate"]
-                ?? throw new Exception("No control named [btnPUpdate] found in layoutPatientButtons controls collection."));
-        private Button btnPatientCancel => (Button)(layoutPatientButtons.Controls["btnPCancel"]
-                ?? throw new Exception("No control named [btnPCancel] found in layoutPatientButtons controls collection."));
-        private Button btnPatientDisplay => (Button)(layoutPatientButtons.Controls["btnPDisplay"]
-                ?? throw new Exception("No control named [btnPDisplay] found in layoutPatientButtons controls collection."));
-        private Button btnPatientSearch => (Button)(layoutPatientButtons.Controls["btnPSearch"]
-                ?? throw new Exception("No control named [btnPSearch] found in layoutPatientButtons controls collection."));
-        private Button btnPatientRefresh => (Button)(layoutPatientButtons.Controls["btnPRefresh"]
-                ?? throw new Exception("No control named [btnPRefresh] found in layoutPatientButtons controls collection."));
+        private DataGridView dgvPatients => (DataGridView)(panel.Controls.Find("dgvRegPatients", true).FirstOrDefault() ?? throw new Exception("No control named [dgvRegPatients] found."));
+        private TextBox txtPatientId => (TextBox)(panel.Controls.Find("txtPatientId", true).FirstOrDefault() ?? throw new Exception("No control named [txtPatientId] found."));
+        private TextBox txtPFName => (TextBox)(panel.Controls.Find("txtPFName", true).FirstOrDefault() ?? throw new Exception("No control named [txtPFName] found."));
+        private TextBox txtPLName => (TextBox)(panel.Controls.Find("txtPLName", true).FirstOrDefault() ?? throw new Exception("No control named [txtPLName] found."));
+        private TextBox txtMedicalNumber => (TextBox)(panel.Controls.Find("txtMedicalNumber", true).FirstOrDefault() ?? throw new Exception("No control named [txtMedicalNumber] found."));
+        private DateTimePicker dtpDoB => (DateTimePicker)(panel.Controls.Find("dtpDoB", true).FirstOrDefault() ?? throw new Exception("No control named [dtpDoB] found."));
+        private TextBox txtPPhone => (TextBox)(panel.Controls.Find("txtPPhone", true).FirstOrDefault() ?? throw new Exception("No control named [txtPPhone] found."));
+        private Button btnPatientCreate => (Button)(panel.Controls.Find("btnPCreate", true).FirstOrDefault() ?? throw new Exception("No control named [btnPCreate] found."));
+        private Button btnPatientUpdate => (Button)(panel.Controls.Find("btnPUpdate", true).FirstOrDefault() ?? throw new Exception("No control named [btnPUpdate] found."));
+        private Button btnPatientCancel => (Button)(panel.Controls.Find("btnPCancel", true).FirstOrDefault() ?? throw new Exception("No control named [btnPCancel] found."));
+        private Button btnPatientDisplay => (Button)(panel.Controls.Find("btnPDisplay", true).FirstOrDefault() ?? throw new Exception("No control named [btnPDisplay] found."));
+        private Button btnPatientSearch => (Button)(panel.Controls.Find("btnPSearch", true).FirstOrDefault() ?? throw new Exception("No control named [btnPSearch] found."));
 
         public Panel Panel => panel;
 

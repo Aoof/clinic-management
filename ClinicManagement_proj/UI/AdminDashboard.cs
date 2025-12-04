@@ -84,6 +84,8 @@ namespace ClinicManagement_proj.UI
 
             btnNotifications.Image = ImageHelper.ResizeImage(btnNotifications.Image, 25, 25);
             btnNotifications.ImageAlign = ContentAlignment.MiddleCenter;
+
+            btnLogout.Image = ImageHelper.ResizeImage(btnLogout.Image, 25, 25);
         }
 
         private void AdminDashboard_Load(object sender, EventArgs e)

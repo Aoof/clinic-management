@@ -23,36 +23,16 @@ namespace ClinicManagement_proj.UI
         private bool isUpdatingDoctorCombo = false;
         private AdminDashboard adminDashboard => (AdminDashboard)(panel.FindForm()
                 ?? throw new Exception("Form not found for panel."));
-        private GroupBox grpScheduling => (GroupBox)(panel.Controls["grpDoctorScheduling"]
-                ?? throw new Exception("No control named [grpDoctorScheduling] found in panel controls collection."));
-        private TableLayoutPanel schedulingLayout => (TableLayoutPanel)(grpScheduling.Controls["layoutSchedulingContent"]
-                ?? throw new Exception("No control named [layoutSchedulingContent] found in grpScheduling controls collection."));
-        private TableLayoutPanel schedulingHeaderLayout => (TableLayoutPanel)(grpScheduling.Controls["layoutSchedulingHeader"]
-                ?? throw new Exception("No control named [layoutSchedulingHeader] found in grpScheduling controls collection."));
-        private TableLayoutPanel layoutSchedulingActions => (TableLayoutPanel)(schedulingHeaderLayout.Controls["layoutSchedulingActions"]
-                ?? throw new Exception("No control named [layoutSchedulingActions] found in layoutSchedulingHeader controls collection."));
-        private Panel pnlDoctorPicker => (Panel)(schedulingHeaderLayout.Controls["pnlDoctorPicker"]
-                ?? throw new Exception("No control named [pnlDoctorPicker] found in layoutSchedulingHeader controls collection."));
-        private ListBox lbSunday => (ListBox)(schedulingLayout.Controls["lbSunday"]
-                ?? throw new Exception("No control named [lbSunday] found in schedulingLayout controls collection."));
-        private ListBox lbMonday => (ListBox)(schedulingLayout.Controls["lbMonday"]
-                ?? throw new Exception("No control named [lbMonday] found in schedulingLayout controls collection."));
-        private ListBox lbTuesday => (ListBox)(schedulingLayout.Controls["lbTuesday"]
-                ?? throw new Exception("No control named [lbTuesday] found in schedulingLayout controls collection."));
-        private ListBox lbWednesday => (ListBox)(schedulingLayout.Controls["lbWednesday"]
-                ?? throw new Exception("No control named [lbWednesday] found in schedulingLayout controls collection."));
-        private ListBox lbThursday => (ListBox)(schedulingLayout.Controls["lbThursday"]
-                ?? throw new Exception("No control named [lbThursday] found in schedulingLayout controls collection."));
-        private ListBox lbFriday => (ListBox)(schedulingLayout.Controls["lbFriday"]
-                ?? throw new Exception("No control named [lbFriday] found in schedulingLayout controls collection."));
-        private ListBox lbSaturday => (ListBox)(schedulingLayout.Controls["lbSaturday"]
-                ?? throw new Exception("No control named [lbSaturday] found in schedulingLayout controls collection."));
-        private ComboBox cmbDoctorSelect => (ComboBox)(pnlDoctorPicker.Controls["cmbDoctorSelect"]
-               ?? throw new Exception("No control named [cmbRoles] found in grpAdminForm controls collection."));
-        private Button btnScheduleSave => (Button)(layoutSchedulingActions.Controls["btnScheduleSave"]
-                ?? throw new Exception("No control named [btnScheduleSave] found in layoutSchedulingActions controls collection."));
-        private Button btnScheduleRevert => (Button)(layoutSchedulingActions.Controls["btnScheduleRevert"]
-                ?? throw new Exception("No control named [btnScheduleRevert] found in layoutSchedulingActions controls collection."));
+        private ListBox lbSunday => (ListBox)(panel.Controls.Find("lbSunday", true).FirstOrDefault() ?? throw new Exception("No control named [lbSunday] found."));
+        private ListBox lbMonday => (ListBox)(panel.Controls.Find("lbMonday", true).FirstOrDefault() ?? throw new Exception("No control named [lbMonday] found."));
+        private ListBox lbTuesday => (ListBox)(panel.Controls.Find("lbTuesday", true).FirstOrDefault() ?? throw new Exception("No control named [lbTuesday] found."));
+        private ListBox lbWednesday => (ListBox)(panel.Controls.Find("lbWednesday", true).FirstOrDefault() ?? throw new Exception("No control named [lbWednesday] found."));
+        private ListBox lbThursday => (ListBox)(panel.Controls.Find("lbThursday", true).FirstOrDefault() ?? throw new Exception("No control named [lbThursday] found."));
+        private ListBox lbFriday => (ListBox)(panel.Controls.Find("lbFriday", true).FirstOrDefault() ?? throw new Exception("No control named [lbFriday] found."));
+        private ListBox lbSaturday => (ListBox)(panel.Controls.Find("lbSaturday", true).FirstOrDefault() ?? throw new Exception("No control named [lbSaturday] found."));
+        private ComboBox cmbDoctorSelect => (ComboBox)(panel.Controls.Find("cmbDoctorSelect", true).FirstOrDefault() ?? throw new Exception("No control named [cmbDoctorSelect] found."));
+        private Button btnScheduleSave => (Button)(panel.Controls.Find("btnScheduleSave", true).FirstOrDefault() ?? throw new Exception("No control named [btnScheduleSave] found."));
+        private Button btnScheduleRevert => (Button)(panel.Controls.Find("btnScheduleRevert", true).FirstOrDefault() ?? throw new Exception("No control named [btnScheduleRevert] found."));
 
         public Panel Panel => panel;
 

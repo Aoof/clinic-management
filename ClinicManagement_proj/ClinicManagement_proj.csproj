@@ -121,6 +121,12 @@
     <Compile Include="DAL\User.cs">
       <DependentUpon>HealthCareClinicModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\vw_DoctorTodaySchedule.cs">
+      <DependentUpon>HealthCareClinicModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\vw_PatientClinicalSummary.cs">
+      <DependentUpon>HealthCareClinicModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\vw_PatientRecordsSummary.cs">
       <DependentUpon>HealthCareClinicModel.tt</DependentUpon>
     </Compile>
@@ -228,6 +234,7 @@
     <Content Include="Static\doctor_icon.png" />
     <Content Include="Static\doctor_icon_light.png" />
     <Content Include="Static\hospital-user-solid-full.svg" />
+    <None Include="Static\logout_icon.png" />
     <Content Include="Static\notifications_icon.png" />
     <Content Include="Static\patients_icon.png" />
     <Content Include="Static\patients_icon_light.png" />

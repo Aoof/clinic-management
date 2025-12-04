@@ -26,6 +26,14 @@ IF OBJECT_ID('dbo.vw_UpcomingAppointments', 'V') IS NOT NULL
     DROP VIEW dbo.vw_UpcomingAppointments;
 GO
 
+IF OBJECT_ID('dbo.vw_DoctorTodaySchedule', 'V') IS NOT NULL
+  DROP VIEW dbo.vw_DoctorTodaySchedule;
+GO
+
+IF OBJECT_ID('dbo.vw_PatientClinicalSummary', 'V') IS NOT NULL
+    DROP VIEW dbo.vw_PatientClinicalSummary;
+GO
+
 -- DROP TABLES (correct FK order: children → parents)
 IF OBJECT_ID('dbo.Appointment', 'U') IS NOT NULL
     DROP TABLE dbo.Appointment;
@@ -303,54 +311,210 @@ INSERT INTO dbo.Appointment (PatientId, DoctorId, TimeSlotId, Date, Notes, Statu
 (@PatientId5, @DoctorId2, 3, '2025-11-23', 'Cardiac screening', 'CANCELLED', GETDATE(), GETDATE()), -- 9:00 AM
 (@PatientId1, @DoctorId2, 6, '2025-12-01', 'Blood pressure check', 'PENDING', GETDATE(), GETDATE()); -- 10:30 AM
 
+-- Add more specialties
+INSERT INTO dbo.Specialties (Name) VALUES ('Dermatology');
+INSERT INTO dbo.Specialties (Name) VALUES ('Neurology');
+INSERT INTO dbo.Specialties (Name) VALUES ('Orthopedics');
+
+-- Add more doctors
+DECLARE @DoctorId4 INT, @DoctorId5 INT, @DoctorId6 INT;
+INSERT INTO dbo.Doctor (FirstName, LastName, LicenseNumber, CreatedAt, ModifiedAt) VALUES ('Alice', 'Johnson', 'LIC004567', GETDATE(), GETDATE());
+SET @DoctorId4 = SCOPE_IDENTITY();
+INSERT INTO dbo.Doctor (FirstName, LastName, LicenseNumber, CreatedAt, ModifiedAt) VALUES ('Robert', 'Lee', 'LIC005678', GETDATE(), GETDATE());
+SET @DoctorId5 = SCOPE_IDENTITY();
+INSERT INTO dbo.Doctor (FirstName, LastName, LicenseNumber, CreatedAt, ModifiedAt) VALUES ('Emily', 'Clark', 'LIC006789', GETDATE(), GETDATE());
+SET @DoctorId6 = SCOPE_IDENTITY();
+
+-- Associate new doctors with specialties
+INSERT INTO dbo.DoctorSpecialties (DoctorId, SpecialtyId) VALUES
+(@DoctorId4, @SpecialtyId1), -- Alice Johnson -> General Practice
+(@DoctorId5, @SpecialtyId2), -- Robert Lee -> Cardiology
+(@DoctorId6, @SpecialtyId3); -- Emily Clark -> Pediatrics
+
+-- Add more patients with valid insurance numbers (using Ontario format: 10 digits + 2 letters)
+DECLARE @PatientId6 INT, @PatientId7 INT, @PatientId8 INT, @PatientId9 INT, @PatientId10 INT;
+INSERT INTO dbo.Patient (FirstName, LastName, DateOfBirth, InsuranceNumber, PhoneNumber, CreatedAt, ModifiedAt) VALUES ('Liam', 'Taylor', '1982-01-05', '1234567890AB', '555-0106', GETDATE(), GETDATE());
+SET @PatientId6 = SCOPE_IDENTITY();
+INSERT INTO dbo.Patient (FirstName, LastName, DateOfBirth, InsuranceNumber, PhoneNumber, CreatedAt, ModifiedAt) VALUES ('Isabella', 'Anderson', '1992-04-12', '2345678901BC', '555-0107', GETDATE(), GETDATE());
+SET @PatientId7 = SCOPE_IDENTITY();
+INSERT INTO dbo.Patient (FirstName, LastName, DateOfBirth, InsuranceNumber, PhoneNumber, CreatedAt, ModifiedAt) VALUES ('Mason', 'Thomas', '1975-08-20', '3456789012CD', '555-0108', GETDATE(), GETDATE());
+SET @PatientId8 = SCOPE_IDENTITY();
+INSERT INTO dbo.Patient (FirstName, LastName, DateOfBirth, InsuranceNumber, PhoneNumber, CreatedAt, ModifiedAt) VALUES ('Ava', 'Jackson', '2000-12-03', '4567890123DE', '555-0109', GETDATE(), GETDATE());
+SET @PatientId9 = SCOPE_IDENTITY();
+INSERT INTO dbo.Patient (FirstName, LastName, DateOfBirth, InsuranceNumber, PhoneNumber, CreatedAt, ModifiedAt) VALUES ('Ethan', 'White', '1988-06-15', '5678901234EF', '555-0110', GETDATE(), GETDATE());
+SET @PatientId10 = SCOPE_IDENTITY();
+
+-- Add schedules for new doctors
+INSERT INTO dbo.DoctorSchedule (DoctorId, DayOfWeek, WorkStartTime, WorkEndTime, CreatedAt, ModifiedAt) VALUES
+-- Alice Johnson (Monday-Friday 9AM-5PM)
+(@DoctorId4, 'MONDAY', '09:00:00', '17:00:00', GETDATE(), GETDATE()),
+(@DoctorId4, 'TUESDAY', '09:00:00', '17:00:00', GETDATE(), GETDATE()),
+(@DoctorId4, 'WEDNESDAY', '09:00:00', '17:00:00', GETDATE(), GETDATE()),
+(@DoctorId4, 'THURSDAY', '09:00:00', '17:00:00', GETDATE(), GETDATE()),
+(@DoctorId4, 'FRIDAY', '09:00:00', '17:00:00', GETDATE(), GETDATE()),
+-- Robert Lee (Tuesday-Friday 8AM-4PM)
+(@DoctorId5, 'TUESDAY', '08:00:00', '16:00:00', GETDATE(), GETDATE()),
+(@DoctorId5, 'WEDNESDAY', '08:00:00', '16:00:00', GETDATE(), GETDATE()),
+(@DoctorId5, 'THURSDAY', '08:00:00', '16:00:00', GETDATE(), GETDATE()),
+(@DoctorId5, 'FRIDAY', '08:00:00', '16:00:00', GETDATE(), GETDATE()),
+-- Emily Clark (Monday, Wednesday, Friday 10AM-6PM)
+(@DoctorId6, 'MONDAY', '10:00:00', '18:00:00', GETDATE(), GETDATE()),
+(@DoctorId6, 'WEDNESDAY', '10:00:00', '18:00:00', GETDATE(), GETDATE()),
+(@DoctorId6, 'FRIDAY', '10:00:00', '18:00:00', GETDATE(), GETDATE());
+
+-- Add more appointments (mix of past and future, ensuring no conflicts)
+INSERT INTO dbo.Appointment (PatientId, DoctorId, TimeSlotId, Date, Notes, Status, CreatedAt, ModifiedAt) VALUES
+-- Past appointments
+(@PatientId6, @DoctorId4, 5, '2025-11-20', 'Routine checkup', 'COMPLETED', GETDATE(), GETDATE()), -- 10:00 AM
+(@PatientId7, @DoctorId5, 13, '2025-11-21', 'Cardiac evaluation', 'COMPLETED', GETDATE(), GETDATE()), -- 2:00 PM
+(@PatientId8, @DoctorId6, 7, '2025-11-19', 'Pediatric consultation', 'COMPLETED', GETDATE(), GETDATE()), -- 11:00 AM
+(@PatientId9, @DoctorId4, 15, '2025-11-18', 'Skin check', 'CANCELLED', GETDATE(), GETDATE()), -- 3:00 PM
+(@PatientId10, @DoctorId5, 3, '2025-11-17', 'Follow-up', 'CANCELLED', GETDATE(), GETDATE()), -- 9:00 AM
+-- Future appointments
+(@PatientId1, @DoctorId4, 6, '2025-12-02', 'Follow-up check', 'PENDING', GETDATE(), GETDATE()), -- 10:30 AM
+(@PatientId2, @DoctorId5, 14, '2025-12-03', 'Blood test review', 'CONFIRMED', GETDATE(), GETDATE()), -- 2:30 PM
+(@PatientId3, @DoctorId6, 8, '2025-12-04', 'Vaccination', 'PENDING', GETDATE(), GETDATE()), -- 11:30 AM
+(@PatientId4, @DoctorId4, 16, '2025-12-05', 'Annual physical', 'CONFIRMED', GETDATE(), GETDATE()), -- 3:30 PM
+(@PatientId5, @DoctorId5, 4, '2025-12-06', 'Consultation', 'PENDING', GETDATE(), GETDATE()); -- 9:30 AM
+
 GO
 
--- VIEW 1: Upcoming Appointments Summary
-CREATE VIEW dbo.vw_UpcomingAppointments
+-- VIEW 1: Doctor's Today Schedule - Shows all appointments for today organized by doctor
+CREATE VIEW dbo.vw_DoctorTodaySchedule
 AS
 SELECT 
     a.Id AS AppointmentId,
-    p.FirstName + ' ' + p.LastName AS PatientName,
-    p.PhoneNumber,
+    d.Id AS DoctorId,
     d.FirstName + ' ' + d.LastName AS DoctorName,
     s.Name AS Specialization,
+    p.Id AS PatientId,
+ p.FirstName + ' ' + p.LastName AS PatientName,
+    p.PhoneNumber AS PatientPhone,
+    p.DateOfBirth,
+    DATEDIFF(YEAR, p.DateOfBirth, GETDATE()) - 
+        CASE 
+            WHEN MONTH(p.DateOfBirth) > MONTH(GETDATE()) 
+     OR (MONTH(p.DateOfBirth) = MONTH(GETDATE()) AND DAY(p.DateOfBirth) > DAY(GETDATE()))
+          THEN 1 
+      ELSE 0 
+END AS PatientAge,
     a.Date AS AppointmentDate,
+    CAST(CAST(ts.HourOfDay AS VARCHAR) + ':' + RIGHT('0' + CAST(ts.MinuteOfHour AS VARCHAR), 2) AS VARCHAR(5)) AS AppointmentTime,
     ts.HourOfDay,
-    ts.MinuteOfHour,
-    a.Notes,
-    a.PatientId,
-    a.DoctorId
+  ts.MinuteOfHour,
+    a.Status,
+    a.Notes
 FROM 
     dbo.Appointment a
-    INNER JOIN dbo.Patient p ON a.PatientId = p.Id
     INNER JOIN dbo.Doctor d ON a.DoctorId = d.Id
+    INNER JOIN dbo.Patient p ON a.PatientId = p.Id
     INNER JOIN dbo.TimeSlots ts ON a.TimeSlotId = ts.Id
     LEFT JOIN dbo.DoctorSpecialties ds ON d.Id = ds.DoctorId
     LEFT JOIN dbo.Specialties s ON ds.SpecialtyId = s.Id
 WHERE 
-    a.Date >= CAST(GETDATE() AS DATE);
+    a.Date = CAST(GETDATE() AS DATE)
+    AND a.Status IN ('PENDING', 'CONFIRMED');
 GO
 
--- VIEW 2: Patient Medical Records Summary
+-- VIEW 2: Patient Clinical Summary - Comprehensive patient health overview
+CREATE VIEW dbo.vw_PatientClinicalSummary
+AS
+SELECT 
+    p.Id AS PatientId,
+    p.FirstName + ' ' + p.LastName AS PatientName,
+    p.DateOfBirth,
+    DATEDIFF(YEAR, p.DateOfBirth, GETDATE()) - 
+        CASE 
+            WHEN MONTH(p.DateOfBirth) > MONTH(GETDATE()) 
+       OR (MONTH(p.DateOfBirth) = MONTH(GETDATE()) AND DAY(p.DateOfBirth) > DAY(GETDATE()))
+    THEN 1 
+       ELSE 0 
+        END AS Age,
+    p.InsuranceNumber,
+    p.PhoneNumber,
+    (SELECT COUNT(*) FROM dbo.Appointment WHERE PatientId = p.Id AND Status = 'COMPLETED') AS CompletedVisits,
+    (SELECT COUNT(*) FROM dbo.Appointment WHERE PatientId = p.Id AND Status = 'CANCELLED') AS CancelledVisits,
+    (SELECT MAX(Date) FROM dbo.Appointment WHERE PatientId = p.Id AND Status = 'COMPLETED') AS LastVisitDate,
+  (SELECT TOP 1 d.FirstName + ' ' + d.LastName 
+     FROM dbo.Appointment a
+     INNER JOIN dbo.Doctor d ON a.DoctorId = d.Id
+     WHERE a.PatientId = p.Id AND a.Status = 'COMPLETED'
+     ORDER BY a.Date DESC, a.TimeSlotId DESC) AS LastSeenDoctor,
+    (SELECT MIN(Date) FROM dbo.Appointment WHERE PatientId = p.Id AND Date >= CAST(GETDATE() AS DATE) AND Status IN ('PENDING', 'CONFIRMED')) AS NextAppointmentDate
+FROM 
+    dbo.Patient p;
+GO
+
+-- VIEW 3: Upcoming Appointments (Next 7 Days) - For scheduling and planning
+CREATE VIEW dbo.vw_UpcomingAppointments
+AS
+SELECT 
+    a.Id AS AppointmentId,
+    d.Id AS DoctorId,
+    d.FirstName + ' ' + d.LastName AS DoctorName,
+    s.Name AS Specialization,
+    p.Id AS PatientId,
+    p.FirstName + ' ' + p.LastName AS PatientName,
+    p.PhoneNumber AS PatientPhone,
+    p.DateOfBirth,
+    a.Date AS AppointmentDate,
+    DATENAME(WEEKDAY, a.Date) AS DayOfWeek,
+    CAST(CAST(ts.HourOfDay AS VARCHAR) + ':' + RIGHT('0' + CAST(ts.MinuteOfHour AS VARCHAR), 2) AS VARCHAR(5)) AS AppointmentTime,
+    ts.HourOfDay,
+    ts.MinuteOfHour,
+    a.Status,
+    a.Notes,
+    CASE 
+    WHEN a.Date = CAST(GETDATE() AS DATE) THEN 'Today'
+        WHEN a.Date = CAST(DATEADD(DAY, 1, GETDATE()) AS DATE) THEN 'Tomorrow'
+     ELSE CAST(DATEDIFF(DAY, GETDATE(), a.Date) AS VARCHAR(10)) + ' days'
+    END AS DaysUntil
+FROM 
+    dbo.Appointment a
+    INNER JOIN dbo.Doctor d ON a.DoctorId = d.Id
+    INNER JOIN dbo.Patient p ON a.PatientId = p.Id
+    INNER JOIN dbo.TimeSlots ts ON a.TimeSlotId = ts.Id
+    LEFT JOIN dbo.DoctorSpecialties ds ON d.Id = ds.DoctorId
+    LEFT JOIN dbo.Specialties s ON ds.SpecialtyId = s.Id
+WHERE 
+    a.Date >= CAST(GETDATE() AS DATE)
+    AND a.Date <= CAST(DATEADD(DAY, 7, GETDATE()) AS DATE)
+    AND a.Status IN ('PENDING', 'CONFIRMED');
+GO
+
+-- VIEW 4: Patient Recent Visit History - Last 5 visits with clinical notes
 CREATE VIEW dbo.vw_PatientRecordsSummary
 AS
 SELECT 
+    ROW_NUMBER() OVER (PARTITION BY p.Id ORDER BY a.Date DESC, ts.HourOfDay DESC, ts.MinuteOfHour DESC) AS VisitNumber,
     p.Id AS PatientId,
     p.FirstName + ' ' + p.LastName AS PatientName,
     p.InsuranceNumber,
     p.DateOfBirth,
     DATEDIFF(YEAR, p.DateOfBirth, GETDATE()) - 
         CASE 
-            WHEN MONTH(p.DateOfBirth) > MONTH(GETDATE()) 
-                OR (MONTH(p.DateOfBirth) = MONTH(GETDATE()) AND DAY(p.DateOfBirth) > DAY(GETDATE()))
+         WHEN MONTH(p.DateOfBirth) > MONTH(GETDATE()) 
+            OR (MONTH(p.DateOfBirth) = MONTH(GETDATE()) AND DAY(p.DateOfBirth) > DAY(GETDATE()))
             THEN 1 
             ELSE 0 
         END AS Age,
     p.PhoneNumber,
-    (SELECT COUNT(*) FROM dbo.Appointment WHERE PatientId = p.Id) AS TotalAppointments,
-    (SELECT MAX(Date) FROM dbo.Appointment WHERE PatientId = p.Id) AS LastAppointmentDate
+a.Id AS AppointmentId,
+    a.Date AS VisitDate,
+    d.FirstName + ' ' + d.LastName AS DoctorName,
+    s.Name AS Specialization,
+    a.Status AS VisitStatus,
+  a.Notes AS ClinicalNotes,
+    DATEDIFF(DAY, a.Date, GETDATE()) AS DaysSinceVisit
 FROM 
-    dbo.Patient p;
+    dbo.Patient p
+    LEFT JOIN dbo.Appointment a ON p.Id = a.PatientId
+    LEFT JOIN dbo.Doctor d ON a.DoctorId = d.Id
+    LEFT JOIN dbo.DoctorSpecialties ds ON d.Id = ds.DoctorId
+    LEFT JOIN dbo.Specialties s ON ds.SpecialtyId = s.Id
+    LEFT JOIN dbo.TimeSlots ts ON a.TimeSlotId = ts.Id
+WHERE 
+    a.Status IN ('COMPLETED', 'CANCELLED');
 GO
 
 -- PROCEDURE 1: Get Available Appointment Slots

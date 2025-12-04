@@ -35,6 +35,8 @@ namespace ClinicManagement_proj.DAL
         public virtual DbSet<Specialty> Specialties { get; set; }
         public virtual DbSet<TimeSlot> TimeSlots { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<vw_DoctorTodaySchedule> vw_DoctorTodaySchedule { get; set; }
+        public virtual DbSet<vw_PatientClinicalSummary> vw_PatientClinicalSummary { get; set; }
         public virtual DbSet<vw_PatientRecordsSummary> vw_PatientRecordsSummary { get; set; }
         public virtual DbSet<vw_UpcomingAppointments> vw_UpcomingAppointments { get; set; }
     

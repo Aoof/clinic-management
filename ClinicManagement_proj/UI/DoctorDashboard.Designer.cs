@@ -37,6 +37,9 @@ namespace ClinicManagement_proj.UI
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DoctorDashboard));
             this.lblHeader = new System.Windows.Forms.Label();
             this.pnlSidebar = new System.Windows.Forms.Panel();
+            this.pnlLogout = new System.Windows.Forms.Panel();
+            this.btnLogout = new System.Windows.Forms.Button();
+            this.lblLogout = new System.Windows.Forms.Label();
             this.btnAppointmentManagement = new System.Windows.Forms.Button();
             this.btnPatientRegistration = new System.Windows.Forms.Button();
             this.btnReports = new System.Windows.Forms.Button();
@@ -45,6 +48,11 @@ namespace ClinicManagement_proj.UI
             this.pnlMainContent = new System.Windows.Forms.Panel();
             this.pnlReports = new System.Windows.Forms.Panel();
             this.tabControlReports = new System.Windows.Forms.TabControl();
+            this.tabDoctorTodaySchedule = new System.Windows.Forms.TabPage();
+            this.dgvDoctorTodaySchedule = new System.Windows.Forms.DataGridView();
+            this.pnlDoctorTodayScheduleTop = new System.Windows.Forms.Panel();
+            this.cmbVwDoctorScheduleSelect = new System.Windows.Forms.ComboBox();
+            this.lblVwDoctorScheduleSelect = new System.Windows.Forms.Label();
             this.tabPatientRecords = new System.Windows.Forms.TabPage();
             this.dgvPatientRecords = new System.Windows.Forms.DataGridView();
             this.pnlPatientRecordsTop = new System.Windows.Forms.Panel();
@@ -55,6 +63,11 @@ namespace ClinicManagement_proj.UI
             this.pnlUpcomingApptTop = new System.Windows.Forms.Panel();
             this.cmbVwDoctorSelect = new System.Windows.Forms.ComboBox();
             this.lblVwDoctorSelect = new System.Windows.Forms.Label();
+            this.tabPatientClinicalSummary = new System.Windows.Forms.TabPage();
+            this.dgvPatientClinicalSummary = new System.Windows.Forms.DataGridView();
+            this.pnlPatientClinicalSummaryTop = new System.Windows.Forms.Panel();
+            this.cmbVwPatientSelectClinical = new System.Windows.Forms.ComboBox();
+            this.lblVwPatientSelectClinical = new System.Windows.Forms.Label();
             this.pnlAppointmentManagement = new System.Windows.Forms.Panel();
             this.dgvAppointments = new System.Windows.Forms.DataGridView();
             this.grpApptMgmt = new System.Windows.Forms.GroupBox();
@@ -103,24 +116,29 @@ namespace ClinicManagement_proj.UI
             this.grpNotifications = new System.Windows.Forms.GroupBox();
             this.btnNotifications = new System.Windows.Forms.Button();
             this.lblToast = new System.Windows.Forms.Label();
-            this.pnlLogout = new System.Windows.Forms.Panel();
-            this.btnLogout = new System.Windows.Forms.Button();
             this.pnlNotifications = new System.Windows.Forms.Panel();
             this.lbNotifications = new System.Windows.Forms.ListBox();
             this.timerToast = new System.Windows.Forms.Timer(this.components);
             this.grpAppointmentForm = new System.Windows.Forms.GroupBox();
             this.lblAppointmentPlaceholder = new System.Windows.Forms.Label();
             this.pnlSidebar.SuspendLayout();
+            this.pnlLogout.SuspendLayout();
             this.pnlSidebarHeader.SuspendLayout();
             this.pnlMainContent.SuspendLayout();
             this.pnlReports.SuspendLayout();
             this.tabControlReports.SuspendLayout();
+            this.tabDoctorTodaySchedule.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDoctorTodaySchedule)).BeginInit();
+            this.pnlDoctorTodayScheduleTop.SuspendLayout();
             this.tabPatientRecords.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPatientRecords)).BeginInit();
             this.pnlPatientRecordsTop.SuspendLayout();
             this.tabUpcomingAppointments.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUpcomingAppointments)).BeginInit();
             this.pnlUpcomingApptTop.SuspendLayout();
+            this.tabPatientClinicalSummary.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPatientClinicalSummary)).BeginInit();
+            this.pnlPatientClinicalSummaryTop.SuspendLayout();
             this.pnlAppointmentManagement.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAppointments)).BeginInit();
             this.grpApptMgmt.SuspendLayout();
@@ -131,7 +149,6 @@ namespace ClinicManagement_proj.UI
             this.layoutPatientButtons.SuspendLayout();
             this.pnlHeader.SuspendLayout();
             this.grpNotifications.SuspendLayout();
-            this.pnlLogout.SuspendLayout();
             this.pnlNotifications.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -142,10 +159,11 @@ namespace ClinicManagement_proj.UI
             this.lblHeader.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.lblHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblHeader.ForeColor = System.Drawing.Color.White;
-            this.lblHeader.Location = new System.Drawing.Point(290, 0);
+            this.lblHeader.Location = new System.Drawing.Point(0, 0);
             this.lblHeader.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblHeader.Name = "lblHeader";
-            this.lblHeader.Size = new System.Drawing.Size(1290, 125);
+            this.lblHeader.Padding = new System.Windows.Forms.Padding(100, 0, 0, 0);
+            this.lblHeader.Size = new System.Drawing.Size(1580, 125);
             this.lblHeader.TabIndex = 1;
             this.lblHeader.Text = "Doctor Dashboard";
             this.lblHeader.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -153,6 +171,7 @@ namespace ClinicManagement_proj.UI
             // pnlSidebar
             // 
             this.pnlSidebar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
+            this.pnlSidebar.Controls.Add(this.pnlLogout);
             this.pnlSidebar.Controls.Add(this.btnAppointmentManagement);
             this.pnlSidebar.Controls.Add(this.btnPatientRegistration);
             this.pnlSidebar.Controls.Add(this.btnReports);
@@ -163,6 +182,49 @@ namespace ClinicManagement_proj.UI
             this.pnlSidebar.Name = "pnlSidebar";
             this.pnlSidebar.Size = new System.Drawing.Size(298, 751);
             this.pnlSidebar.TabIndex = 2;
+            // 
+            // pnlLogout
+            // 
+            this.pnlLogout.BackColor = System.Drawing.Color.Transparent;
+            this.pnlLogout.Controls.Add(this.btnLogout);
+            this.pnlLogout.Controls.Add(this.lblLogout);
+            this.pnlLogout.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnlLogout.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.pnlLogout.Location = new System.Drawing.Point(0, 649);
+            this.pnlLogout.Margin = new System.Windows.Forms.Padding(2);
+            this.pnlLogout.Name = "pnlLogout";
+            this.pnlLogout.Padding = new System.Windows.Forms.Padding(20);
+            this.pnlLogout.Size = new System.Drawing.Size(298, 102);
+            this.pnlLogout.TabIndex = 5;
+            // 
+            // btnLogout
+            // 
+            this.btnLogout.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnLogout.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnLogout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLogout.ForeColor = System.Drawing.Color.White;
+            this.btnLogout.Image = global::ClinicManagement_proj.Properties.Resources.logout_icon;
+            this.btnLogout.Location = new System.Drawing.Point(217, 20);
+            this.btnLogout.Margin = new System.Windows.Forms.Padding(0);
+            this.btnLogout.Name = "btnLogout";
+            this.btnLogout.Size = new System.Drawing.Size(61, 62);
+            this.btnLogout.TabIndex = 3;
+            this.btnLogout.UseVisualStyleBackColor = false;
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
+            // 
+            // lblLogout
+            // 
+            this.lblLogout.BackColor = System.Drawing.Color.Transparent;
+            this.lblLogout.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblLogout.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLogout.ForeColor = System.Drawing.Color.White;
+            this.lblLogout.Location = new System.Drawing.Point(20, 20);
+            this.lblLogout.Name = "lblLogout";
+            this.lblLogout.Size = new System.Drawing.Size(197, 62);
+            this.lblLogout.TabIndex = 4;
+            this.lblLogout.Text = "Welcome, [USER]";
+            this.lblLogout.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btnAppointmentManagement
             // 
@@ -278,8 +340,10 @@ namespace ClinicManagement_proj.UI
             // 
             // tabControlReports
             // 
+            this.tabControlReports.Controls.Add(this.tabDoctorTodaySchedule);
             this.tabControlReports.Controls.Add(this.tabPatientRecords);
             this.tabControlReports.Controls.Add(this.tabUpcomingAppointments);
+            this.tabControlReports.Controls.Add(this.tabPatientClinicalSummary);
             this.tabControlReports.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlReports.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControlReports.Location = new System.Drawing.Point(0, 0);
@@ -287,7 +351,79 @@ namespace ClinicManagement_proj.UI
             this.tabControlReports.Name = "tabControlReports";
             this.tabControlReports.SelectedIndex = 0;
             this.tabControlReports.Size = new System.Drawing.Size(1242, 711);
-            this.tabControlReports.TabIndex = 1;
+            this.tabControlReports.TabIndex = 3;
+            // 
+            // tabDoctorTodaySchedule
+            // 
+            this.tabDoctorTodaySchedule.BackColor = System.Drawing.Color.White;
+            this.tabDoctorTodaySchedule.Controls.Add(this.dgvDoctorTodaySchedule);
+            this.tabDoctorTodaySchedule.Controls.Add(this.pnlDoctorTodayScheduleTop);
+            this.tabDoctorTodaySchedule.Location = new System.Drawing.Point(4, 31);
+            this.tabDoctorTodaySchedule.Margin = new System.Windows.Forms.Padding(2);
+            this.tabDoctorTodaySchedule.Name = "tabDoctorTodaySchedule";
+            this.tabDoctorTodaySchedule.Padding = new System.Windows.Forms.Padding(2);
+            this.tabDoctorTodaySchedule.Size = new System.Drawing.Size(1234, 676);
+            this.tabDoctorTodaySchedule.TabIndex = 2;
+            this.tabDoctorTodaySchedule.Text = "Doctor\'s Today Schedule";
+            // 
+            // dgvDoctorTodaySchedule
+            // 
+            this.dgvDoctorTodaySchedule.AllowUserToAddRows = false;
+            this.dgvDoctorTodaySchedule.AllowUserToDeleteRows = false;
+            this.dgvDoctorTodaySchedule.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvDoctorTodaySchedule.BackgroundColor = System.Drawing.Color.White;
+            this.dgvDoctorTodaySchedule.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvDoctorTodaySchedule.ColumnHeadersHeight = 40;
+            this.dgvDoctorTodaySchedule.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.dgvDoctorTodaySchedule.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvDoctorTodaySchedule.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dgvDoctorTodaySchedule.Location = new System.Drawing.Point(2, 82);
+            this.dgvDoctorTodaySchedule.Margin = new System.Windows.Forms.Padding(2);
+            this.dgvDoctorTodaySchedule.MultiSelect = false;
+            this.dgvDoctorTodaySchedule.Name = "dgvDoctorTodaySchedule";
+            this.dgvDoctorTodaySchedule.ReadOnly = true;
+            this.dgvDoctorTodaySchedule.RowHeadersWidth = 51;
+            this.dgvDoctorTodaySchedule.RowTemplate.Height = 30;
+            this.dgvDoctorTodaySchedule.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvDoctorTodaySchedule.Size = new System.Drawing.Size(1230, 592);
+            this.dgvDoctorTodaySchedule.TabIndex = 1;
+            // 
+            // pnlDoctorTodayScheduleTop
+            // 
+            this.pnlDoctorTodayScheduleTop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(240)))), ((int)(((byte)(241)))));
+            this.pnlDoctorTodayScheduleTop.Controls.Add(this.cmbVwDoctorScheduleSelect);
+            this.pnlDoctorTodayScheduleTop.Controls.Add(this.lblVwDoctorScheduleSelect);
+            this.pnlDoctorTodayScheduleTop.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlDoctorTodayScheduleTop.Location = new System.Drawing.Point(2, 2);
+            this.pnlDoctorTodayScheduleTop.Margin = new System.Windows.Forms.Padding(2);
+            this.pnlDoctorTodayScheduleTop.Name = "pnlDoctorTodayScheduleTop";
+            this.pnlDoctorTodayScheduleTop.Padding = new System.Windows.Forms.Padding(20, 15, 20, 15);
+            this.pnlDoctorTodayScheduleTop.Size = new System.Drawing.Size(1230, 80);
+            this.pnlDoctorTodayScheduleTop.TabIndex = 0;
+            // 
+            // cmbVwDoctorScheduleSelect
+            // 
+            this.cmbVwDoctorScheduleSelect.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbVwDoctorScheduleSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbVwDoctorScheduleSelect.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbVwDoctorScheduleSelect.FormattingEnabled = true;
+            this.cmbVwDoctorScheduleSelect.Location = new System.Drawing.Point(180, 22);
+            this.cmbVwDoctorScheduleSelect.Margin = new System.Windows.Forms.Padding(2);
+            this.cmbVwDoctorScheduleSelect.Name = "cmbVwDoctorScheduleSelect";
+            this.cmbVwDoctorScheduleSelect.Size = new System.Drawing.Size(1028, 30);
+            this.cmbVwDoctorScheduleSelect.TabIndex = 1;
+            // 
+            // lblVwDoctorScheduleSelect
+            // 
+            this.lblVwDoctorScheduleSelect.AutoSize = true;
+            this.lblVwDoctorScheduleSelect.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblVwDoctorScheduleSelect.Location = new System.Drawing.Point(20, 25);
+            this.lblVwDoctorScheduleSelect.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblVwDoctorScheduleSelect.Name = "lblVwDoctorScheduleSelect";
+            this.lblVwDoctorScheduleSelect.Size = new System.Drawing.Size(141, 24);
+            this.lblVwDoctorScheduleSelect.TabIndex = 0;
+            this.lblVwDoctorScheduleSelect.Text = "Select Doctor:";
             // 
             // tabPatientRecords
             // 
@@ -432,6 +568,78 @@ namespace ClinicManagement_proj.UI
             this.lblVwDoctorSelect.Size = new System.Drawing.Size(141, 24);
             this.lblVwDoctorSelect.TabIndex = 0;
             this.lblVwDoctorSelect.Text = "Select Doctor:";
+            // 
+            // tabPatientClinicalSummary
+            // 
+            this.tabPatientClinicalSummary.BackColor = System.Drawing.Color.White;
+            this.tabPatientClinicalSummary.Controls.Add(this.dgvPatientClinicalSummary);
+            this.tabPatientClinicalSummary.Controls.Add(this.pnlPatientClinicalSummaryTop);
+            this.tabPatientClinicalSummary.Location = new System.Drawing.Point(4, 31);
+            this.tabPatientClinicalSummary.Margin = new System.Windows.Forms.Padding(2);
+            this.tabPatientClinicalSummary.Name = "tabPatientClinicalSummary";
+            this.tabPatientClinicalSummary.Padding = new System.Windows.Forms.Padding(2);
+            this.tabPatientClinicalSummary.Size = new System.Drawing.Size(1234, 676);
+            this.tabPatientClinicalSummary.TabIndex = 3;
+            this.tabPatientClinicalSummary.Text = "Patient Clinical Summary";
+            // 
+            // dgvPatientClinicalSummary
+            // 
+            this.dgvPatientClinicalSummary.AllowUserToAddRows = false;
+            this.dgvPatientClinicalSummary.AllowUserToDeleteRows = false;
+            this.dgvPatientClinicalSummary.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvPatientClinicalSummary.BackgroundColor = System.Drawing.Color.White;
+            this.dgvPatientClinicalSummary.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvPatientClinicalSummary.ColumnHeadersHeight = 40;
+            this.dgvPatientClinicalSummary.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.dgvPatientClinicalSummary.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvPatientClinicalSummary.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dgvPatientClinicalSummary.Location = new System.Drawing.Point(2, 82);
+            this.dgvPatientClinicalSummary.Margin = new System.Windows.Forms.Padding(2);
+            this.dgvPatientClinicalSummary.MultiSelect = false;
+            this.dgvPatientClinicalSummary.Name = "dgvPatientClinicalSummary";
+            this.dgvPatientClinicalSummary.ReadOnly = true;
+            this.dgvPatientClinicalSummary.RowHeadersWidth = 51;
+            this.dgvPatientClinicalSummary.RowTemplate.Height = 30;
+            this.dgvPatientClinicalSummary.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvPatientClinicalSummary.Size = new System.Drawing.Size(1230, 592);
+            this.dgvPatientClinicalSummary.TabIndex = 1;
+            // 
+            // pnlPatientClinicalSummaryTop
+            // 
+            this.pnlPatientClinicalSummaryTop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(240)))), ((int)(((byte)(241)))));
+            this.pnlPatientClinicalSummaryTop.Controls.Add(this.cmbVwPatientSelectClinical);
+            this.pnlPatientClinicalSummaryTop.Controls.Add(this.lblVwPatientSelectClinical);
+            this.pnlPatientClinicalSummaryTop.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlPatientClinicalSummaryTop.Location = new System.Drawing.Point(2, 2);
+            this.pnlPatientClinicalSummaryTop.Margin = new System.Windows.Forms.Padding(2);
+            this.pnlPatientClinicalSummaryTop.Name = "pnlPatientClinicalSummaryTop";
+            this.pnlPatientClinicalSummaryTop.Padding = new System.Windows.Forms.Padding(20, 15, 20, 15);
+            this.pnlPatientClinicalSummaryTop.Size = new System.Drawing.Size(1230, 80);
+            this.pnlPatientClinicalSummaryTop.TabIndex = 0;
+            // 
+            // cmbVwPatientSelectClinical
+            // 
+            this.cmbVwPatientSelectClinical.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbVwPatientSelectClinical.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbVwPatientSelectClinical.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbVwPatientSelectClinical.FormattingEnabled = true;
+            this.cmbVwPatientSelectClinical.Location = new System.Drawing.Point(180, 22);
+            this.cmbVwPatientSelectClinical.Margin = new System.Windows.Forms.Padding(2);
+            this.cmbVwPatientSelectClinical.Name = "cmbVwPatientSelectClinical";
+            this.cmbVwPatientSelectClinical.Size = new System.Drawing.Size(1028, 30);
+            this.cmbVwPatientSelectClinical.TabIndex = 1;
+            // 
+            // lblVwPatientSelectClinical
+            // 
+            this.lblVwPatientSelectClinical.AutoSize = true;
+            this.lblVwPatientSelectClinical.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblVwPatientSelectClinical.Location = new System.Drawing.Point(20, 25);
+            this.lblVwPatientSelectClinical.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblVwPatientSelectClinical.Name = "lblVwPatientSelectClinical";
+            this.lblVwPatientSelectClinical.Size = new System.Drawing.Size(143, 24);
+            this.lblVwPatientSelectClinical.TabIndex = 0;
+            this.lblVwPatientSelectClinical.Text = "Select Patient:";
             // 
             // pnlAppointmentManagement
             // 
@@ -1089,7 +1297,6 @@ namespace ClinicManagement_proj.UI
             // 
             this.pnlHeader.Controls.Add(this.grpNotifications);
             this.pnlHeader.Controls.Add(this.lblHeader);
-            this.pnlHeader.Controls.Add(this.pnlLogout);
             this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlHeader.Location = new System.Drawing.Point(0, 0);
             this.pnlHeader.Margin = new System.Windows.Forms.Padding(2);
@@ -1146,35 +1353,6 @@ namespace ClinicManagement_proj.UI
             this.lblToast.TabIndex = 2;
             this.lblToast.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lblToast.Visible = false;
-            // 
-            // pnlLogout
-            // 
-            this.pnlLogout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
-            this.pnlLogout.Controls.Add(this.btnLogout);
-            this.pnlLogout.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pnlLogout.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.pnlLogout.Location = new System.Drawing.Point(0, 0);
-            this.pnlLogout.Margin = new System.Windows.Forms.Padding(2);
-            this.pnlLogout.Name = "pnlLogout";
-            this.pnlLogout.Padding = new System.Windows.Forms.Padding(40, 30, 40, 30);
-            this.pnlLogout.Size = new System.Drawing.Size(290, 125);
-            this.pnlLogout.TabIndex = 5;
-            // 
-            // btnLogout
-            // 
-            this.btnLogout.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnLogout.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnLogout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLogout.ForeColor = System.Drawing.Color.White;
-            this.btnLogout.Location = new System.Drawing.Point(40, 30);
-            this.btnLogout.Margin = new System.Windows.Forms.Padding(0);
-            this.btnLogout.Name = "btnLogout";
-            this.btnLogout.Size = new System.Drawing.Size(210, 65);
-            this.btnLogout.TabIndex = 3;
-            this.btnLogout.Text = "Logout";
-            this.btnLogout.UseVisualStyleBackColor = false;
-            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
             // 
             // pnlNotifications
             // 
@@ -1244,10 +1422,15 @@ namespace ClinicManagement_proj.UI
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.DoctorDashboard_Load);
             this.pnlSidebar.ResumeLayout(false);
+            this.pnlLogout.ResumeLayout(false);
             this.pnlSidebarHeader.ResumeLayout(false);
             this.pnlMainContent.ResumeLayout(false);
             this.pnlReports.ResumeLayout(false);
             this.tabControlReports.ResumeLayout(false);
+            this.tabDoctorTodaySchedule.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDoctorTodaySchedule)).EndInit();
+            this.pnlDoctorTodayScheduleTop.ResumeLayout(false);
+            this.pnlDoctorTodayScheduleTop.PerformLayout();
             this.tabPatientRecords.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvPatientRecords)).EndInit();
             this.pnlPatientRecordsTop.ResumeLayout(false);
@@ -1256,6 +1439,10 @@ namespace ClinicManagement_proj.UI
             ((System.ComponentModel.ISupportInitialize)(this.dgvUpcomingAppointments)).EndInit();
             this.pnlUpcomingApptTop.ResumeLayout(false);
             this.pnlUpcomingApptTop.PerformLayout();
+            this.tabPatientClinicalSummary.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPatientClinicalSummary)).EndInit();
+            this.pnlPatientClinicalSummaryTop.ResumeLayout(false);
+            this.pnlPatientClinicalSummaryTop.PerformLayout();
             this.pnlAppointmentManagement.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvAppointments)).EndInit();
             this.grpApptMgmt.ResumeLayout(false);
@@ -1270,7 +1457,6 @@ namespace ClinicManagement_proj.UI
             this.layoutPatientButtons.PerformLayout();
             this.pnlHeader.ResumeLayout(false);
             this.grpNotifications.ResumeLayout(false);
-            this.pnlLogout.ResumeLayout(false);
             this.pnlNotifications.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -1292,15 +1478,10 @@ namespace ClinicManagement_proj.UI
         private System.Windows.Forms.TableLayoutPanel layoutPatientButtons;
         private System.Windows.Forms.Button btnPCreate;
         private System.Windows.Forms.Button btnPSearch;
-        private System.Windows.Forms.Button btnPDisplay;
-        private System.Windows.Forms.Button btnPCancel;
-        private System.Windows.Forms.Button btnPUpdate;
         private System.Windows.Forms.TextBox txtPPhone;
         private System.Windows.Forms.Label lblPPhone;
         private System.Windows.Forms.DateTimePicker dtpDoB;
         private System.Windows.Forms.Label lblDoB;
-        private System.Windows.Forms.TextBox txtPatientId;
-        private System.Windows.Forms.Label lblPatientId;
         private System.Windows.Forms.TextBox txtMedicalNumber;
         private System.Windows.Forms.Label lblMedicalNumber;
         private System.Windows.Forms.TextBox txtPLName;
@@ -1308,39 +1489,29 @@ namespace ClinicManagement_proj.UI
         private System.Windows.Forms.TextBox txtPFName;
         private System.Windows.Forms.Label lblPFName;
         private System.Windows.Forms.Panel pnlReports;
-        private System.Windows.Forms.TabControl tabControlReports;
-        private System.Windows.Forms.TabPage tabPatientRecords;
-        private System.Windows.Forms.DataGridView dgvPatientRecords;
-        private System.Windows.Forms.Panel pnlPatientRecordsTop;
-        private System.Windows.Forms.ComboBox cmbVwPatientSelect;
-        private System.Windows.Forms.Label lblVwPatientSelect;
-        private System.Windows.Forms.TabPage tabUpcomingAppointments;
-        private System.Windows.Forms.DataGridView dgvUpcomingAppointments;
-        private System.Windows.Forms.Panel pnlUpcomingApptTop;
-        private System.Windows.Forms.ComboBox cmbVwDoctorSelect;
-        private System.Windows.Forms.Label lblVwDoctorSelect;
         private System.Windows.Forms.Panel pnlHeader;
         private System.Windows.Forms.GroupBox grpNotifications;
         private System.Windows.Forms.Button btnNotifications;
         private System.Windows.Forms.Label lblToast;
-        private System.Windows.Forms.Panel pnlLogout;
-        private System.Windows.Forms.Button btnLogout;
         private System.Windows.Forms.Panel pnlNotifications;
         private System.Windows.Forms.ListBox lbNotifications;
         private System.Windows.Forms.Timer timerToast;
         private System.Windows.Forms.GroupBox grpAppointmentForm;
         private System.Windows.Forms.Label lblAppointmentPlaceholder;
-        private System.Windows.Forms.Button btnApptCancel;
+        private System.Windows.Forms.Button btnPCancel;
+        private System.Windows.Forms.Button btnPDisplay;
+        private System.Windows.Forms.Button btnPUpdate;
+        private System.Windows.Forms.TextBox txtPatientId;
+        private System.Windows.Forms.Label lblPatientId;
         private System.Windows.Forms.Panel pnlAppointmentManagement;
         private System.Windows.Forms.DataGridView dgvAppointments;
         private System.Windows.Forms.GroupBox grpApptMgmt;
         private System.Windows.Forms.TableLayoutPanel layoutApptButtons;
-        private System.Windows.Forms.Button btnApptDisplay;
-        private System.Windows.Forms.Button btnApptSearch;
-        private System.Windows.Forms.Button btnApptUpdate;
         private System.Windows.Forms.Button btnApptCreate;
-        private System.Windows.Forms.TextBox txtApptId;
-        private System.Windows.Forms.Label lblApptId;
+        private System.Windows.Forms.Button btnApptUpdate;
+        private System.Windows.Forms.Button btnApptSearch;
+        private System.Windows.Forms.Button btnApptDisplay;
+        private System.Windows.Forms.Button btnApptCancel;
         private System.Windows.Forms.Label lblApptDoctor;
         private System.Windows.Forms.ComboBox cmbApptDoctor;
         private System.Windows.Forms.Label lblApptPatient;
@@ -1353,5 +1524,31 @@ namespace ClinicManagement_proj.UI
         private System.Windows.Forms.TextBox txtApptNotes;
         private System.Windows.Forms.Label lblApptStatus;
         private System.Windows.Forms.ComboBox cmbApptStatus;
+        private System.Windows.Forms.Label lblApptId;
+        private System.Windows.Forms.TextBox txtApptId;
+        private System.Windows.Forms.Panel pnlLogout;
+        private System.Windows.Forms.Button btnLogout;
+        private System.Windows.Forms.TabControl tabControlReports;
+        private System.Windows.Forms.TabPage tabPatientRecords;
+        private System.Windows.Forms.DataGridView dgvPatientRecords;
+        private System.Windows.Forms.Panel pnlPatientRecordsTop;
+        private System.Windows.Forms.ComboBox cmbVwPatientSelect;
+        private System.Windows.Forms.Label lblVwPatientSelect;
+        private System.Windows.Forms.TabPage tabUpcomingAppointments;
+        private System.Windows.Forms.DataGridView dgvUpcomingAppointments;
+        private System.Windows.Forms.Panel pnlUpcomingApptTop;
+        private System.Windows.Forms.ComboBox cmbVwDoctorSelect;
+        private System.Windows.Forms.Label lblVwDoctorSelect;
+        private System.Windows.Forms.TabPage tabDoctorTodaySchedule;
+        private System.Windows.Forms.DataGridView dgvDoctorTodaySchedule;
+        private System.Windows.Forms.Panel pnlDoctorTodayScheduleTop;
+        private System.Windows.Forms.ComboBox cmbVwDoctorScheduleSelect;
+        private System.Windows.Forms.Label lblVwDoctorScheduleSelect;
+        private System.Windows.Forms.TabPage tabPatientClinicalSummary;
+        private System.Windows.Forms.DataGridView dgvPatientClinicalSummary;
+        private System.Windows.Forms.Panel pnlPatientClinicalSummaryTop;
+        private System.Windows.Forms.ComboBox cmbVwPatientSelectClinical;
+        private System.Windows.Forms.Label lblVwPatientSelectClinical;
+        public System.Windows.Forms.Label lblLogout;
     }
 }

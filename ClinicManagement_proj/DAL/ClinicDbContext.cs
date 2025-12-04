@@ -18,6 +18,8 @@ namespace ClinicManagement_proj.DAL
         public DbSet<UserDTO> Users { get; set; }
         public virtual DbSet<vw_PatientRecordsSummary> vw_PatientRecordsSummary { get; set; }
         public virtual DbSet<vw_UpcomingAppointments> vw_UpcomingAppointments { get; set; }
+        public virtual DbSet<vw_DoctorTodaySchedule> vw_DoctorTodaySchedule { get; set; }
+        public virtual DbSet<vw_PatientClinicalSummary> vw_PatientClinicalSummary { get; set; }
         public ClinicDbContext() : base("data source=.\\SQLEXPRESS;initial catalog=HealthCareClinicDB_T2;integrated security=True;encrypt=False;MultipleActiveResultSets=True;App=EntityFramework")
         { }
 
@@ -272,11 +274,19 @@ namespace ClinicManagement_proj.DAL
             // View entities primary keys
             modelBuilder.Entity<vw_PatientRecordsSummary>()
                 .ToTable("vw_PatientRecordsSummary")
-                .HasKey(v => v.PatientId);
+                .HasKey(v => new { v.PatientId, v.AppointmentId });
 
             modelBuilder.Entity<vw_UpcomingAppointments>()
                 .ToTable("vw_UpcomingAppointments")
                 .HasKey(v => v.AppointmentId);
+
+            modelBuilder.Entity<vw_DoctorTodaySchedule>()
+                .ToTable("vw_DoctorTodaySchedule")
+                .HasKey(v => v.AppointmentId);
+
+            modelBuilder.Entity<vw_PatientClinicalSummary>()
+                .ToTable("vw_PatientClinicalSummary")
+                .HasKey(v => v.PatientId);
         }
     }
 }

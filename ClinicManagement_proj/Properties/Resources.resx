@@ -118,25 +118,28 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="doctor_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Static\doctor_icon_light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="reports_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Static\reports_icon_light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="patient_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Static\patients_icon_light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="users_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Static\users_icon_light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="schedule_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Static\schedule_icon_light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="appointment_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Static\appointment_icon_light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="notifications_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Static\notifications_icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="appointment_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Static\appointment_icon_light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="doctor_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Static\doctor_icon_light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="users_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Static\users_icon_light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="patient_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Static\patients_icon_light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="logout_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Static\logout_icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
