@@ -26,11 +26,14 @@ namespace ClinicManagement_proj.BLL.Services
 
         public UserDTO Authenticate(string username, string password)
         {
-            var user = GetUserByUsername(username);
-            if (user != null && ComparePassword(password, user.PasswordHash))
+            try
             {
-                return user;
-            }
+                var user = GetUserByUsername(username);
+                if (user != null && ComparePassword(password, user.PasswordHash))
+                {
+                    return user;
+                }
+            } catch (Exception) { }
             return null;
         }
 

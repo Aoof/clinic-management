@@ -127,8 +127,8 @@
   <data name="appointment_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Static\appointment_icon_light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="notifications_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Static\notifications_icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="patient_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Static\patients_icon_light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="doctor_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Static\doctor_icon_light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -136,10 +136,13 @@
   <data name="users_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Static\users_icon_light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="patient_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Static\patients_icon_light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="logout_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Static\logout_icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="notifications_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Static\notifications_icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="clinic-mgmt-thumbnail" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Static\clinic-mgmt-thumbnail.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

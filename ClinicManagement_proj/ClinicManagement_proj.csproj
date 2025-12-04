@@ -230,6 +230,7 @@
     <Content Include="Static\bell-solid-full.svg" />
     <Content Include="Static\calendar-days-solid-full.svg" />
     <Content Include="Static\chart-pie-solid-full.svg" />
+    <None Include="Static\clinic-mgmt-thumbnail.jpg" />
     <Content Include="Static\dashboard_icon.ico" />
     <Content Include="Static\dashboard_icon.png" />
     <Content Include="Static\dashboard_icon.svg" />

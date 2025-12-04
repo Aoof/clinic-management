@@ -73,6 +73,16 @@ namespace ClinicManagement_proj.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap clinic_mgmt_thumbnail {
+            get {
+                object obj = ResourceManager.GetObject("clinic-mgmt-thumbnail", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap doctor_icon {
             get {
                 object obj = ResourceManager.GetObject("doctor_icon", resourceCulture);
