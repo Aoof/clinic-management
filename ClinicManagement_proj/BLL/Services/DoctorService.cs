@@ -125,5 +125,23 @@ namespace ClinicManagement_proj.BLL.Services
                 .Include(d => d.DoctorSchedules)
                 .ToList();
         }
+
+        public List<DoctorDTO> SearchByLicense(string license)
+        {
+            if (!ClinicManagementApp.CurrentUserHasRole
+                (
+                    UserService.UserRoles.Administrator,
+                    UserService.UserRoles.Doctor,
+                    UserService.UserRoles.Receptionist
+                )
+            )
+                throw new UnauthorizedAccessException("You don't have access to search doctors.");
+
+            return clinicDb.Doctors
+                .Where(d => d.LicenseNumber.Contains(license))
+                .Include(d => d.Specialties)
+                .Include(d => d.DoctorSchedules)
+                .ToList();
+        }
     }
 }

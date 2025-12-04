@@ -28,6 +28,8 @@ namespace ClinicManagement_proj.UI
                 ?? throw new Exception("No control named [txtDoctorFName] found in grpDoctorMgmt controls collection."));
         private TextBox txtDoctorLName => (TextBox)(grpDoctorMgmt.Controls["txtDoctorLName"]
                 ?? throw new Exception("No control named [txtDoctorLName] found in grpDoctorMgmt controls collection."));
+        private TextBox txtDoctorLicense => (TextBox)(grpDoctorMgmt.Controls["txtDoctorLicense"]
+                ?? throw new Exception("No control named [txtDoctorLicense] found in grpDoctorMgmt controls collection."));
         private ComboBox cmbSpecialization => (ComboBox)(grpDoctorMgmt.Controls["cmbSpecialization"]
                 ?? throw new Exception("No control named [cmbSpecialization] found in grpDoctorMgmt controls collection."));
         private Button btnDoctorCreate => (Button)(actionsLayout.Controls["btnDoctorCreate"]
@@ -103,7 +105,6 @@ namespace ClinicManagement_proj.UI
 
             dgvDoctors.Columns["Appointments"].Visible = false;
             dgvDoctors.Columns["DoctorSchedules"].Visible = false;
-            dgvDoctors.Columns["DisplayText"].Visible = false;
 
             dgvDoctors.Columns["Specialties"].HeaderText = "Specialties";
             dgvDoctors.Columns["Specialties"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
@@ -123,6 +124,7 @@ namespace ClinicManagement_proj.UI
             txtDoctorId.Text = string.Empty;
             txtDoctorFName.Text = string.Empty;
             txtDoctorLName.Text = string.Empty;
+            txtDoctorLicense.Text = string.Empty;
             cmbSpecialization.SelectedIndex = -1;
             isEditMode = false;
 
@@ -156,6 +158,7 @@ namespace ClinicManagement_proj.UI
                 txtDoctorId.Text = selectedDoctor.Id.ToString();
                 txtDoctorFName.Text = selectedDoctor.FirstName;
                 txtDoctorLName.Text = selectedDoctor.LastName;
+                txtDoctorLicense.Text = selectedDoctor.LicenseNumber;
                 
                 if (selectedDoctor.Specialties.Any())
                 {
@@ -170,6 +173,7 @@ namespace ClinicManagement_proj.UI
         /// </summary>
         private void btnDoctorCancel_Click(object sender, EventArgs e)
         {
+            LoadDoctors();
             ResetDoctorForm();
         }
 
@@ -181,6 +185,7 @@ namespace ClinicManagement_proj.UI
             string idTxt = txtDoctorId.Text.Trim();
             string name = txtDoctorFName.Text.Trim();
             string lastName = txtDoctorLName.Text.Trim();
+            string licenseNumber = txtDoctorLicense.Text.Trim();
             var specialization = cmbSpecialization.SelectedItem as SpecialtyDTO;
 
             if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(lastName))
@@ -202,6 +207,7 @@ namespace ClinicManagement_proj.UI
                     Id = id,
                     FirstName = name,
                     LastName = lastName,
+                    LicenseNumber = licenseNumber,
                     Specialties = specialization != null ? new List<SpecialtyDTO> { specialization } : new List<SpecialtyDTO>()
                 };
                 doctorService.CreateDoctor(newDoctor);
@@ -229,13 +235,14 @@ namespace ClinicManagement_proj.UI
             string idTxt = txtDoctorId.Text.Trim();
             string name = txtDoctorFName.Text.Trim();
             string lastName = txtDoctorLName.Text.Trim();
+            string licenseNumber = txtDoctorLicense.Text.Trim();
             List<SpecialtyDTO> selectedSpecialties = new List<SpecialtyDTO> { cmbSpecialization.SelectedItem as SpecialtyDTO};
 
             DoctorDTO updatedDoctor = (DoctorDTO)dgvDoctors.CurrentRow.DataBoundItem;
 
-            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(lastName))
+            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(lastName) || string.IsNullOrEmpty(licenseNumber))
             {
-                NotificationManager.AddNotification("First Name and Last Name are required.", NotificationType.Warning);
+                NotificationManager.AddNotification("Please fill out the required fields", NotificationType.Warning);
                 return;
             }
 
@@ -248,6 +255,7 @@ namespace ClinicManagement_proj.UI
             {
                 updatedDoctor.FirstName = name;
                 updatedDoctor.LastName = lastName;
+                updatedDoctor.LicenseNumber = licenseNumber;
                 updatedDoctor.Specialties = selectedSpecialties.Where(s => s != null).ToList();
                 doctorService.UpdateDoctor(updatedDoctor);
                 NotificationManager.AddNotification("Doctor updated successfully.", NotificationType.Info);
@@ -268,6 +276,7 @@ namespace ClinicManagement_proj.UI
             string idText = txtDoctorId.Text.Trim();
             string firstName = txtDoctorFName.Text.Trim();
             string lastName = txtDoctorLName.Text.Trim();
+            string licenseNumber = txtDoctorLicense.Text.Trim();
 
             List<DoctorDTO> doctors = null;
 
@@ -288,9 +297,13 @@ namespace ClinicManagement_proj.UI
             {
                 doctors = doctorService.Search(lastName);
             }
+            else if (!string.IsNullOrEmpty(licenseNumber))
+            {
+                doctors = doctorService.SearchByLicense(licenseNumber);
+            }
             else
             {
-                NotificationManager.AddNotification("Enter doctor id or first name or last name to search!", NotificationType.Warning);
+                NotificationManager.AddNotification("Enter doctor id, first name, last name, or license number to search!", NotificationType.Warning);
                 return;
             }
 
@@ -307,6 +320,13 @@ namespace ClinicManagement_proj.UI
                 txtDoctorId.Text = doctor.Id.ToString();
                 txtDoctorFName.Text = doctor.FirstName;
                 txtDoctorLName.Text = doctor.LastName;
+                txtDoctorLicense.Text = doctor.LicenseNumber;
+                if (doctor.Specialties.Any())
+                {
+                    cmbSpecialization.SelectedItem = doctor.Specialties.First();
+                }
+                dgvDoctors.SelectedRows[0].Selected = true;
+                EnterDoctorEditMode();
             }
             catch (Exception ex)
             {
