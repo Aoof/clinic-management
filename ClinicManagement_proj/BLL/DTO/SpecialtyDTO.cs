@@ -36,5 +36,10 @@ namespace ClinicManagement_proj.BLL.DTO
             Name = name;
             Doctors = new List<DoctorDTO>();
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

@@ -102,14 +102,15 @@ namespace ClinicManagement_proj.UI
             dgvDoctors.Columns["ModifiedAt"].DisplayIndex = 5;
 
             dgvDoctors.Columns["Appointments"].Visible = false;
-
             dgvDoctors.Columns["DoctorSchedules"].Visible = false;
+            dgvDoctors.Columns["DisplayText"].Visible = false;
 
             dgvDoctors.Columns["Specialties"].HeaderText = "Specialties";
             dgvDoctors.Columns["Specialties"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dgvDoctors.Columns["Specialties"].DisplayIndex = 8;
 
             dgvDoctors.AutoResizeColumns();
+            ResetDoctorForm();
         }
 
         /// <summary>
@@ -117,18 +118,19 @@ namespace ClinicManagement_proj.UI
         /// </summary>
         private void ResetDoctorForm()
         {
+            dgvDoctors.ClearSelection();
+
             txtDoctorId.Text = string.Empty;
             txtDoctorFName.Text = string.Empty;
             txtDoctorLName.Text = string.Empty;
             cmbSpecialization.SelectedIndex = -1;
             isEditMode = false;
 
-            btnDoctorCreate.Enabled = true;
-            btnDoctorCancel.Enabled = false;
-            btnDoctorDelete.Enabled = false;
-            btnDoctorUpdate.Enabled = false;
+            btnDoctorCreate.Visible = true;
+            btnDoctorCancel.Visible = false;
+            btnDoctorDelete.Visible = false;
 
-            dgvDoctors.ClearSelection();
+            grpDoctorMgmt.Text = "Create New Doctor";
         }
 
         /// <summary>
@@ -136,10 +138,10 @@ namespace ClinicManagement_proj.UI
         /// </summary>
         private void EnterDoctorEditMode()
         {
-            btnDoctorCreate.Enabled = false;
-            btnDoctorCancel.Enabled = true;
-            btnDoctorDelete.Enabled = true;
-            btnDoctorUpdate.Enabled = true;
+            isEditMode = true;
+            btnDoctorCreate.Visible = false;
+            btnDoctorCancel.Visible = true;
+            btnDoctorDelete.Visible = true;
             grpDoctorMgmt.Text = "Edit Doctor";
         }
 
@@ -218,9 +220,44 @@ namespace ClinicManagement_proj.UI
         /// </summary>
         private void btnDoctorUpdate_Click(object sender, EventArgs e)
         {
-            // TODO: Implement actual update logic
-            NotificationManager.AddNotification("Doctor operation simulated!", NotificationType.Info);
-            ResetDoctorForm();
+            if (!isEditMode || dgvDoctors.CurrentRow == null)
+            {
+                NotificationManager.AddNotification("Not in edit mode. Please select a doctor to edit.", NotificationType.Warning);
+                return;
+            }
+
+            string idTxt = txtDoctorId.Text.Trim();
+            string name = txtDoctorFName.Text.Trim();
+            string lastName = txtDoctorLName.Text.Trim();
+            List<SpecialtyDTO> selectedSpecialties = new List<SpecialtyDTO> { cmbSpecialization.SelectedItem as SpecialtyDTO};
+
+            DoctorDTO updatedDoctor = (DoctorDTO)dgvDoctors.CurrentRow.DataBoundItem;
+
+            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(lastName))
+            {
+                NotificationManager.AddNotification("First Name and Last Name are required.", NotificationType.Warning);
+                return;
+            }
+
+            if (idTxt != updatedDoctor.Id.ToString())
+            {
+                NotificationManager.AddNotification("Doctor ID cannot be changed.", NotificationType.Warning);
+            }
+
+            try
+            {
+                updatedDoctor.FirstName = name;
+                updatedDoctor.LastName = lastName;
+                updatedDoctor.Specialties = selectedSpecialties.Where(s => s != null).ToList();
+                doctorService.UpdateDoctor(updatedDoctor);
+                NotificationManager.AddNotification("Doctor updated successfully.", NotificationType.Info);
+                LoadDoctors();
+                ResetDoctorForm();
+            }
+            catch (Exception ex)
+            {
+                NotificationManager.AddNotification($"Error updating doctor: {ex.Message}", NotificationType.Error);
+            }
         }
 
         /// <summary>
