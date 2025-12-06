@@ -61,15 +61,6 @@ namespace ClinicManagement_proj.BLL.Services
 
         public List<DoctorDTO> GetAllDoctors()
         {
-            if (!ClinicManagementApp.CurrentUserHasRole
-                (
-                    UserService.UserRoles.Administrator,
-                    UserService.UserRoles.Doctor,
-                    UserService.UserRoles.Receptionist
-                )
-            )
-                throw new UnauthorizedAccessException("You don't have access to read all doctors.");
-
             return clinicDb.Doctors
                 .Include(d => d.Specialties)
                 .Include(d => d.DoctorSchedules)
@@ -78,29 +69,11 @@ namespace ClinicManagement_proj.BLL.Services
 
         public List<SpecialtyDTO> GetAllSpecialties()
         {
-            if (!ClinicManagementApp.CurrentUserHasRole
-                (
-                    UserService.UserRoles.Administrator,
-                    UserService.UserRoles.Doctor,
-                    UserService.UserRoles.Receptionist
-                )
-            )
-                throw new UnauthorizedAccessException("You don't have access to read specialties.");
-
             return clinicDb.Specialties.Include(s => s.Doctors).ToList();
         }
 
         public List<DoctorDTO> Search(string name)
         {
-            if (!ClinicManagementApp.CurrentUserHasRole
-                (
-                    UserService.UserRoles.Administrator,
-                    UserService.UserRoles.Doctor,
-                    UserService.UserRoles.Receptionist
-                )
-            )
-                throw new UnauthorizedAccessException("You don't have access to search doctors.");
-
             return clinicDb.Doctors
                 .Where(d => d.FirstName.Contains(name) || d.LastName.Contains(name))
                 .Include(d => d.Specialties)
@@ -110,15 +83,6 @@ namespace ClinicManagement_proj.BLL.Services
 
         public List<DoctorDTO> Search(int id)
         {
-            if (!ClinicManagementApp.CurrentUserHasRole
-                (
-                    UserService.UserRoles.Administrator,
-                    UserService.UserRoles.Doctor,
-                    UserService.UserRoles.Receptionist
-                )
-            )
-                throw new UnauthorizedAccessException("You don't have access to search doctors.");
-
             return clinicDb.Doctors
                 .Where(d => d.Id.ToString().Contains(id.ToString()))
                 .Include(d => d.Specialties)
@@ -128,15 +92,6 @@ namespace ClinicManagement_proj.BLL.Services
 
         public List<DoctorDTO> SearchByLicense(string license)
         {
-            if (!ClinicManagementApp.CurrentUserHasRole
-                (
-                    UserService.UserRoles.Administrator,
-                    UserService.UserRoles.Doctor,
-                    UserService.UserRoles.Receptionist
-                )
-            )
-                throw new UnauthorizedAccessException("You don't have access to search doctors.");
-
             return clinicDb.Doctors
                 .Where(d => d.LicenseNumber.Contains(license))
                 .Include(d => d.Specialties)
