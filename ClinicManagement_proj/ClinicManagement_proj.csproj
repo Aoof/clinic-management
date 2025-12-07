@@ -46,6 +46,7 @@
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -86,6 +87,7 @@
       <DependentUpon>HealthCareClinicModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\ClinicDbContext.cs" />
+    <Compile Include="DAL\ClinicDbInitializer.cs" />
     <Compile Include="DAL\Doctor.cs">
       <DependentUpon>HealthCareClinicModel.tt</DependentUpon>
     </Compile>
