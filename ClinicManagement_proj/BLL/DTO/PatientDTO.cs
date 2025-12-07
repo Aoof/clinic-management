@@ -41,11 +41,20 @@ namespace ClinicManagement_proj.BLL.DTO
         public DateTime ModifiedAt { get; set; }
         public ICollection<AppointmentDTO> Appointments { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the PatientDTO class.
+        /// </summary>
         public PatientDTO()
         {
             Appointments = new List<AppointmentDTO>();
         }
 
+        /// <summary>
+        /// Validates the first name string.
+        /// </summary>
+        /// <param name="firstName">The first name to validate.</param>
+        /// <returns>The validated first name.</returns>
+        /// <exception cref="ArgumentException">Thrown if first name is null, empty, or exceeds max length.</exception>
         public static string ValidateFirstName(string firstName)
         {
             if (string.IsNullOrWhiteSpace(firstName))
@@ -55,6 +64,12 @@ namespace ClinicManagement_proj.BLL.DTO
             return firstName;
         }
 
+        /// <summary>
+        /// Validates the last name string.
+        /// </summary>
+        /// <param name="lastName">The last name to validate.</param>
+        /// <returns>The validated last name.</returns>
+        /// <exception cref="ArgumentException">Thrown if last name is null, empty, or exceeds max length.</exception>
         public static string ValidateLastName(string lastName)
         {
             if (string.IsNullOrWhiteSpace(lastName))
@@ -64,6 +79,12 @@ namespace ClinicManagement_proj.BLL.DTO
             return lastName;
         }
 
+        /// <summary>
+        /// Validates the insurance number string.
+        /// </summary>
+        /// <param name="insuranceNumber">The insurance number to validate.</param>
+        /// <returns>The validated insurance number.</returns>
+        /// <exception cref="ArgumentException">Thrown if insurance number is null, empty, or exceeds max length.</exception>
         public static string ValidateInsuranceNumber(string insuranceNumber)
         {
             if (string.IsNullOrWhiteSpace(insuranceNumber))
@@ -73,6 +94,12 @@ namespace ClinicManagement_proj.BLL.DTO
             return insuranceNumber;
         }
 
+        /// <summary>
+        /// Validates the phone number string.
+        /// </summary>
+        /// <param name="phoneNumber">The phone number to validate.</param>
+        /// <returns>The validated phone number.</returns>
+        /// <exception cref="ArgumentException">Thrown if phone number is null, empty, or exceeds max length.</exception>
         public static string ValidatePhoneNumber(string phoneNumber)
         {
             if (string.IsNullOrWhiteSpace(phoneNumber))
@@ -82,6 +109,16 @@ namespace ClinicManagement_proj.BLL.DTO
             return phoneNumber;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the PatientDTO class with specified parameters.
+        /// </summary>
+        /// <param name="firstName">The first name of the patient.</param>
+        /// <param name="lastName">The last name of the patient.</param>
+        /// <param name="insuranceNumber">The insurance number of the patient.</param>
+        /// <param name="dateOfBirth">The date of birth of the patient.</param>
+        /// <param name="phoneNumber">The phone number of the patient.</param>
+        /// <param name="createdAt">The creation date.</param>
+        /// <param name="modifiedAt">The modification date.</param>
         public PatientDTO(string firstName, string lastName, string insuranceNumber, DateTime dateOfBirth, string phoneNumber, DateTime createdAt, DateTime modifiedAt)
         {
             FirstName = firstName;
@@ -94,6 +131,10 @@ namespace ClinicManagement_proj.BLL.DTO
             Appointments = new List<AppointmentDTO>();
         }
 
+        /// <summary>
+        /// Returns a string representation of the patient.
+        /// </summary>
+        /// <returns>A string describing the patient.</returns>
         public override string ToString()
         {
             return $"{FirstName} {LastName} (Phone: {PhoneNumber}) [{Id}]";

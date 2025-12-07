@@ -19,11 +19,20 @@ namespace ClinicManagement_proj.BLL.DTO
         public DateTime ModifiedAt { get; set; }
         public ICollection<UserDTO> Users { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the RoleDTO class.
+        /// </summary>
         public RoleDTO()
         {
             Users = new List<UserDTO>();
         }
 
+        /// <summary>
+        /// Validates the role name string.
+        /// </summary>
+        /// <param name="roleName">The role name to validate.</param>
+        /// <returns>The validated role name.</returns>
+        /// <exception cref="ArgumentException">Thrown if role name is null, empty, or exceeds max length.</exception>
         public static string ValidateRoleName(string roleName)
         {
             if (string.IsNullOrWhiteSpace(roleName))
@@ -33,6 +42,12 @@ namespace ClinicManagement_proj.BLL.DTO
             return roleName;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the RoleDTO class with specified parameters.
+        /// </summary>
+        /// <param name="roleName">The name of the role.</param>
+        /// <param name="createdAt">The creation date.</param>
+        /// <param name="modifiedAt">The modification date.</param>
         public RoleDTO(string roleName, DateTime createdAt, DateTime modifiedAt)
         {
             RoleName = roleName;
@@ -41,6 +56,14 @@ namespace ClinicManagement_proj.BLL.DTO
             Users = new List<UserDTO>();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the RoleDTO class with specified parameters including ID and users.
+        /// </summary>
+        /// <param name="id">The ID of the role.</param>
+        /// <param name="roleName">The name of the role.</param>
+        /// <param name="createdAt">The creation date.</param>
+        /// <param name="modifiedAt">The modification date.</param>
+        /// <param name="users">The collection of users.</param>
         public RoleDTO(int id, string roleName, DateTime createdAt, DateTime modifiedAt, ICollection<UserDTO> users = null)
         {
             Id = id;
@@ -50,6 +73,10 @@ namespace ClinicManagement_proj.BLL.DTO
             Users = users ?? new List<UserDTO>();
         }
 
+        /// <summary>
+        /// Returns a string representation of the role.
+        /// </summary>
+        /// <returns>The role name.</returns>
         public override string ToString()
         {
             return RoleName;

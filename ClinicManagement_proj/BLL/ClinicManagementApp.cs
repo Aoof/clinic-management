@@ -5,6 +5,9 @@ using System.Linq;
 
 namespace ClinicManagement_proj.BLL
 {
+    /// <summary>
+    /// Manages clinic operations such as user, appointment, doctor, and patient management.
+    /// </summary>
     public static class ClinicManagementApp
     {
         public static ClinicDbContext DbContext { get; } = new ClinicDbContext();
@@ -18,12 +21,22 @@ namespace ClinicManagement_proj.BLL
         public static ViewsService ViewsService { get; } = new ViewsService(DbContext);
         public static NotificationService NotificationService { get; } = new NotificationService(DbContext);
 
+        /// <summary>
+        /// Checks if the current user has a specific role.
+        /// </summary>
+        /// <param name="role">The role to check.</param>
+        /// <returns>True if the user has the role, otherwise false.</returns>
         public static bool CurrentUserHasRole(UserService.UserRoles role)
         {
             if (CurrentUser == null) return false;
             return CurrentUser.Roles.Any(r => r.RoleName == role.ToString());
         }
 
+        /// <summary>
+        /// Checks if the current user has any of the specified roles.
+        /// </summary>
+        /// <param name="roles">The roles to check.</param>
+        /// <returns>True if the user has any of the roles, otherwise false.</returns>
         public static bool CurrentUserHasRole(params UserService.UserRoles[] roles)
         {
             if (CurrentUser == null) return false;

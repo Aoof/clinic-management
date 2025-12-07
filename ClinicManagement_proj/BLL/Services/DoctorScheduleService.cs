@@ -7,15 +7,28 @@ using System.Linq;
 
 namespace ClinicManagement_proj.BLL
 {
+    /// <summary>
+    /// Provides services for managing doctor schedules.
+    /// </summary>
     public class DoctorScheduleService
     {
         private readonly ClinicDbContext clinicDb;
 
+        /// <summary>
+        /// Initializes a new instance of the DoctorScheduleService class.
+        /// </summary>
+        /// <param name="dbContext">The database context.</param>
         public DoctorScheduleService(ClinicDbContext dbContext)
         {
             clinicDb = dbContext;
         }
 
+        /// <summary>
+        /// Creates a new doctor schedule.
+        /// </summary>
+        /// <param name="scheduleDto">The schedule to create.</param>
+        /// <returns>The created schedule.</returns>
+        /// <exception cref="UnauthorizedAccessException">Thrown if the current user is not an administrator.</exception>
         public DoctorScheduleDTO CreateSchedule(DoctorScheduleDTO scheduleDto)
         {
             if (!ClinicManagementApp.CurrentUserHasRole(UserService.UserRoles.Administrator))
@@ -26,6 +39,12 @@ namespace ClinicManagement_proj.BLL
             return scheduleDto;
         }
 
+        /// <summary>
+        /// Updates an existing doctor schedule.
+        /// </summary>
+        /// <param name="scheduleDto">The schedule to update.</param>
+        /// <returns>The updated schedule.</returns>
+        /// <exception cref="UnauthorizedAccessException">Thrown if the current user is not an administrator.</exception>
         public DoctorScheduleDTO UpdateSchedule(DoctorScheduleDTO scheduleDto)
         {
             if (!ClinicManagementApp.CurrentUserHasRole(UserService.UserRoles.Administrator))
@@ -36,6 +55,12 @@ namespace ClinicManagement_proj.BLL
             return scheduleDto;
         }
 
+        /// <summary>
+        /// Deletes a doctor schedule by ID.
+        /// </summary>
+        /// <param name="id">The ID of the schedule to delete.</param>
+        /// <exception cref="UnauthorizedAccessException">Thrown if the current user is not an administrator.</exception>
+        /// <exception cref="ArgumentException">Thrown if the schedule is not found.</exception>
         public void DeleteSchedule(int id)
         {
             if (!ClinicManagementApp.CurrentUserHasRole(UserService.UserRoles.Administrator))
@@ -49,6 +74,11 @@ namespace ClinicManagement_proj.BLL
             clinicDb.SaveChanges();
         }
 
+        /// <summary>
+        /// Deletes a doctor schedule.
+        /// </summary>
+        /// <param name="scheduleDto">The schedule to delete.</param>
+        /// <exception cref="UnauthorizedAccessException">Thrown if the current user is not an administrator.</exception>
         public void DeleteSchedule(DoctorScheduleDTO scheduleDto)
         {
             if (!ClinicManagementApp.CurrentUserHasRole(UserService.UserRoles.Administrator))
@@ -58,6 +88,11 @@ namespace ClinicManagement_proj.BLL
             clinicDb.SaveChanges();
         }
 
+        /// <summary>
+        /// Gets all doctor schedules.
+        /// </summary>
+        /// <returns>A list of all schedules.</returns>
+        /// <exception cref="UnauthorizedAccessException">Thrown if the current user does not have access.</exception>
         public List<DoctorScheduleDTO> GetAllSchedules()
         {
             if (!ClinicManagementApp.CurrentUserHasRole
@@ -71,6 +106,13 @@ namespace ClinicManagement_proj.BLL
             return clinicDb.DoctorSchedules.ToList();
         }
 
+        /// <summary>
+        /// Searches for a doctor schedule by ID.
+        /// </summary>
+        /// <param name="id">The ID of the schedule.</param>
+        /// <returns>The schedule with the specified ID.</returns>
+        /// <exception cref="UnauthorizedAccessException">Thrown if the current user does not have access.</exception>
+        /// <exception cref="ArgumentException">Thrown if the schedule is not found.</exception>
         public DoctorScheduleDTO Search(int id)
         {
             if (!ClinicManagementApp.CurrentUserHasRole
@@ -89,6 +131,13 @@ namespace ClinicManagement_proj.BLL
             return schedule;
         }
 
+        /// <summary>
+        /// Searches for a doctor schedule by day of the week.
+        /// </summary>
+        /// <param name="dayOfWeek">The day of the week.</param>
+        /// <returns>The schedule for the specified day.</returns>
+        /// <exception cref="UnauthorizedAccessException">Thrown if the current user does not have access.</exception>
+        /// <exception cref="ArgumentException">Thrown if the schedule is not found.</exception>
         public DoctorScheduleDTO Search(string dayOfWeek)
         {
             if (!ClinicManagementApp.CurrentUserHasRole

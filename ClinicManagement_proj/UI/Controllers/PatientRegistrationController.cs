@@ -46,12 +46,19 @@ namespace ClinicManagement_proj.UI
 
         public Panel Panel => panel;
 
+        /// <summary>
+        /// Initializes a new instance of the PatientRegistrationController class.
+        /// </summary>
+        /// <param name="panel">The panel to control.</param>
         public PatientRegistrationController(Panel panel)
         {
             this.patientService = ClinicManagementApp.PatientService;
             this.panel = panel;
         }
 
+        /// <summary>
+        /// Initializes the controller.
+        /// </summary>
         public void Initialize()
         {
             btnPatientCreate.Click += new EventHandler(btnPatientCreate_Click);
@@ -66,6 +73,9 @@ namespace ClinicManagement_proj.UI
             dgvPatients.ScrollBars = ScrollBars.Both;
         }
 
+        /// <summary>
+        /// Called when the panel is shown.
+        /// </summary>
         public void OnShow()
         {
             LoadPatients();
@@ -301,11 +311,17 @@ namespace ClinicManagement_proj.UI
         //    ResetPatientForm();
         //}
 
+        /// <summary>
+        /// Called when the panel is hidden.
+        /// </summary>
         public void OnHide()
         {
             // Cleanup when leaving panel
         }
 
+        /// <summary>
+        /// Cleans up resources.
+        /// </summary>
         public void Cleanup()
         {
             // Dispose resources if needed

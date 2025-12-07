@@ -29,11 +29,20 @@ namespace ClinicManagement_proj.BLL.DTO
         public DateTime ModifiedAt { get; set; }
         public ICollection<RoleDTO> Roles { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the UserDTO class.
+        /// </summary>
         public UserDTO()
         {
             Roles = new List<RoleDTO>();
         }
 
+        /// <summary>
+        /// Validates the username string.
+        /// </summary>
+        /// <param name="username">The username to validate.</param>
+        /// <returns>The validated username.</returns>
+        /// <exception cref="ArgumentException">Thrown if username is invalid.</exception>
         public static string ValidateUsername(string username)
         {
             if (string.IsNullOrWhiteSpace(username))
@@ -51,6 +60,12 @@ namespace ClinicManagement_proj.BLL.DTO
             return username;
         }
 
+        /// <summary>
+        /// Validates the password hash string.
+        /// </summary>
+        /// <param name="passwordHash">The password hash to validate.</param>
+        /// <returns>The validated password hash.</returns>
+        /// <exception cref="ArgumentException">Thrown if password hash is null, empty, or exceeds max length.</exception>
         public static string ValidatePasswordHash(string passwordHash)
         {
             if (string.IsNullOrWhiteSpace(passwordHash))
@@ -60,6 +75,12 @@ namespace ClinicManagement_proj.BLL.DTO
             return passwordHash;
         }
 
+        /// <summary>
+        /// Validates the password string.
+        /// </summary>
+        /// <param name="password">The password to validate.</param>
+        /// <returns>The validated password.</returns>
+        /// <exception cref="ArgumentException">Thrown if password does not meet requirements.</exception>
         public static string ValidatePassword(string password)
         {
             if (string.IsNullOrWhiteSpace(password))
@@ -77,6 +98,10 @@ namespace ClinicManagement_proj.BLL.DTO
             return password;
         }
 
+        /// <summary>
+        /// Returns a string representation of the user.
+        /// </summary>
+        /// <returns>A string describing the user.</returns>
         public override string ToString()
         {
             return $"{Id} - {Username} ({Roles.FirstOrDefault()})";

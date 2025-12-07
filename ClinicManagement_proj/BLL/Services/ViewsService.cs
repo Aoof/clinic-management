@@ -5,15 +5,27 @@ using ClinicManagement_proj.DAL;
 
 namespace ClinicManagement_proj.BLL.Services
 {
+    /// <summary>
+    /// Provides methods to retrieve various views related to patients and doctors.
+    /// </summary>
     public class ViewsService
     {
         private readonly ClinicDbContext _context;
 
+        /// <summary>
+        /// Initializes a new instance of the ViewsService class.
+        /// </summary>
+        /// <param name="context">The database context.</param>
         public ViewsService(ClinicDbContext context)
         {
             _context = context;
         }
 
+        /// <summary>
+        /// Gets the patient records summary.
+        /// </summary>
+        /// <param name="patientId">Optional patient ID to filter.</param>
+        /// <returns>A list of patient records summaries.</returns>
         public List<vw_PatientRecordsSummary> GetPatientRecordsSummary(int? patientId = null)
         {
             var query = _context.vw_PatientRecordsSummary.AsQueryable();
@@ -27,6 +39,11 @@ namespace ClinicManagement_proj.BLL.Services
                 .ToList();
         }
 
+        /// <summary>
+        /// Gets the upcoming appointments.
+        /// </summary>
+        /// <param name="doctorId">Optional doctor ID to filter.</param>
+        /// <returns>A list of upcoming appointments.</returns>
         public List<vw_UpcomingAppointments> GetUpcomingAppointments(int? doctorId = null)
         {
             var query = _context.vw_UpcomingAppointments.AsQueryable();
@@ -40,6 +57,11 @@ namespace ClinicManagement_proj.BLL.Services
                 .ToList();
         }
 
+        /// <summary>
+        /// Gets the doctor's schedule for today.
+        /// </summary>
+        /// <param name="doctorId">Optional doctor ID to filter.</param>
+        /// <returns>A list of today's schedules.</returns>
         public List<vw_DoctorTodaySchedule> GetDoctorTodaySchedule(int? doctorId = null)
         {
             var query = _context.vw_DoctorTodaySchedule.AsQueryable();
@@ -53,6 +75,11 @@ namespace ClinicManagement_proj.BLL.Services
                 .ToList();
         }
 
+        /// <summary>
+        /// Gets the patient clinical summary.
+        /// </summary>
+        /// <param name="patientId">Optional patient ID to filter.</param>
+        /// <returns>A list of patient clinical summaries.</returns>
         public List<vw_PatientClinicalSummary> GetPatientClinicalSummary(int? patientId = null)
         {
             var query = _context.vw_PatientClinicalSummary.AsQueryable();

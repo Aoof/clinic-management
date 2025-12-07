@@ -11,8 +11,6 @@ using System.Windows.Forms;
 
 namespace ClinicManagement_proj.UI
 {
-    
-
     /// <summary>
     /// Controller for the Doctor Scheduling panel
     /// </summary>
@@ -36,12 +34,19 @@ namespace ClinicManagement_proj.UI
 
         public Panel Panel => panel;
 
+        /// <summary>
+        /// Initializes a new instance of the SchedulingController class.
+        /// </summary>
+        /// <param name="panel">The panel to control.</param>
         public SchedulingController(Panel panel)
         {
             this.panel = panel;
             
         }
 
+        /// <summary>
+        /// Initializes the controller.
+        /// </summary>
         public void Initialize()
         {
             adminDashboard.ResizeEnd += new System.EventHandler(AdminDashboard_ResizeEnd);
@@ -148,6 +153,9 @@ namespace ClinicManagement_proj.UI
             isUpdatingDoctorCombo = false;
         }
 
+        /// <summary>
+        /// Called when the panel is shown.
+        /// </summary>
         public void OnShow()
         {
             RefreshSchedulingListViews();
@@ -367,11 +375,18 @@ namespace ClinicManagement_proj.UI
                 ClinicManagementApp.NotificationService.AddNotification($"Error reverting schedule: {ex.Message}", NotificationType.Error);
             }
         }
+
+        /// <summary>
+        /// Called when the panel is hidden.
+        /// </summary>
         public void OnHide()
         {
             // Cleanup when leaving panel
         }
 
+        /// <summary>
+        /// Cleans up resources.
+        /// </summary>
         public void Cleanup()
         {
             // Dispose resources if needed
