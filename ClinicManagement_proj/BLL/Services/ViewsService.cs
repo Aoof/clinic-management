@@ -1,7 +1,6 @@
-﻿using System;
+﻿using ClinicManagement_proj.DAL;
 using System.Collections.Generic;
 using System.Linq;
-using ClinicManagement_proj.DAL;
 
 namespace ClinicManagement_proj.BLL.Services
 {

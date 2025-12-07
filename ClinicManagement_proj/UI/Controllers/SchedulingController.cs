@@ -41,7 +41,7 @@ namespace ClinicManagement_proj.UI
         public SchedulingController(Panel panel)
         {
             this.panel = panel;
-            
+
         }
 
         /// <summary>
@@ -53,13 +53,13 @@ namespace ClinicManagement_proj.UI
             btnScheduleSave.Click += new EventHandler(btnScheduleSave_Click);
             btnScheduleRevert.Click += new EventHandler(btnScheduleRevert_Click);
             SetupSchedulingListViews();
-            
+
             // Populate doctor ComboBox here
             doctorService = new DoctorService(new ClinicDbContext());
             List<DoctorDTO> doctors = doctorService.GetAllDoctors();
 
             cmbDoctorSelect.DataSource = doctors;
-            cmbDoctorSelect.DisplayMember = "ToString"; 
+            cmbDoctorSelect.DisplayMember = "ToString";
             cmbDoctorSelect.ValueMember = null;
             cmbDoctorSelect.SelectedIndex = -1;
             cmbDoctorSelect.Text = "Please select a doctor";
@@ -161,7 +161,7 @@ namespace ClinicManagement_proj.UI
             RefreshSchedulingListViews();
         }
 
-        
+
 
         private void AdminDashboard_ResizeEnd(object sender, System.EventArgs e)
         {
