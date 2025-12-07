@@ -169,7 +169,7 @@ namespace ClinicManagement_proj.UI
                 txtDoctorFName.Text = selectedDoctor.FirstName;
                 txtDoctorLName.Text = selectedDoctor.LastName;
                 txtDoctorLicense.Text = selectedDoctor.LicenseNumber;
-                
+
                 if (selectedDoctor.Specialties.Any())
                 {
                     cmbSpecialization.SelectedItem = selectedDoctor.Specialties.First();
@@ -203,7 +203,7 @@ namespace ClinicManagement_proj.UI
                 return;
             }
 
-            if(string.IsNullOrEmpty(licenseNumber))
+            if (string.IsNullOrEmpty(licenseNumber))
             {
                 ClinicManagementApp.NotificationService.AddNotification("License Number is required.", NotificationType.Warning);
                 return;
@@ -245,7 +245,7 @@ namespace ClinicManagement_proj.UI
             string name = txtDoctorFName.Text.Trim();
             string lastName = txtDoctorLName.Text.Trim();
             string licenseNumber = txtDoctorLicense.Text.Trim();
-            List<SpecialtyDTO> selectedSpecialties = new List<SpecialtyDTO> { cmbSpecialization.SelectedItem as SpecialtyDTO};
+            List<SpecialtyDTO> selectedSpecialties = new List<SpecialtyDTO> { cmbSpecialization.SelectedItem as SpecialtyDTO };
 
             DoctorDTO updatedDoctor = (DoctorDTO)dgvDoctors.CurrentRow.DataBoundItem;
 

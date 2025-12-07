@@ -1,11 +1,10 @@
-﻿using ClinicManagement_proj.BLL.Utils;
+﻿using ClinicManagement_proj.BLL;
 using ClinicManagement_proj.BLL.DTO;
-using ClinicManagement_proj.BLL;
+using ClinicManagement_proj.BLL.Utils;
 using System;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using System.Diagnostics.Eventing.Reader;
 
 namespace ClinicManagement_proj.UI
 {

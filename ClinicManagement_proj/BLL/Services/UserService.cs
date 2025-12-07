@@ -43,7 +43,8 @@ namespace ClinicManagement_proj.BLL.Services
                 {
                     return user;
                 }
-            } catch (Exception) { }
+            }
+            catch (Exception) { }
             return null;
         }
 

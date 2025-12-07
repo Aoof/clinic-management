@@ -1,8 +1,6 @@
 ﻿using ClinicManagement_proj.BLL;
-using ClinicManagement_proj.BLL.Utils;
 using System;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace ClinicManagement_proj.UI
@@ -39,7 +37,7 @@ namespace ClinicManagement_proj.UI
 
             notificationController.Initialize();
         }
-        
+
 
         /// <summary>
         /// Setup navigation between panels
@@ -80,7 +78,7 @@ namespace ClinicManagement_proj.UI
         {
             navigationManager.NavigateTo(btnAppointmentManagement);
         }
-        
+
         /// <summary>
         /// Cleanup resources on form closing
         /// </summary>
