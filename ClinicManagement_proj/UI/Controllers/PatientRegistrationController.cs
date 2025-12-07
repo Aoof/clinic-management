@@ -68,6 +68,7 @@ namespace ClinicManagement_proj.UI
             btnPatientDisplay.Click += new EventHandler(btnPatientDisplay_Click);
             btnPatientSearch.Click += new EventHandler(btnPatientSearch_Click);
             dgvPatients.Click += new EventHandler(dgvPatients_Click);
+            dgvPatients.CellFormatting += new DataGridViewCellFormattingEventHandler(dgvPatients_CellFormatting);
 
             // Ensure scrollbars are enabled
             dgvPatients.ScrollBars = ScrollBars.Both;
@@ -89,7 +90,50 @@ namespace ClinicManagement_proj.UI
             dgvPatients.DataSource = users;
             dgvPatients.AutoGenerateColumns = true;
 
+            dgvPatients.Columns["Id"].HeaderText = "Patient ID";
+            dgvPatients.Columns["Id"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvPatients.Columns["Id"].DisplayIndex = 0;
+
+            dgvPatients.Columns["FirstName"].HeaderText = "First Name";
+            dgvPatients.Columns["FirstName"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dgvPatients.Columns["FirstName"].DisplayIndex = 1;
+
+            dgvPatients.Columns["LastName"].HeaderText = "Last Name";
+            dgvPatients.Columns["LastName"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dgvPatients.Columns["LastName"].DisplayIndex = 2;
+
+            dgvPatients.Columns["InsuranceNumber"].HeaderText = "Insurance Number";
+            dgvPatients.Columns["InsuranceNumber"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dgvPatients.Columns["InsuranceNumber"].DisplayIndex = 3;
+
+            dgvPatients.Columns["DateOfBirth"].HeaderText = "Date of Birth";
+            dgvPatients.Columns["DateOfBirth"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dgvPatients.Columns["DateOfBirth"].DisplayIndex = 4;
+
+            dgvPatients.Columns["PhoneNumber"].HeaderText = "Phone Number";
+            dgvPatients.Columns["PhoneNumber"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dgvPatients.Columns["PhoneNumber"].DisplayIndex = 5;
+
+            dgvPatients.Columns["CreatedAt"].HeaderText = "Created At";
+            dgvPatients.Columns["CreatedAt"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dgvPatients.Columns["CreatedAt"].DisplayIndex = 6;
+
+            dgvPatients.Columns["ModifiedAt"].HeaderText = "Modified At";
+            dgvPatients.Columns["ModifiedAt"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dgvPatients.Columns["ModifiedAt"].DisplayIndex = 7;
+
             dgvPatients.Columns["Appointments"].Visible = false;
+
+            dgvPatients.AutoResizeColumns();
+            ResetPatientForm();
+        }
+
+        private void dgvPatients_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.ColumnIndex == dgvPatients.Columns["DateOfBirth"].Index && e.Value != null && e.Value is DateTime dt)
+            {
+                e.Value = dt.ToShortDateString();
+            }
         }
 
 
